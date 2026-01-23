@@ -1,0 +1,5 @@
+#Inclua<stdio.h>
+
+Integrado Inteiro inl(Inteiro x){ Retorne x+1; }
+
+Inteiro Início(){ printf("24_Integrado=%d\n", inl(3)); Retorne 0; }

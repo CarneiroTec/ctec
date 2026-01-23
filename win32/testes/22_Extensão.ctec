@@ -1,0 +1,6 @@
+#Inclua<stdio.h>
+
+/* Extensão keyword test: placed as annotation (may be ignored) */
+Extensão Inteiro f(){ Retorne 2; }
+
+Inteiro Início(){ printf("22_Extensão=%d\n", f()); Retorne 0; }

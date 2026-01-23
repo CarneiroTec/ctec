@@ -1,0 +1,43 @@
+#define CTEC_LANG_INICIO
+#include "fonte/ctec-lang.ctec"
+#include "fonte/infraestrutura/registro_servicos.ctec"
+#include "fonte/aplicacao/servico_compilacao.ctec"
+#include "fonte/apresentacao/formatador_saida.ctec"
+
+static RegistroServicos* registro_global = NULL;
+
+void configurar_ambiente_runtime(void)
+{
+    if (!registro_global)
+        registro_global = criar_registro_servicos();
+}
+
+void carregar_dependencias(void)
+{
+}
+
+void inicializar_servicos(void)
+{
+    if (!registro_global)
+        return;
+    ServicoCompilacao* servico = criar_servico_compilacao();
+    FormatadorSaida* formatador = criar_formatador_saida();
+    if (servico)
+        registro_global->repositorio->registrar_servico_compilacao(registro_global, servico);
+    if (formatador)
+        registro_global->repositorio->registrar_formatador_saida(registro_global, formatador);
+}
+
+int principal(int quantidade_argumentos, char **argumentos)
+{
+    configurar_ambiente_runtime();
+    carregar_dependencias();
+    inicializar_servicos();
+    if (!registro_global)
+        return 1;
+    ServicoCompilacao* servico = registro_global->repositorio->obter_servico_compilacao(registro_global);
+    if (!servico)
+        return 1;
+    return servico->repositorio->executar_projeto(servico, quantidade_argumentos, argumentos);
+}
+

@@ -1,0 +1,32 @@
+[Projeto]
+Nome = "ctec-lang"
+Descrição = "Linguagem CTEC - Adaptação de C para pt-br"
+Versão = "1.0.0"
+Tipo = "Projeto"
+Saída = "ctec"
+Licença = "CTECL"
+
+[[Autor]]
+Nome = "Anildo Carneiro"
+CorreioEletrônico = "anildo.10@hotmail.com"
+
+[[Perfil.biblioteca]]
+Plataforma = "Windows"
+Extensão = ".ctb"
+Sinalizadores = ["--Dinamica"]
+
+[[Perfil.depuração]]
+Plataforma = "Windows"
+Extensão = ".exe"
+Sinalizadores = ["--Erros", "--Avisos"]
+
+[[Perfil.lançamento]]
+Plataforma = "Windows"
+Extensão = ".exe"
+Sinalizadores = ["--Otimizacao=Leve"]
+
+[Procedimento]
+Limpar = "rm -rf construcao"
+Compilar = "ctec inicio.ctec -o construcao/depuracao/ctec.exe"
+Publicar = "ctec inicio.ctec -o construcao/lancamento/ctec.exe"
+Testar = "ctec testes/executar_todos_testes.ctec -o construcao/depuracao/testes.exe && construcao/depuracao/testes.exe"

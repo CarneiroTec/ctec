@@ -1,0 +1,3 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){ Local Inteiro a = 2; printf("29_Local=%d\n", a); Retorne 0; }

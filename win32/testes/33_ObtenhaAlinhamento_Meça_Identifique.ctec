@@ -1,0 +1,3 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){ Inteiro a; /* Meça used for sizeof */ printf("33_Meça=%d\n", Meça(a)); Retorne 0; }

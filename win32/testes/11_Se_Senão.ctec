@@ -1,0 +1,6 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    Se (1) printf("11_Se: true\n"); Senão printf("11_Senão: false\n");
+    Retorne 0;
+}

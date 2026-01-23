@@ -1,0 +1,7 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    Caractere c = 'A';
+    printf("08_Caractere=%c\n", c);
+    Retorne 0;
+}

@@ -1,0 +1,10 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    Inteiro x = 0;
+    Execute rot;
+    x = 1; /* pulado */
+rot:
+    printf("09_Execute=%d\n", x);
+    Retorne 0;
+}

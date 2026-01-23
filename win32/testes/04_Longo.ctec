@@ -1,0 +1,7 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    Longo l = 123456L;
+    printf("04_Longo=%ld\n", l);
+    Retorne 0;
+}

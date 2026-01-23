@@ -1,0 +1,9 @@
+Módulo teste {
+    Exporte Inteiro soma(Inteiro a, Inteiro b) {
+        Retorne a + b;
+    }
+    
+    Privado Inteiro auxiliar() {
+        Retorne 10;
+    }
+}

@@ -1,0 +1,12 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    Inteiro i = 0;
+    Enquanto (i < 4) {
+        i = i + 1;
+        Se (i == 2) Continue;
+        Se (i == 3) Interrompa;
+        printf("16_i=%d\n", i);
+    }
+    Retorne 0;
+}

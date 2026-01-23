@@ -1,0 +1,9 @@
+#Inclua<stdio.h>
+
+Inteiro f(){ Retorne 123; }
+
+Inteiro Início(){
+    Inteiro v = f();
+    printf("10_Retorne=%d\n", v);
+    Retorne 0;
+}

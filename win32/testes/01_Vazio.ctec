@@ -1,0 +1,11 @@
+#Inclua<stdio.h>
+
+Vazio f_vazio(){
+    Retorne;
+}
+
+Inteiro Início(){
+    f_vazio();
+    printf("01_Vazio OK\n");
+    Retorne 0;
+}

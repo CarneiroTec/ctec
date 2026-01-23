@@ -1,0 +1,3 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){ /* ARGUMENTOS_VARIÁVEIS and CONTADOR are preproc tokens; print fixed */ printf("42_ARGVAR_CONT=%d\n", CONTADOR); Retorne 0; }

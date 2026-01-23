@@ -1,0 +1,42 @@
+[Projeto]
+Nome = "ctec-lang"
+Descrição = "CTEC - Compilador da Linguagem CTEC"
+Versão = "0.1.0"
+Tipo = "Executável"
+Saída = "ctec"
+Licença = "LGPL"
+Repositório = "https://www.github.com/carneirotec/ctec-lang.git"
+
+[[Autor]]
+Nome = "Anildo Carneiro"
+CorreioEletrônico = "anildo.10@hotmail.com"
+
+[[Dependência.produção]]
+Nome = "ctec-convencional"
+Versão = ">=1.0.0"
+
+[[Dependência.desenvolvimento]]
+Nome = "ctec-test"
+Versão = ">=0.1.0"
+
+[[Perfil.biblioteca]]
+Plataforma = "Windows"
+Extensão = ".ctb"
+Sinalizadores = ["--Dinamica"]
+
+[[Perfil.depuração]]
+Plataforma = "Windows"
+Extensão = ".exe"
+Sinalizadores = ["--Erros", "--Avisos"]
+
+[[Perfil.lançamento]]
+Plataforma = "Windows"
+Extensão = ".exe"
+Sinalizadores = ["--Otimizacao=Leve"]
+
+[Procedimento]
+Limpar = "rm -rf construcao"
+Compilar = "ctec --perfil=Depuração"
+Publicar = "ctec --perfil=Lançamento && ctec enviar --destino=RepositorioCentral"
+Testar = "ctec ./teste/Teste.ctec && ./teste/Teste"
+

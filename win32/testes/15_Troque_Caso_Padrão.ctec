@@ -1,0 +1,7 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    Inteiro x = 0;
+    Troque (x) { Caso 0: printf("15_Caso 0\n"); Interrompa; Padrão: printf("15_Padrão\n"); }
+    Retorne 0;
+}

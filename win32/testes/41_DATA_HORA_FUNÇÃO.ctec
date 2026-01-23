@@ -1,0 +1,3 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){ printf("41_DATA_HORA_FUNÇÃO=%s %s %s\n", DATA, HORA, FUNÇÃO); Retorne 0; }

@@ -1,0 +1,5 @@
+#Inclua<stdio.h>
+
+Fixo Inteiro s = 6;
+
+Inteiro Início(){ printf("32_Fixo=%d\n", s); Retorne 0; }

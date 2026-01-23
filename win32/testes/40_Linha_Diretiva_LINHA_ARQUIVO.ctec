@@ -1,0 +1,3 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){ printf("40_LINHA=%d ARQUIVO=%s\n", LINHA, ARQUIVO); Retorne 0; }

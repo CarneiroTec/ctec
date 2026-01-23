@@ -1,0 +1,5 @@
+Externo Inteiro printf(Imutável Caractere *formato, ...);
+
+Inteiro ext_var;
+
+Inteiro Início(){ ext_var = 4; printf("30_Externo=%d\n", ext_var); Retorne 0; }

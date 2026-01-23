@@ -1,0 +1,6 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    printf("Olá, CTEC!\n");
+    Retorne 0;
+}

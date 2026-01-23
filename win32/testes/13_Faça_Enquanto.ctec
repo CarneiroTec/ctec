@@ -1,0 +1,7 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    Inteiro i = 0;
+    Faça { printf("13_Faça i=%d\n", i); i = i + 1; } Enquanto (i < 1);
+    Retorne 0;
+}

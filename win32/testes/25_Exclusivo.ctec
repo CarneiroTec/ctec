@@ -1,0 +1,5 @@
+#Inclua<stdio.h>
+
+Exclusivo Inteiro *p = 0;
+
+Inteiro Início(){ printf("25_Exclusivo=%p\n", p); Retorne 0; }

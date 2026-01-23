@@ -1,0 +1,5 @@
+#Inclua<stdio.h>
+
+Enumeração E { A, B, C };
+
+Inteiro Início(){ printf("17_Enumeração=%d\n", B); Retorne 0; }

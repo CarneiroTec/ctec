@@ -1,0 +1,7 @@
+#Inclua<stdio.h>
+
+Inteiro Início(){
+    Duplo d = 2.71828;
+    printf("07_Duplo=%.5f\n", d);
+    Retorne 0;
+}
