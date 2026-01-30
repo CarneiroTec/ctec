@@ -1,0 +1,39 @@
+Documentação do módulo Fluxo
+===========================
+
+Arquivos no diretório Fonte/Sistema/Fluxo
+- Fluxo.ctec — define estruturas e operações para fluxo de dados, encadeamento e controle de estado.
+- GerenciadorFluxo.ctec — funções para manipular fluxos padronizados usados pela biblioteca.
+
+Resumo
+- O módulo `Fluxo` centraliza operações relacionadas a leitura/escrita sequencial e ao controle de fluxo entre componentes.
+
+Localização no código
+- Fonte/Sistema/Fluxo/Fluxo.ctec
+- Fonte/Sistema/Fluxo/GerenciadorFluxo.ctec
+
+Fim.
+
+Exemplos práticos (Correto / Errado)
+
+Exemplo correto — ler sequencialmente e fechar fluxo:
+
+
+Fluxo *f = GerenciadorFluxo.abrir("algum_fluxo");
+Se (f) {
+	Caractere buffer[512];
+	Inteiro l = GerenciadorFluxo.leia(f, buffer, 1, 511);
+	buffer[l] = '\0';
+	GerenciadorFluxo.fechar(f);
+}
+
+
+Exemplo errado — não fechar o fluxo e não checar retorno:
+
+
+GerenciadorFluxo.leia(f, buffer, 1, 512); // f pode ser NULL ou inválido
+// Não fecha o fluxo
+
+
+Por que é errado
+- Fluxos abertos consomem recursos; sempre verifique retornos e feche corretamente.

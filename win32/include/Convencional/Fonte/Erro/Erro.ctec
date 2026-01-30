@@ -1,0 +1,12 @@
+#SeNãoDefinido Convencional_Erro
+#Defina Convencional_Erro
+// Dependências
+
+// Implementação
+Pseudônimo Inteiro Erro;
+
+// Providências
+#Inclua "CodigoErro.ctec"
+#Inclua "GerenciadorErro.ctec"
+
+#FimSe

@@ -1,0 +1,49 @@
+#Inclua "../../../Fonte/Sistema/Ambiente.ctec"
+Externo Inteiro printf(Imutável Caractere *formato, ...);
+
+Inteiro teste_deve_ter_funcoes_ambiente() {
+	Se(GerenciadorAmbiente.defina_variável && GerenciadorAmbiente.obtenha_variável && GerenciadorAmbiente.remova_variável) {
+		printf("Passou: funcoes de ambiente presentes\n");
+		Retorne 1;
+	}
+	printf("Falhou: funcoes de ambiente ausentes\n");
+	Retorne 0;
+}
+
+Inteiro teste_deve_definir_e_obter_variavel() {
+	Caractere nome[] = "Convencional_TEST_VAR";
+	Caractere valor[] = "valor_ctec";
+	Inteiro res = GerenciadorAmbiente.defina_variável(nome, valor, 1);
+	Se(res == 0) {
+		Caractere *v = GerenciadorAmbiente.obtenha_variável(nome);
+		Se(v && v[0] == valor[0]) {
+			printf("Passou: defina e obtenha variavel\n");
+			Retorne 1;
+		}
+		printf("Falhou: valor obtido invalido\n");
+		Retorne 0;
+	}
+	printf("Falhou: defina_variavel retornou %d\n", res);
+	Retorne 0;
+}
+
+Inteiro teste_deve_remover_variavel() {
+	Caractere nome[] = "Convencional_TEST_VAR";
+	GerenciadorAmbiente.remova_variável(nome);
+	Caractere *v = GerenciadorAmbiente.obtenha_variável(nome);
+	Se(!v || v[0] == '\0') {
+		printf("Passou: remova variavel\n");
+		Retorne 1;
+	}
+	printf("Falhou: variavel ainda presente\n");
+	Retorne 0;
+}
+
+Inteiro Início() {
+	Inteiro total = 0;
+	total = total + teste_deve_ter_funcoes_ambiente();
+	total = total + teste_deve_definir_e_obter_variavel();
+	total = total + teste_deve_remover_variavel();
+	printf("\nResultado: %d/3 testes passaram\n", total);
+	Retorne 0;
+}

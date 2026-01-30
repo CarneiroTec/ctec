@@ -1,0 +1,15 @@
+#SeNãoDefinido Convencional_Dados
+#Defina Convencional_Dados
+
+Estrutura Dados {
+    Caractere *ponteiro;
+    Inteiro tamanho;
+    Caractere *base;
+    Inteiro tipo;
+    Inteiro arquivo;
+    Inteiro reserva_caractere;
+    Inteiro tamanho_reserva;
+    Caractere *nome_arquivo;
+};
+
+#FimSe

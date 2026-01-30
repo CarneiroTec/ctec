@@ -1,0 +1,39 @@
+#SeNãoDefinido Convencional_Sistema_Execução
+#Defina Convencional_Sistema_Execução
+
+Externo Vazio exit(Inteiro codigo);
+Externo Vazio _exit(Inteiro codigo);
+Externo Vazio abort(Vazio);
+Externo Inteiro atexit(Vazio (*func)(Vazio));
+
+Pseudônimo Estrutura {
+    Vazio (*finalize)(Inteiro codigo);
+    Vazio (*finalize_imediato)(Inteiro codigo);
+    Vazio (*aborte)(Vazio);
+    Inteiro (*suceda)(Vazio (*func)(Vazio));
+} Execução;
+
+Vazio ctec_finalize(Inteiro codigo) {
+    exit(codigo);
+}
+
+Vazio ctec_finalize_imediato(Inteiro codigo) {
+    _exit(codigo);
+}
+
+Vazio ctec_aborte(Vazio) {
+    abort();
+}
+
+Inteiro ctec_suceda(Vazio (*func)(Vazio)) {
+    Retorne atexit(func);
+}
+
+Execução GerenciadorExecução = {
+    .finalize = ctec_finalize,
+    .finalize_imediato = ctec_finalize_imediato,
+    .aborte = ctec_aborte,
+    .suceda = ctec_suceda
+};
+
+#FimSe

@@ -1,0 +1,54 @@
+#SeNãoDefinido Convencional_Sistema_Terminal
+#Defina Convencional_Sistema_Terminal
+
+Externo Inteiro system(Imutável Caractere *comando);
+Externo Inteiro printf(Imutável Caractere *formato, ...);
+Externo Inteiro puts(Imutável Caractere *texto);
+Externo Inteiro getchar(Vazio);
+Externo Inteiro gets(Caractere *texto);
+Externo Inteiro scanf(Imutável Caractere *formato, ...);
+Externo Inteiro putchar(Caractere caractere);
+
+Vazio ctec_void_ret_void(Vazio) { ((Vazio)0); }
+
+Inteiro ctec_execute(Imutável Caractere *comando) {
+    Retorne system(comando);
+}
+
+Inteiro ctec_exiba_caractere(Caractere caractere) {
+    Retorne putchar(caractere);
+}
+
+Inteiro ctec_exiba_texto(Imutável Caractere *texto) {
+    Retorne puts(texto);
+}
+
+Inteiro ctec_leia_caractere(Vazio) {
+    Retorne getchar();
+}
+
+Inteiro ctec_leia_texto(Caractere *texto) {
+    Retorne gets(texto);
+}
+
+Pseudônimo Estrutura {
+    Inteiro (*execute)(Imutável Caractere *comando);
+    Inteiro (*exiba_caractere)(Caractere caractere);
+    Inteiro (*exiba_formatado)(Imutável Caractere *formato, ...);
+    Inteiro (*exiba_texto)(Imutável Caractere *texto);
+    Inteiro (*leia_caractere)(Vazio);
+    Inteiro (*leia_formatado)(Imutável Caractere *formato, ...);
+    Inteiro (*leia_texto)(Caractere *texto);
+} InterfaceTerminal;
+
+InterfaceTerminal Terminal = {
+    .execute = ctec_execute,
+    .exiba_caractere = ctec_exiba_caractere,
+    .exiba_formatado = printf,
+    .exiba_texto = ctec_exiba_texto,
+    .leia_caractere = ctec_leia_caractere,
+    .leia_formatado = scanf,
+    .leia_texto = ctec_leia_texto
+};
+
+#FimSe

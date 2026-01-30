@@ -1,0 +1,59 @@
+#SeNãoDefinido Convencional_Arquivo_GerenciadorArquivo
+#Defina Convencional_Arquivo_GerenciadorArquivo
+
+Externo Arquivo *fopen(Imutável Caractere *nome_arquivo, Imutável Caractere *modo);
+Externo Inteiro fclose(Arquivo *arquivo);
+Externo Inteiro fread(Vazio *ponteiro, Inteiro tamanho, Inteiro quantidade, Arquivo *arquivo);
+Externo Inteiro fwrite(Imutável Vazio *ponteiro, Inteiro tamanho, Inteiro quantidade, Arquivo *arquivo);
+Externo Inteiro fflush(Arquivo *arquivo);
+Externo Inteiro remove(Caractere *nome_arquivo);
+
+Arquivo *ctec_crie_arquivo(Imutável Caractere *nome_arquivo, Imutável Caractere *modo) {
+    Retorne fopen(nome_arquivo, modo);
+}
+
+Arquivo *ctec_abra_arquivo(Imutável Caractere *nome_arquivo, Imutável Caractere *modo) {
+    Retorne fopen(nome_arquivo, modo);
+}
+
+Inteiro ctec_feche_arquivo(Arquivo *arquivo) {
+    Retorne fclose(arquivo);
+}
+
+Inteiro ctec_leia_arquivo(Vazio *ponteiro, Inteiro tamanho, Inteiro quantidade, Arquivo *arquivo) {
+    Retorne fread(ponteiro, tamanho, quantidade, arquivo);
+}
+
+Inteiro ctec_escreva_arquivo(Imutável Vazio *ponteiro, Inteiro tamanho, Inteiro quantidade, Arquivo *arquivo) {
+    Retorne fwrite(ponteiro, tamanho, quantidade, arquivo);
+}
+
+Inteiro ctec_despeje_arquivo(Arquivo *arquivo) {
+    Retorne fflush(arquivo);
+}
+
+Inteiro ctec_remova_arquivo(Caractere *nome_arquivo) {
+    Retorne remove(nome_arquivo);
+}
+
+Pseudônimo Estrutura {
+    Arquivo *(*crie)(Imutável Caractere *nome_arquivo, Imutável Caractere *modo);
+    Arquivo *(*abra)(Imutável Caractere *nome_arquivo, Imutável Caractere *modo);
+    Inteiro (*feche)(Arquivo *arquivo);
+    Inteiro (*leia)(Vazio *ponteiro, Inteiro tamanho, Inteiro quantidade, Arquivo *arquivo);
+    Inteiro (*escreva)(Imutável Vazio *ponteiro, Inteiro tamanho, Inteiro quantidade, Arquivo *arquivo);
+    Inteiro (*despeje)(Arquivo *arquivo);
+    Inteiro (*remova)(Caractere *nome_arquivo);
+} ModeloGerenciadorArquivo;
+
+ModeloGerenciadorArquivo GerenciadorArquivo = {
+    .crie = ctec_crie_arquivo,
+    .abra = ctec_abra_arquivo,
+    .leia = ctec_leia_arquivo,
+    .escreva = ctec_escreva_arquivo,
+    .despeje = ctec_despeje_arquivo,
+    .feche = ctec_feche_arquivo,
+    .remova = ctec_remova_arquivo
+};
+
+#FimSe

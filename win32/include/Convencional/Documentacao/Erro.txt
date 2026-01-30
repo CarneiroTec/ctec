@@ -1,0 +1,46 @@
+Documentação do módulo Erro
+===========================
+
+Arquivos no diretório Fonte/Erro
+- CodigoErro.ctec — define códigos de erro e constantes usadas pela biblioteca.
+- Erro.ctec — define a estrutura/objeto de erro e utilitários para manipulação de erros.
+- GerenciadorErro.ctec — implementa funções para obter/definir o erro atual e integração com o restante da biblioteca.
+
+Resumo
+- O módulo `Erro` centraliza como a biblioteca representa e reporta condições de falha. Use o `GerenciadorErro` para obter `Sistema.erro->obtenha_erro()` e para definir códigos em operações que falham.
+
+Como usar
+- Verificar erros: chame `Sistema.erro->obtenha_erro()` após chamadas que possam falhar.
+- Definir erros: use `Sistema.erro->defina_erro(codigo)` para sinalizar um problema que será consultável por outros componentes.
+
+Localização no código
+- Fonte/Erro/CodigoErro.ctec
+- Fonte/Erro/Erro.ctec
+- Fonte/Erro/GerenciadorErro.ctec
+
+Fim.
+
+Exemplos práticos (Correto / Errado)
+
+Exemplo correto — verificar erro após operação:
+
+
+Inteiro res = Sistema.arquivo->remova("minha_nota.txt");
+Se (res != 0) {
+	Inteiro e = Sistema.erro->obtenha_erro();
+	Sistema.terminal->exiba_formatado("Falha ao remover. Código: %d\n", e);
+}
+
+
+Exemplo errado — ignorar falha:
+
+
+GerenciadorArquivo.remova("minha_nota.txt");
+// Não verifica retorno nem chama Sistema.erro->obtenha_erro()
+
+
+Por que é errado
+- Ignorar retornos de funções que podem falhar dificulta diagnóstico e deixa o programa em estado inconsistente.
+
+Boas práticas
+- Sempre trate erros: registre, traduza para mensagem amigável e, quando necessário, recupere ou faça rollback.

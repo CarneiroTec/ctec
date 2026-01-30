@@ -1,0 +1,133 @@
+#Inclua "../../../Fonte/Arquivo/Arquivo.ctec"
+Externo Inteiro printf(Imutável Caractere *formato, ...);
+Inteiro teste_deve_criar_arquivo() {
+    Caractere nome[] = "./teste_crie.txt";
+    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
+    Se(arquivo) {
+        GerenciadorArquivo.feche(arquivo);
+        GerenciadorArquivo.remova(nome);
+        printf("Passou: crie_arquivo\n");
+        Retorne 1;
+    }
+    printf("Falhou: crie_arquivo\n");
+    Retorne 0;
+}
+
+Inteiro teste_deve_escrever_arquivo() {
+    Caractere nome[] = "./teste_escreva.txt";
+    Caractere conteúdo[] = "conteúdo";
+    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
+    Se(!arquivo) {
+        printf("Falhou: escrever no arquivo (abrir)\n");
+        Retorne 0;
+    }
+    Inteiro escritos = GerenciadorArquivo.escreva(conteúdo, Meça(Caractere), (Meça(conteúdo) - 1), arquivo);
+    GerenciadorArquivo.despeje(arquivo);
+    GerenciadorArquivo.feche(arquivo);
+    Se(escritos == (Meça(conteúdo) - 1)) {
+        GerenciadorArquivo.remova(nome);
+        printf("Passou: escreveu no arquivo\n");
+        Retorne 1;
+    }
+    printf("Falhou: escrever no arquivo\n");
+    Retorne 0;
+}
+
+Inteiro teste_deve_ler_arquivo() {
+    Caractere nome[] = "./teste_leia.txt";
+    Caractere conteúdo[] = "olá mundo";
+    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
+    Se(!arquivo) { printf("Falhou: leia_arquivo (criar)\n"); Retorne 0; }
+    GerenciadorArquivo.escreva(conteúdo, Meça(Caractere), (Meça(conteúdo) - 1), arquivo);
+    GerenciadorArquivo.feche(arquivo);
+
+    Caractere reserva[64];
+    arquivo = GerenciadorArquivo.abra(nome, "r");
+    Se(!arquivo) { printf("Falhou: ler arquivo (abrir)\n"); Retorne 0; }
+    Inteiro lidos = GerenciadorArquivo.leia(reserva, Meça(Caractere), (Meça(conteúdo) - 1), arquivo);
+    GerenciadorArquivo.feche(arquivo);
+    GerenciadorArquivo.remova(nome);
+    Se(lidos == (Meça(conteúdo) - 1) && reserva[0] == conteúdo[0]) {
+        printf("Passou: leu arquivo\n");
+        Retorne 1;
+    }
+    printf("Falhou: ler arquivo\n");
+    Retorne 0;
+}
+
+Inteiro teste_deve_despejar_arquivo() {
+    Caractere nome[] = "./teste_despeje.txt";
+    Caractere conteúdo[] = "x";
+    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
+    Se(!arquivo) { printf("Falhou: despeje_arquivo (abrir)\n"); Retorne 0; }
+    GerenciadorArquivo.escreva(conteúdo, Meça(Caractere), (Meça(conteúdo) - 1), arquivo);
+    Inteiro resultado = GerenciadorArquivo.despeje(arquivo);
+    GerenciadorArquivo.feche(arquivo);
+    GerenciadorArquivo.remova(nome);
+    Se(resultado == 0) {
+        printf("Passou: despejou (despeje/flush) no arquivo\n");
+        Retorne 1;
+    }
+    printf("Falhou: despejar no arquivo\n");
+    Retorne 0;
+}
+
+Inteiro teste_deve_fechar_arquivo() {
+    Caractere nome[] = "./teste_feche.txt";
+    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
+    Se(!arquivo) { printf("Falhou: feche_arquivo (abrir)\n"); Retorne 0; }
+    Inteiro res = GerenciadorArquivo.feche(arquivo);
+    GerenciadorArquivo.remova(nome);
+    Se(res == 0) {
+        printf("Passou: fechou arquivo\n");
+        Retorne 1;
+    }
+    printf("Falhou: fechar arquivo\n");
+    Retorne 0;
+}
+
+Inteiro teste_deve_remover_arquivo() {
+    Caractere nome[] = "./teste_remova.txt";
+    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
+    Se(!arquivo) { printf("Falhou: remova_arquivo (criar)\n"); Retorne 0; }
+    GerenciadorArquivo.feche(arquivo);
+    Inteiro res = GerenciadorArquivo.remova(nome);
+    Se(res == 0) {
+        printf("Passou: removeu arquivo\n");
+        Retorne 1;
+    }
+    printf("Falhou: remover arquivo\n");
+    Retorne 0;
+}
+
+Inteiro teste_deve_abrir_arquivo() {
+    Caractere nome[] = "./teste_abrir.txt";
+    /* Cria o arquivo primeiro para garantir que existe */
+    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
+    Se(!arquivo) { printf("Falhou: abrir_arquivo (criar)\n"); Retorne 0; }
+    GerenciadorArquivo.feche(arquivo);
+
+    /* Tenta abrir para leitura */
+    arquivo = GerenciadorArquivo.abra(nome, "r");
+    Se(arquivo) {
+        GerenciadorArquivo.feche(arquivo);
+        GerenciadorArquivo.remova(nome);
+        printf("Passou: abriu arquivo\n");
+        Retorne 1;
+    }
+    printf("Falhou: abrir arquivo\n");
+    Retorne 0;
+}
+
+Inteiro Início() {
+    Inteiro total_acertos = 0;
+    total_acertos = total_acertos + teste_deve_criar_arquivo();
+    total_acertos = total_acertos + teste_deve_escrever_arquivo();
+    total_acertos = total_acertos + teste_deve_ler_arquivo();
+    total_acertos = total_acertos + teste_deve_despejar_arquivo();
+    total_acertos = total_acertos + teste_deve_fechar_arquivo();
+    total_acertos = total_acertos + teste_deve_remover_arquivo();
+    total_acertos = total_acertos + teste_deve_abrir_arquivo();
+    printf("\nResultado: %d/7 testes passaram\n", total_acertos);
+    Retorne 0;
+}

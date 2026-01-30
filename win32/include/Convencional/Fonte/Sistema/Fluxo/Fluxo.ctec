@@ -1,0 +1,12 @@
+#SeNãoDefinido Convencional_Fluxo
+#Defina Convencional_Fluxo
+// Dependências
+
+//Implementação
+Pseudônimo Estrutura {
+    Vazio *ambiente;
+} Fluxo;
+
+// Providências
+#Inclua "GerenciadorFluxo.ctec"
+#FimSe

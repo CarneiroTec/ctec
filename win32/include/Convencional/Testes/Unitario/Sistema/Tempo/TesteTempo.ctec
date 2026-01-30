@@ -1,0 +1,48 @@
+#Inclua "../../../../Fonte/Sistema/Tempo.ctec"
+Externo Inteiro printf(Imutável Caractere *formato, ...);
+
+Inteiro teste_deve_ter_funcoes_tempo() {
+	Se(GerenciadorTempo.obtenha_tempo && GerenciadorTempo.obtenha_relógio && GerenciadorTempo.aguarde) {
+		printf("Passou: funcoes de tempo presentes\n");
+		Retorne 1;
+	}
+	printf("Falhou: funcoes de tempo ausentes\n");
+	Retorne 0;
+}
+
+Inteiro teste_deve_obter_tempo() {
+	Longo res = GerenciadorTempo.obtenha_tempo(0);
+	Se(res != -1) {
+		printf("Passou: obteve tempo\n");
+		Retorne 1;
+	}
+	printf("Falhou: obteve tempo invalido\n");
+	Retorne 0;
+}
+
+Inteiro teste_deve_obter_relogio() {
+	Longo r = GerenciadorTempo.obtenha_relógio();
+	Se(r >= 0) {
+		printf("Passou: obteve relogio\n");
+		Retorne 1;
+	}
+	printf("Falhou: relogio invalido\n");
+	Retorne 0;
+}
+
+Inteiro teste_deve_aguardar() {
+	/* Aguarda 0 segundos para não atrasar a suíte */
+	GerenciadorTempo.aguarde(0);
+	printf("Passou: aguarde executou\n");
+	Retorne 1;
+}
+
+Inteiro Início() {
+	Inteiro total = 0;
+	total = total + teste_deve_ter_funcoes_tempo();
+	total = total + teste_deve_obter_tempo();
+	total = total + teste_deve_obter_relogio();
+	total = total + teste_deve_aguardar();
+	printf("\nResultado: %d/4 testes passaram\n", total);
+	Retorne 0;
+}

@@ -1,0 +1,12 @@
+#SeNãoDefinido Convencional_Arquivo
+#Defina Convencional_Arquivo
+
+// Dependências
+#Inclua "../Dados/Dados.ctec"
+
+//Implementação
+Pseudônimo Estrutura Dados Arquivo;
+
+// Providências
+#Inclua "./GerenciadorArquivo.ctec"
+#FimSe

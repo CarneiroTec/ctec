@@ -1,0 +1,78 @@
+#Inclua "../../../Fonte/Erro/Erro.ctec"
+
+Externo Inteiro printf(Imutável Caractere *formato, ...);
+
+/* Testes explícitos para as funções do gerenciador de erro */
+Inteiro teste_defina_erro_simples() {
+    GerenciadorErro.defina_erro(ERRO_FALHA);
+    Se(GerenciadorErro.obtenha_erro() == ERRO_FALHA) {
+        printf("Passou: defina_erro_simples\n");
+        Retorne 1;
+    }
+    printf("Falhou: defina_erro_simples\n");
+    Retorne 0;
+}
+
+Inteiro teste_obtenha_erro_simples() {
+    /* assegura um valor diferente antes de testar obtenha */
+    GerenciadorErro.defina_erro(ERRO_INVÁLIDO);
+    Erro atual = GerenciadorErro.obtenha_erro();
+    Se(atual == ERRO_INVÁLIDO) {
+        printf("Passou: obtenha_erro_simples\n");
+        Retorne 1;
+    }
+    printf("Falhou: obtenha_erro_simples\n");
+    Retorne 0;
+}
+
+Inteiro teste_defina_obtenha_erro_permissao() {
+    GerenciadorErro.defina_erro(ERRO_PERMISSÃO);
+    Se(GerenciadorErro.obtenha_erro() == ERRO_PERMISSÃO) {
+        printf("Passou: definiu e obteve ERRO_PERMISSÃO\n");
+        Retorne 1;
+    }
+    printf("Falhou: definir/obter ERRO_PERMISSÃO\n");
+    Retorne 0;
+}
+
+Inteiro teste_defina_obtenha_erro_sem_entrada() {
+    GerenciadorErro.defina_erro(ERRO_NENHUMA_ENTRADA);
+    Se(GerenciadorErro.obtenha_erro() == ERRO_NENHUMA_ENTRADA) {
+        printf("Passou: definiu e obteve ERRO_NENHUMA_ENTRADA\n");
+        Retorne 1;
+    }
+    printf("Falhou: definir/obter ERRO_NENHUMA_ENTRADA\n");
+    Retorne 0;
+}
+
+Inteiro teste_defina_obtenha_erro_falha() {
+    GerenciadorErro.defina_erro(ERRO_FALHA);
+    Se(GerenciadorErro.obtenha_erro() == ERRO_FALHA) {
+        printf("Passou: definiu e obteve ERRO_FALHA\n");
+        Retorne 1;
+    }
+    printf("Falhou: definir/obter ERRO_FALHA\n");
+    Retorne 0;
+}
+
+Inteiro teste_defina_obtenha_erro_invalido() {
+    GerenciadorErro.defina_erro(ERRO_INVÁLIDO);
+    Se(GerenciadorErro.obtenha_erro() == ERRO_INVÁLIDO) {
+        printf("Passou: definiu e obteve ERRO_INVÁLIDO\n");
+        Retorne 1;
+    }
+    printf("Falhou: definir/obter ERRO_INVÁLIDO\n");
+    Retorne 0;
+}
+
+Inteiro Início() {
+    Inteiro total_acertos = 0;
+    total_acertos = total_acertos + teste_defina_erro_simples();
+    total_acertos = total_acertos + teste_obtenha_erro_simples();
+    total_acertos = total_acertos + teste_defina_obtenha_erro_permissao();
+    total_acertos = total_acertos + teste_defina_obtenha_erro_sem_entrada();
+    total_acertos = total_acertos + teste_defina_obtenha_erro_falha();
+    total_acertos = total_acertos + teste_defina_obtenha_erro_invalido();
+    printf("\nResultado: %d/6 testes passaram\n", total_acertos);
+    Retorne 0;
+}

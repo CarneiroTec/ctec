@@ -1,0 +1,33 @@
+#Inclua "../../../../Fonte/Sistema/Execucao.ctec"
+Externo Inteiro printf(Imutável Caractere *formato, ...);
+
+Vazio rotina_teste(Vazio) {
+	Retorne;
+}
+
+Inteiro teste_deve_ter_funcoes_execucao() {
+	Se(GerenciadorExecução.finalize && GerenciadorExecução.finalize_imediato && GerenciadorExecução.aborte && GerenciadorExecução.suceda) {
+		printf("Passou: funcoes de execucao presentes\n");
+		Retorne 1;
+	}
+	printf("Falhou: funcoes de execucao ausentes\n");
+	Retorne 0;
+}
+
+Inteiro teste_deve_registrar_suceda() {
+	Inteiro res = GerenciadorExecução.suceda(rotina_teste);
+	Se(res == 0) {
+		printf("Passou: suceda registrou rotina\n");
+		Retorne 1;
+	}
+	printf("Falhou: suceda retornou %d\n", res);
+	Retorne 0;
+}
+
+Inteiro Início() {
+	Inteiro total = 0;
+	total = total + teste_deve_ter_funcoes_execucao();
+	total = total + teste_deve_registrar_suceda();
+	printf("\nResultado: %d/2 testes passaram\n", total);
+	Retorne 0;
+}

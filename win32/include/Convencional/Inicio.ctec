@@ -1,0 +1,150 @@
+#Inclua "Fonte/Convencional.ctec"
+
+Pseudônimo Estrutura {
+    Caractere *rotulo;
+    Inteiro id;
+    Caractere atalho;
+} Opção;
+
+Pseudônimo Estrutura {
+    Caractere *titulo;
+    Opção *opcoes;
+    Inteiro quantidade_opcoes;
+    Inteiro indice_selecionado;
+} Menu;
+
+Inteiro Início (Inteiro quantidade_argumentos, Imutável Caractere lista_argumentos[]){
+    Sistema.terminal->exiba_texto("Bem-vindo à Biblioteca Convencional!");
+    Sistema.terminal->exiba_texto("Arquivos em Documentacao:");
+
+    /* Gere a lista de arquivos em Documentacao num arquivo temporário */
+    Sistema.terminal->execute("dir /b Documentacao > .ctec_list.txt");
+
+    Caractere entrada[512];
+    Caractere comando[1024];
+    Menu principal;
+    Opção opcoes[64];
+    Caractere nomes[64][256];
+    Inteiro quantidade = 0;
+
+    /* Leia .ctec_list.txt e preencha nomes[] */
+    Arquivo *f = GerenciadorArquivo.abra(".ctec_list.txt", "r");
+    Se (f) {
+        Caractere buf[16384];
+        Inteiro lidos = GerenciadorArquivo.leia(buf, 1, 16384, f);
+        Se (lidos < 0) lidos = 0;
+        Se (lidos >= 16384) lidos = 16383;
+        buf[lidos] = '\0';
+        GerenciadorArquivo.feche(f);
+
+        /* Parse lines */
+        Inteiro i = 0; Inteiro ni = 0;
+        Enquanto (buf[i] != '\0' && quantidade < 64) {
+            Caractere c = buf[i];
+            Se (c == '\r') { i = i + 1; Continue; }
+                Se (c == '\n' || c == '\0') {
+                nomes[quantidade][ni] = '\0';
+                quantidade = quantidade + 1;
+                ni = 0;
+                Se (buf[i] == '\0') Interrompa;
+                i = i + 1;
+                Continue;
+            }
+            nomes[quantidade][ni] = c;
+            ni = ni + 1;
+            i = i + 1;
+        }
+        /* Caso último arquivo não terminado por newline */
+        Se (ni > 0 && quantidade < 64) {
+            nomes[quantidade][ni] = '\0';
+            quantidade = quantidade + 1;
+        }
+    }
+
+    principal.titulo = "Documentacao";
+    principal.opcoes = opcoes;
+    principal.quantidade_opcoes = quantidade + 2; /* arquivos + Atualizar + Sair */
+
+    Inteiro k;
+    Para (k = 0; k < quantidade; k = k + 1) {
+        principal.opcoes[k].rotulo = nomes[k];
+        principal.opcoes[k].id = k + 1;
+    }
+    principal.opcoes[quantidade].rotulo = "Atualizar lista";
+    principal.opcoes[quantidade].id = quantidade + 1;
+    principal.opcoes[quantidade + 1].rotulo = "Sair";
+    principal.opcoes[quantidade + 1].id = quantidade + 2;
+
+    Enquanto (1) {
+        /* Limpa a tela ao navegar */
+        Sistema.terminal->execute("cls");
+        Sistema.terminal->exiba_texto("\n============================");
+        Sistema.terminal->exiba_formatado("%s\n", principal.titulo);
+        Sistema.terminal->exiba_texto("============================");
+        Inteiro idx;
+        Para (idx = 0; idx < principal.quantidade_opcoes; idx = idx + 1) {
+            Sistema.terminal->exiba_formatado("%d) %s\n", idx + 1, principal.opcoes[idx].rotulo);
+        }
+
+        Sistema.terminal->exiba_texto("Escolha uma opção (digite o número):");
+        Sistema.terminal->leia_texto(entrada);
+
+        /* Converte primeira posição em índice */
+        Inteiro escolha = entrada[0] - '0';
+        Se (escolha <= 0 || escolha > principal.quantidade_opcoes) {
+            Sistema.terminal->exiba_texto("Opção inválida. Tente novamente.");
+            Continue;
+        }
+
+        /* Se for arquivo selecionado */
+        Se (escolha <= quantidade) {
+            /* limpar tela antes de mostrar conteúdo */
+            Sistema.terminal->execute("cls");
+            /* montar caminho Documentacao\\nome */
+            Inteiro p = 0; Inteiro q = 0;
+            Caractere prefixo[] = "Documentacao\\";
+            Enquanto (prefixo[p] != '\0') { comando[p] = prefixo[p]; p = p + 1; }
+            Enquanto (nomes[escolha - 1][q] != '\0') { comando[p + q] = nomes[escolha - 1][q]; q = q + 1; }
+            comando[p + q] = '\0';
+
+            /* Abra e leia o arquivo usando GerenciadorArquivo */
+            Arquivo *fa = GerenciadorArquivo.abra(comando, "r");
+            Se (fa) {
+                Caractere conteudo[32768];
+                Inteiro l = GerenciadorArquivo.leia(conteudo, 1, 32768, fa);
+                Se (l < 0) l = 0;
+                Se (l >= 32768) l = 32767;
+                conteudo[l] = '\0';
+                GerenciadorArquivo.feche(fa);
+
+                Sistema.terminal->exiba_texto("\n----- Conteúdo do arquivo -----");
+                Sistema.terminal->exiba_texto(conteudo);
+                Sistema.terminal->exiba_texto("\n-------------------------------");
+            } Senão {
+                Sistema.terminal->exiba_formatado("Erro ao abrir %s\n", comando);
+            }
+
+            Sistema.terminal->exiba_texto("\nPressione Enter para voltar ao menu...");
+            Sistema.terminal->leia_texto(entrada);
+            Continue;
+        }
+
+        /* Atualizar lista */
+        Se (escolha == quantidade + 1) {
+            Sistema.terminal->execute("dir /b Documentacao > .ctec_list.txt");
+            /* limpar e avisar */
+            Sistema.terminal->execute("cls");
+            Sistema.terminal->exiba_texto("Lista atualizada. Reinicie o programa para recarregar a lista.");
+            Sistema.terminal->exiba_texto("\nPressione Enter para voltar ao menu...");
+            Sistema.terminal->leia_texto(entrada);
+            Continue;
+        }
+
+        /* Sair */
+        Se (escolha == quantidade + 2) {
+            Sistema.terminal->exiba_texto("Saindo...");
+            Retorne 0;
+        }
+    }
+    Retorne 0;
+}

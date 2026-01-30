@@ -1,0 +1,36 @@
+#SeNãoDefinido Convencional_Sistema
+#Defina Convencional_Sistema
+
+// Dependências
+#Inclua "Ambiente.ctec"
+#Inclua "Diretorio.ctec"
+#Inclua "Terminal.ctec"
+#Inclua "Memoria.ctec"
+#Inclua "Execucao.ctec"
+#Inclua "Fluxo/Fluxo.ctec"
+#Inclua "Processo/Processo.ctec"
+
+// Implementação
+Pseudônimo Estrutura {
+    Ambiente *ambiente;
+    Diretório *diretorio;
+    InterfaceTerminal *terminal;
+    InterfaceMemoria *memoria;
+    Execução *execucao;
+    InterfaceFluxo *fluxo;
+    ModeloGerenciadorProcesso *processo;
+} ModeloSistema;
+
+ModeloSistema Sistema = {
+    .ambiente = &GerenciadorAmbiente,
+    .diretorio = &GerenciadorDiretorio,
+    .terminal = &Terminal,
+    .memoria = &GerenciadorMemoria,
+    .execucao = &GerenciadorExecução,
+    .fluxo = &GerenciadorFluxo,
+    .processo = &GerenciadorProcesso
+};
+
+
+// Providência
+#FimSe

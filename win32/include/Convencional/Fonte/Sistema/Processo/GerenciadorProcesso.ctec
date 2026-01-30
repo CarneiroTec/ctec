@@ -1,0 +1,19 @@
+#SeNãoDefinido Convencional_Sistema_Processo_GerenciadorProcesso
+#Defina Convencional_Sistema_Processo_GerenciadorProcesso
+
+Externo Inteiro system(Imutável Caractere *comando);
+
+Pseudônimo Estrutura {
+    Inteiro (*execute)(Imutável Caractere *comando);
+    Inteiro (*limpa_tela)(Vazio);
+} ModeloGerenciadorProcesso;
+
+Inteiro ctec_execute_processo(Imutável Caractere *comando) {
+    Retorne system(comando);
+}
+
+ModeloGerenciadorProcesso GerenciadorProcesso = {
+    .execute = ctec_execute_processo,
+};
+
+#FimSe

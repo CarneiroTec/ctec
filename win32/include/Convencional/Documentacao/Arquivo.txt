@@ -1,0 +1,119 @@
+Manual Didático — Uso de “Arquivo"
+
+Objetivo
+- Este manual explica de forma simples como usar as ações básicas relacionadas a arquivos: criar, abrir, escrever, ler, salvar (despejar), fechar e remover. Use como um guia passo a passo.
+
+O que é um arquivo?
+- Um arquivo é um recipiente onde guardamos texto ou outros dados no disco do computador. Pense nele como uma folha onde você escreve e depois guarda.
+
+Ações principais (palavras que vamos usar)
+- crie: cria um arquivo novo (ou abre para escrita).
+- abra: abre um arquivo existente para leitura ou outras operações.
+- escreva: adiciona conteúdo ao arquivo.
+- leia: pega o conteúdo do arquivo para ver o que está escrito.
+- despeje: força a gravação do que foi escrito para o disco (garante que nada fique apenas na memória temporária).
+- feche: termina o uso do arquivo e o libera.
+- remova: apaga o arquivo do disco.
+
+Como usar (passo a passo simples)
+1) Criar um arquivo novo
+- Para criar um arquivo e começar a escrever:
+  Exemplo: GerenciadorArquivo.crie("./nota.txt", "w")
+- O primeiro argumento é o nome do arquivo. O segundo indica o modo (aqui, "w" significa que queremos escrever).
+- Resultado esperado: o arquivo "nota.txt" é criado (ou sobrescrito) e fica pronto para receber texto.
+
+2) Escrever no arquivo
+- Depois de criar/abrir, você pode escrever:
+  Exemplo: GerenciadorArquivo.escreva("Olá mundo", 1, 10, arquivo)
+- Dica: escreva em partes se precisar; o item acima mostra a ideia de enviar texto para o arquivo.
+
+3) Salvar imediatamente (despejar)
+- Para garantir que tudo que você escreveu foi gravado no disco:
+  Exemplo: GerenciadorArquivo.despeje(arquivo)
+- Use quando for importante não perder os dados (por exemplo, antes de uma parada inesperada).
+
+4) Fechar o arquivo
+- Quando terminar, sempre feche:
+  Exemplo: GerenciadorArquivo.feche(arquivo)
+- Fechar libera o arquivo para outros programas e garante integridade.
+
+5) Ler o conteúdo de um arquivo
+- Abra para leitura e traga o conteúdo:
+  Exemplo: arquivo = GerenciadorArquivo.abra("./nota.txt", "r")
+           GerenciadorArquivo.leia(buffer, tamanho, quantidade, arquivo)
+- Dica: verifique se o arquivo existe antes de tentar ler.
+
+6) Remover (apagar) um arquivo
+- Para apagar um arquivo que não precisa mais:
+  Exemplo: GerenciadorArquivo.remova("./nota.txt")
+- Atenção: essa ação apaga permanentemente o arquivo.
+
+Erros comuns e como evitar
+- Tentar ler sem abrir: sempre abra o arquivo antes de ler.
+- Esquecer de fechar: pode bloquear o arquivo; sempre chame feche quando terminar.
+- Remover sem querer: confirme o nome do arquivo antes de remover.
+- Acessar posições inválidas: ao ler/escrever, cuide dos tamanhos usados.
+
+Pequeno roteiro de exemplo (atividade)
+- Atividade: criar uma nota, escrever "Olá", salvar, fechar, abrir de novo, ler e mostrar o conteúdo, depois remover o arquivo.
+  1. a = GerenciadorArquivo.crie("./minha_nota.txt", "w")
+  2. GerenciadorArquivo.escreva("Olá", 1, 3, a)
+  3. GerenciadorArquivo.despeje(a)
+  4. GerenciadorArquivo.feche(a)
+  5. b = GerenciadorArquivo.abra("./minha_nota.txt", "r")
+  6. GerenciadorArquivo.leia(buffer, tamanho, quantidade, b)
+  7. GerenciadorArquivo.feche(b)
+  8. GerenciadorArquivo.remova("./minha_nota.txt")
+
+Dicas finais (para lembrar)
+- Sempre faça backup de coisas importantes antes de remover.
+- Use nomes simples para arquivos e pastas.
+- Pratique criando, escrevendo e lendo pequenos arquivos para ganhar confiança.
+
+Se quiser, eu transformo este guia em um tutorial passo a passo com telas de exemplo (texto de exemplo) ou em um arquivo de ajuda mais curto para imprimir.
+
+Exemplos práticos (Correto / Errado)
+
+Exemplo correto — criar, escrever, salvar, fechar e ler:
+
+1) Criar e escrever
+
+Arquivo *a = GerenciadorArquivo.crie("minha_nota.txt", "w");
+Se (a) {
+  Caractere *texto = "Olá, biblioteca Convencional!";
+  GerenciadorArquivo.escreva(texto, 1, 26, a);
+  GerenciadorArquivo.despeje(a);
+  GerenciadorArquivo.feche(a);
+} Senão {
+  Sistema.terminal->exiba_texto("Falha ao criar arquivo.");
+}
+
+
+2) Ler
+
+Arquivo *b = GerenciadorArquivo.abra("minha_nota.txt", "r");
+Se (b) {
+  Caractere buffer[128];
+  Inteiro lidos = GerenciadorArquivo.leia(buffer, 1, 127, b);
+  buffer[lidos] = '\0';
+  GerenciadorArquivo.feche(b);
+  Sistema.terminal->exiba_texto(buffer);
+}
+
+
+Exemplo errado — esquecer de checar retornos e não fechar o arquivo:
+
+
+Arquivo *a = GerenciadorArquivo.crie("nota.txt", "w");
+GerenciadorArquivo.escreva("texto", 1, 5, a); // Não checou se 'a' é válido
+// Não chamou GerenciadorArquivo.feche(a);
+
+
+Por que é errado
+- Não verificar se `a` é NULL pode levar a falha de execução.
+- Não fechar arquivos pode bloquear recursos e perder dados que não foram despejados.
+
+Boas práticas rápidas
+- Sempre verifique o retorno de `crie` / `abra`.
+- Use buffers com tamanho conhecido e passe o comprimento correto para `leia`/`escreva`.
+- Use `despeje` antes de `feche` quando for crítico persistir dados.

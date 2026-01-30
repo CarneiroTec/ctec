@@ -1,0 +1,26 @@
+#SeNãoDefinido Convencional_Sistema_Fluxo
+#Defina Convencional_Sistema_Fluxo
+
+Externo Inteiro setjmp(Vazio *ambiente);
+Externo Vazio longjmp(Vazio *ambiente, Inteiro valor);
+
+
+Pseudônimo Estrutura {
+    Inteiro (*capture)(Fluxo *fluxo);
+    Vazio (*lance)(Fluxo *fluxo, Inteiro valor);
+} InterfaceFluxo;
+
+Inteiro ctec_capture_fluxo(Fluxo *fluxo) {
+    Retorne setjmp(fluxo->ambiente);
+}
+
+Vazio ctec_lance_fluxo(Fluxo *fluxo, Inteiro valor) {
+    longjmp(fluxo->ambiente, valor);
+}
+
+InterfaceFluxo GerenciadorFluxo = {
+    .capture = ctec_capture_fluxo,
+    .lance = ctec_lance_fluxo
+};
+
+#FimSe

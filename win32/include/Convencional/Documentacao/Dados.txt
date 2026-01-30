@@ -1,0 +1,93 @@
+Documentação da Estrutura Dados
+================================
+
+Descrição
+- A `Estrutura Dados` é um contêiner genérico usado pela biblioteca para representar blocos de dados que podem vir de memória, arquivos ou outras fontes. Ela centraliza informações sobre o ponteiro para os dados, tamanho, tipo e metadados relacionados ao arquivo.
+
+Definição (em `Fonte/Dados/Dados.ctec`)
+- `Estrutura Dados` campos principais:
+  - `Caractere *ponteiro;` : ponteiro para os dados em memória.
+  - `Inteiro tamanho;` : tamanho atual (em bytes) dos dados válidos apontados por `ponteiro`.
+  - `Caractere *base;` : ponteiro para a base/começo do buffer (pode ser igual a `ponteiro` ou apontar para uma área maior reservada).
+  - `Inteiro tipo;` : código numérico indicando o tipo de dado (ex.: 0 = texto, 1 = binário, outros códigos conforme convenção interna).
+  - `Inteiro arquivo;` : identificador associado ao arquivo (quando aplicável) ou descriptor usado internamente.
+  - `Inteiro reserva_caractere;` : tamanho em caracteres reservado para strings (útil para buffers terminados em `\0`).
+  - `Inteiro tamanho_reserva;` : tamanho total do buffer alocado (capacidade máxima em bytes).
+  - `Caractere *nome_arquivo;` : nome do arquivo associado ao conteúdo (se houver).
+
+Uso típico
+- Receber dados ao ler um arquivo: a biblioteca pode preencher `ponteiro` com um buffer alocado, definir `tamanho` com o número de bytes lidos e armazenar `nome_arquivo` com o caminho original.
+- Trabalhar com transformação: ao manipular conteúdo (ex.: leitura parcial, concatenação), `base` e `tamanho_reserva` ajudam a controlar realocações e evitar sobrescritas.
+
+Exemplo (pseudo-CTEC)
+1. Inicializar um `Dados` vazio e reservar espaço:
+   Dados d;
+   d.base = aloque(1024);
+   d.ponteiro = d.base;
+   d.tamanho = 0;
+   d.tamanho_reserva = 1024;
+   d.tipo = 0; // texto
+
+2. Ler arquivo para `Dados` usando `GerenciadorArquivo`:
+   Arquivo *f = GerenciadorArquivo.abra("Documentacao/Arquivo.txt", "r");
+   Se (f) {
+       Inteiro lidos = GerenciadorArquivo.leia(d.ponteiro, 1, d.tamanho_reserva, f);
+       d.tamanho = lidos;
+       d.nome_arquivo = "Documentacao/Arquivo.txt";
+       GerenciadorArquivo.feche(f);
+   }
+
+Boas práticas
+- Sempre verifique `tamanho_reserva` antes de ler para evitar overflow; realoque com `realoque` se necessário.
+- Quando `ponteiro` for alocado por você, libere com `libere` após uso.
+- Use `tipo` para condicionar tratamento (por exemplo, aplicar terminação `\0` em strings quando `tipo` indicar texto).
+
+Integração com o restante da biblioteca
+- Muitos gerenciadores da biblioteca (Arquivo, Fluxo, etc.) trocam ou retornam objetos `Dados` para padronizar manipulação de conteúdo.
+
+Onde encontrar
+- Código fonte: `Fonte/Dados/Dados.ctec`
+
+----
+Fim.
+
+Exemplos práticos (Correto / Errado)
+
+Exemplo correto — inicializar `Dados`, ler arquivo e tratar como texto:
+
+
+Dados d;
+d.base = GerenciadorMemoria.aloque(2048);
+d.ponteiro = d.base;
+d.tamanho_reserva = 2048;
+d.tamanho = 0;
+d.tipo = 0; // texto
+
+Arquivo *f = GerenciadorArquivo.abra("Documentacao/Arquivo.txt", "r");
+Se (f) {
+   Inteiro lidos = GerenciadorArquivo.leia(d.ponteiro, 1, d.tamanho_reserva - 1, f);
+   Se (lidos > 0) {
+      d.tamanho = lidos;
+      d.ponteiro[d.tamanho] = '\0';
+      Sistema.terminal->exiba_texto(d.ponteiro);
+   }
+   GerenciadorArquivo.feche(f);
+}
+GerenciadorMemoria.libere(d.base);
+
+
+Exemplo errado — ler sem reservar espaço suficiente e sem checar retornos:
+
+
+Dados d;
+Arquivo *f = GerenciadorArquivo.abra("Documentacao/Arquivo.txt", "r");
+GerenciadorArquivo.leia(d.ponteiro, 1, 10000, f); // d.ponteiro não inicializado: undefined behavior
+
+
+Por que é errado
+- Não alocar `d.base`/`d.ponteiro` e não verificar limites de `tamanho_reserva` pode causar sobrescrita de memória.
+- Sempre inicialize campos e verifique retornos de leitura.
+
+Boas práticas
+- Inicialize `Dados` antes do uso; sempre libere buffers alocados.
+- Use `tipo` para decidir se deve terminar com `\0` quando for texto.

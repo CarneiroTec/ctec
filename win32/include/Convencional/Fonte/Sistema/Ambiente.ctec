@@ -1,0 +1,38 @@
+#SeNãoDefinido Convencional_Sistema_Ambiente
+#Defina Convencional_Sistema_Ambiente
+
+Externo Inteiro _putenv_s(Imutável Caractere *nome, Imutável Caractere *valor);
+Externo Caractere *getenv(Imutável Caractere *nome);
+
+Pseudônimo Estrutura {
+    Inteiro (*defina_variável)(Imutável Caractere *nome, Imutável Caractere *valor, Inteiro sobreescrita);
+    Caractere *(*obtenha_variável)(Imutável Caractere *nome);
+    Inteiro (*remova_variável)(Imutável Caractere *nome);
+} Ambiente;
+
+Inteiro ctec_defina_variavel(
+    Imutável Caractere *nome,
+    Imutável Caractere *valor,
+    Inteiro sobreescrita
+) {
+    Se(!sobreescrita && getenv(nome))
+        Retorne 0;
+
+    Retorne _putenv_s(nome, valor);
+}
+
+Caractere *ctec_obtenha_variavel(Imutável Caractere *nome) {
+    Retorne getenv(nome);
+}
+
+Inteiro ctec_remova_variavel(Imutável Caractere *nome) {
+    Retorne _putenv_s(nome, "");
+}
+
+Ambiente GerenciadorAmbiente = {
+    .defina_variável = ctec_defina_variavel,
+    .obtenha_variável = ctec_obtenha_variavel,
+    .remova_variável = ctec_remova_variavel
+};
+
+#FimSe
