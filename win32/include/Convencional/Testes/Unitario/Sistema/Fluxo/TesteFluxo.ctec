@@ -11,6 +11,7 @@ Inteiro teste_deve_retornar_zero_em_capture() {
 }
 
 Inteiro teste_deve_capture_e_lance_fluxo() {
+	/* combinamos com o teste acima; aqui apenas verificamos presença */
 	Se(GerenciadorFluxo.lance) {
 		printf("Passou: lance presente\n");
 		Retorne 1;

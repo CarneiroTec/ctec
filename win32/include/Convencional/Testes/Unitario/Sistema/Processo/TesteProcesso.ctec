@@ -20,10 +20,21 @@ Inteiro teste_deve_executar_comando() {
 	Retorne 0;
 }
 
+Inteiro teste_deve_retornar_erro_em_comando_invalido() {
+	Inteiro res = GerenciadorProcesso.execute("comando_invalido_que_nao_existe_12345");
+	Se(res != 0) {
+		printf("Passou: comando invalido retornou erro esperado (%d)\n", res);
+		Retorne 1;
+	}
+	printf("Falhou: comando invalido retornou 0 inesperado\n");
+	Retorne 0;
+}
+
 Inteiro Início() {
 	Inteiro total_acertos = 0;
 	total_acertos = total_acertos + teste_deve_existir_execute();
 	total_acertos = total_acertos + teste_deve_executar_comando();
-	printf("\nResultado: %d/2 testes passaram\n", total_acertos);
+	total_acertos = total_acertos + teste_deve_retornar_erro_em_comando_invalido();
+	printf("\nResultado: %d/3 testes passaram\n", total_acertos);
 	Retorne 0;
 }

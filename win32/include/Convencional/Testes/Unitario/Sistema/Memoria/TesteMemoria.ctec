@@ -28,12 +28,12 @@ Inteiro teste_deve_aloque_zerado() {
 		Retorne 0;
 	}
 	Caractere *c = (Caractere *)p;
-	Se(c[0] == '\0') {
-		GerenciadorMemoria.libere(p);
-		printf("Passou: aloque_zerado retornou memoria zerada\n");
-		Retorne 1;
+	Inteiro ok = 1;
+	Para(Inteiro i = 0; i < (4 * 1); i = i + 1) {
+		Se(c[i] != '\0') { ok = 0; Interrompa; }
 	}
 	GerenciadorMemoria.libere(p);
+	Se(ok) { printf("Passou: aloque_zerado retornou memoria zerada\n"); Retorne 1; }
 	printf("Falhou: memoria nao zerada\n");
 	Retorne 0;
 }

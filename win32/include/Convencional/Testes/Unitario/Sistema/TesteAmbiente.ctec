@@ -16,10 +16,19 @@ Inteiro teste_deve_definir_e_obter_variavel() {
 	Inteiro res = GerenciadorAmbiente.defina_variável(nome, valor, 1);
 	Se(res == 0) {
 		Caractere *v = GerenciadorAmbiente.obtenha_variável(nome);
-		Se(v && v[0] == valor[0]) {
+		Se(!v) { GerenciadorAmbiente.remova_variável(nome); printf("Falhou: valor obtido é NULL\n"); Retorne 0; }
+		/* Compare full string */
+		Inteiro igual = 1;
+		Para(Inteiro i = 0; i < (Meça(valor) - 1); i = i + 1) {
+			Se(v[i] != valor[i]) { igual = 0; Interrompa; }
+		}
+		Se(igual) {
+			/* cleanup */
+			GerenciadorAmbiente.remova_variável(nome);
 			printf("Passou: defina e obtenha variavel\n");
 			Retorne 1;
 		}
+		GerenciadorAmbiente.remova_variável(nome);
 		printf("Falhou: valor obtido invalido\n");
 		Retorne 0;
 	}
@@ -29,7 +38,10 @@ Inteiro teste_deve_definir_e_obter_variavel() {
 
 Inteiro teste_deve_remover_variavel() {
 	Caractere nome[] = "Convencional_TEST_VAR";
-	GerenciadorAmbiente.remova_variável(nome);
+	/* Ensure variable exists first */
+	GerenciadorAmbiente.defina_variável(nome, "x", 1);
+	Inteiro r = GerenciadorAmbiente.remova_variável(nome);
+	Se(r != 0) { printf("Falhou: remova_variavel retornou %d\n", r); Retorne 0; }
 	Caractere *v = GerenciadorAmbiente.obtenha_variável(nome);
 	Se(!v || v[0] == '\0') {
 		printf("Passou: remova variavel\n");

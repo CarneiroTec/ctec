@@ -12,8 +12,13 @@ Inteiro teste_deve_ter_funcoes_diretorio() {
 
 Inteiro teste_deve_criar_e_remover_diretorio() {
 	Caractere nome[] = "./teste_dir_ctec";
+	/* cleanup antes caso exista */
+	GerenciadorDiretorio.remova_diretorio(nome);
 	Inteiro res = GerenciadorDiretorio.crie_diretorio(nome, 0);
 	Se(res == 0) {
+		/* tente criar novamente para garantir que falha quando já existe */
+		Inteiro res2 = GerenciadorDiretorio.crie_diretorio(nome, 0);
+		/* res2 pode ser diferente por plataforma; ignore, mas continue com remoção */
 		Inteiro r = GerenciadorDiretorio.remova_diretorio(nome);
 		Se(r == 0) {
 			printf("Passou: criou e removeu diretorio\n");
@@ -29,9 +34,14 @@ Inteiro teste_deve_criar_e_remover_diretorio() {
 Inteiro teste_deve_renomear_diretorio() {
 	Caractere origem[] = "./dir_origem_ctec";
 	Caractere destino[] = "./dir_destino_ctec";
-	GerenciadorDiretorio.crie_diretorio(origem, 0);
+	/* cleanup antes */
+	GerenciadorDiretorio.remova_diretorio(origem);
+	GerenciadorDiretorio.remova_diretorio(destino);
+	Inteiro c = GerenciadorDiretorio.crie_diretorio(origem, 0);
+	Se(c != 0) { printf("Falhou: crie_diretorio para renomear retornou %d\n", c); Retorne 0; }
 	Inteiro r = GerenciadorDiretorio.renomeie_diretorio(origem, destino);
 	Se(r == 0) {
+		/* cleanup destino */
 		GerenciadorDiretorio.remova_diretorio(destino);
 		printf("Passou: renomeou diretorio\n");
 		Retorne 1;

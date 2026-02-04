@@ -24,8 +24,11 @@ Inteiro teste_exiba_texto_e_formatado() {
 	Inteiro r1 = Terminal.exiba_texto("texto_para_teste");
 	Inteiro r2 = Terminal.exiba_formatado("format %d\n", 42);
 	Se(r1 >= 0 && r2 >= 0) {
-		printf("Passou: exiba_texto e exiba_formatado\n");
-		Retorne 1;
+		/* também verifique que exiba_formatado retorna pelo menos o número de caracteres escritos */
+		Se(r2 >= 9) {
+			printf("Passou: exiba_texto e exiba_formatado\n");
+			Retorne 1;
+		}
 	}
 	printf("Falhou: exiba texto/format retornou r1=%d r2=%d\n", r1, r2);
 	Retorne 0;
