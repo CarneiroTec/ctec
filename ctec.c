@@ -1,20 +1,20 @@
 /*
- *  CTEC - CTEC Compiler
+ *  CTEC - Compilador CTEC
  * 
  *  Copyright (c) 2001-2004 Fabrice Bellard
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * Esta biblioteca é software livre; você pode redistribuí-la e/ou
+ * modificá-la sob os termos da Licença Pública Geral Menor GNU publicada
+ * pela Free Software Foundation; tanto a versão 2 da Licença, como (a seu critério)
+ * qualquer versão posterior.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * Esta biblioteca é distribuída na esperança de que seja útil,
+ * mas SEM NENHUMA GARANTIA; sem mesmo a garantia implícita de
+ * COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM PROPÓSITO EM PARTICULAR. Veja a
+ * Licença Pública Geral Menor GNU para mais detalhes.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
+ * Você deve ter recebido uma cópia da Licença Pública Geral Menor GNU
+ * junto com esta biblioteca; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
@@ -25,119 +25,119 @@
 #include "ctectools.c"
 
 static const char help[] =
-    "Compilador CTEC "CTEC_VERSION" - Copyright (C) 2001-2006 Fabrice Bellard\n"
-    "Usage: ctec [options...] [-o outfile] [-c] infile(s)...\n"
-    "       ctec [options...] -run infile [arguments...]\n"
-    "General options:\n"
-    "  -c          compile only - generate an object file\n"
-    "  -o outfile  set output filename\n"
-    "  -run        run compiled source\n"
-    "  -fflag      set or reset (with 'no-' prefix) 'flag' (see ctec -hh)\n"
-    "  -Wwarning   set or reset (with 'no-' prefix) 'warning' (see ctec -hh)\n"
-    "  -w          disable all warnings\n"
-    "  -v -vv      show version, show search paths or loaded files\n"
-    "  -h -hh      show this, show more help\n"
-    "  -bench      show compilation statistics\n"
-    "  -           use stdin pipe as infile\n"
-    "  @listfile   read arguments from listfile\n"
-    "Preprocessor options:\n"
-    "  -Idir       add include path 'dir'\n"
-    "  -Dsym[=val] define 'sym' with value 'val'\n"
-    "  -Usym       undefine 'sym'\n"
-    "  -E          preprocess only\n"
-    "Linker options:\n"
-    "  -Ldir       add library path 'dir'\n"
-    "  -llib       link with dynamic or static library 'lib'\n"
-    "  -r          generate (relocatable) object file\n"
-    "  -shared     generate a shared library/dll\n"
-    "  -rdynamic   export all global symbols to dynamic linker\n"
-    "  -soname     set name for shared library to be used at runtime\n"
-    "  -Wl,-opt[=val]  set linker option (see ctec -hh)\n"
-    "Debugger options:\n"
-    "  -g          generate runtime debug info\n"
+    "Compilador CTEC "CTEC_VERSION" - Copyright (C) 2024-2026 Anildo Carneiro\n"
+    "Uso: ctec [opções...] [-o arquivo_saida] [-c] arquivo(s)...\n"
+    "     ctec [opções...] -run arquivo_entrada [argumentos...]\n"
+    "Opções gerais:\n"
+    "  -c          compilar apenas - gerar um arquivo objeto\n"
+    "  -o arquivo  definir nome do arquivo de saída\n"
+    "  -run        executar fonte compilado\n"
+    "  -fflag      ativa ou desativa (com prefixo 'no-') a 'flag' (veja ctec -hh)\n"
+    "  -Wwarning   ativa ou desativa (com prefixo 'no-') o 'aviso' (veja ctec -hh)\n"
+    "  -w          desabilita todos os avisos\n"
+    "  -v -vv      mostrar versão, mostrar caminhos de busca ou arquivos carregados\n"
+    "  -h -hh      mostrar esta ajuda, mostrar mais ajuda\n"
+    "  -bench      mostrar estatísticas de compilação\n"
+    "  -           usar stdin como arquivo de entrada\n"
+    "  @listfile   ler argumentos de listfile\n"
+    "Opções do pré-processador:\n"
+    "  -Idir       adicionar caminho de inclusão 'dir'\n"
+    "  -Dsim[=val] definir 'sim' com valor 'val'\n"
+    "  -Usim       remover definição de 'sim'\n"
+    "  -E          apenas pré-processar\n"
+    "Opções do vinculador:\n"
+    "  -Ldir       adicionar caminho de biblioteca 'dir'\n"
+    "  -llib       vincular com biblioteca dinâmica ou estática 'lib'\n"
+    "  -r          gerar arquivo objeto (relocável)\n"
+    "  -shared     gerar uma biblioteca compartilhada/dll\n"
+    "  -rdynamic   exportar todos os símbolos globais para o vinculador dinâmico\n"
+    "  -soname     definir nome para biblioteca compartilhada em tempo de execução\n"
+    "  -Wl,-opt[=val]  definir opção do vinculador (veja ctec -hh)\n"
+    "Opções do depurador:\n"
+    "  -g          gerar informações de depuração em tempo de execução\n"
 #ifdef CONFIG_CTEC_BCHECK
-    "  -b          compile with built-in memory and bounds checker (implies -g)\n"
+    "  -b          compilar com verificador de memória e limites embutido (implica -g)\n"
 #endif
 #ifdef CONFIG_CTEC_BACKTRACE
-    "  -bt N       show N callers in stack traces\n"
+    "  -bt N       mostrar N chamadas na pilha de execução\n"
 #endif
-    "Misc. options:\n"
-    "  -x[c|a|n]   specify type of the next infile\n"
-    "  -nostdinc   do not use standard system include paths\n"
-    "  -nostdlib   do not link with standard crt and libraries\n"
-    "  -Bdir       set ctec's private include/library dir\n"
-    "  -MD         generate dependency file for make\n"
-    "  -MF file    specify dependency file name\n"
-    "  -m32/64     defer to i386/x86_64 cross compiler\n"
-    "Tools:\n"
-    "  create library  : ctec -ar [rcsv] lib.a files\n"
+    "Outras opções:\n"
+    "  -x[c|a|n]   especificar tipo do próximo arquivo de entrada\n"
+    "  -nostdinc   não usar caminhos de inclusão padrão do sistema\n"
+    "  -nostdlib   não vincular com bibliotecas/crt padrão\n"
+    "  -Bdir       definir diretório privado de inclusão/biblioteca do ctec\n"
+    "  -MD         gerar arquivo de dependência para make\n"
+    "  -MF arquivo especificar nome do arquivo de dependência\n"
+    "  -m32/64     delegar para compilador cruzado i386/x86_64\n"
+    "Ferramentas:\n"
+    "  criar biblioteca  : ctec -ar [rcsv] lib.a arquivos\n"
 #ifdef CTEC_TARGET_PE
-    "  create def file : ctec -impdef lib.dll [-v] [-o lib.def]\n"
+    "  criar arquivo def : ctec -impdef lib.dll [-v] [-o lib.def]\n"
 #endif
     ;
 
 static const char help2[] =
-    "CTEC Compiler "CTEC_VERSION" - More Options\n"
-    "Special options:\n"
-    "  -P -P1                        with -E: no/alternative #line output\n"
-    "  -dD -dM                       with -E: output #define directives\n"
-    "  -pthread                      same as -D_REENTRANT and -lpthread\n"
-    "  -On                           same as -D__OPTIMIZE__ for n > 0\n"
-    "  -Wp,-opt                      same as -opt\n"
-    "  -include file                 include 'file' above each input file\n"
-    "  -isystem dir                  add 'dir' to system include path\n"
-    "  -static                       link to static libraries (not recommended)\n"
-    "  -dumpversion                  print version\n"
-    "  -print-search-dirs            print search paths\n"
-    "  -dt                           with -run/-E: auto-define 'test_...' macros\n"
-    "Ignored options:\n"
+    "Compilador CTEC "CTEC_VERSION" - Mais Opções\n"
+    "Opções especiais:\n"
+    "  -P -P1                        com -E: sem/alternativa para saída #line\n"
+    "  -dD -dM                       com -E: saída de diretivas #define\n"
+    "  -pthread                      igual a -D_REENTRANT e -lpthread\n"
+    "  -On                           igual a -D__OPTIMIZE__ para n > 0\n"
+    "  -Wp,-opt                      igual a -opt\n"
+    "  -include arquivo              inclui 'arquivo' acima de cada arquivo de entrada\n"
+    "  -isystem dir                  adiciona 'dir' ao caminho de inclusão do sistema\n"
+    "  -static                       vincular a bibliotecas estáticas (não recomendado)\n"
+    "  -dumpversion                  mostrar versão\n"
+    "  -print-search-dirs            mostrar caminhos de busca\n"
+    "  -dt                           com -run/-E: auto-define macros 'test_...'\n"
+    "Opções ignoradas:\n"
     "  --param  -pedantic  -pipe  -s  -std  -traditional\n"
-    "-W... warnings:\n"
-    "  all                           turn on some (*) warnings\n"
-    "  error                         stop after first warning\n"
-    "  unsupported                   warn about ignored options, pragmas, etc.\n"
-    "  write-strings                 strings are const\n"
-    "  implicit-function-declaration warn for missing prototype (*)\n"
-    "-f[no-]... flags:\n"
-    "  unsigned-char                 default char is unsigned\n"
-    "  signed-char                   default char is signed\n"
-    "  common                        use common section instead of bss\n"
-    "  leading-underscore            decorate extern symbols\n"
-    "  ms-extensions                 allow anonymous struct in struct\n"
-    "  dollars-in-identifiers        allow '$' in C symbols\n"
-    "-m... target specific options:\n"
-    "  ms-bitfields                  use MSVC bitfield layout\n"
+    "Avisos -W...:\n"
+    "  all                           ativa alguns (*) avisos\n"
+    "  error                         parar após o primeiro aviso\n"
+    "  unsupported                   avisar sobre opções/pragmas ignorados\n"
+    "  write-strings                 strings são const\n"
+    "  implicit-function-declaration avisar sobre protótipo ausente (*)\n"
+    "Flags -f[no-]... :\n"
+    "  unsigned-char                 char padrão é unsigned\n"
+    "  signed-char                   char padrão é signed\n"
+    "  common                        usar seção common ao invés de bss\n"
+    "  leading-underscore            decorar símbolos extern\n"
+    "  ms-extensions                 permitir struct anônima em struct\n"
+    "  dollars-in-identifiers        permitir '$' em símbolos C\n"
+    "Opções específicas de alvo -m... :\n"
+    "  ms-bitfields                  usar layout MSVC para bitfield\n"
 #ifdef CTEC_TARGET_ARM
-    "  float-abi                     hard/softfp on arm\n"
+    "  float-abi                     hard/softfp em arm\n"
 #endif
 #ifdef CTEC_TARGET_X86_64
-    "  no-sse                        disable floats on x86_64\n"
+    "  no-sse                        desabilitar floats em x86_64\n"
 #endif
-    "-Wl,... linker options:\n"
-    "  -nostdlib                     do not link with standard crt/libs\n"
-    "  -[no-]whole-archive           load lib(s) fully/only as needed\n"
-    "  -export-all-symbols           same as -rdynamic\n"
-    "  -image-base= -Ttext=          set base address of executable\n"
-    "  -section-alignment=           set section alignment in executable\n"
+    "Opções do vinculador -Wl,... :\n"
+    "  -nostdlib                     não vincular com bibliotecas/crt padrão\n"
+    "  -[no-]whole-archive           carregar libs totalmente/somente se necessário\n"
+    "  -export-all-symbols           igual a -rdynamic\n"
+    "  -image-base= -Ttext=          definir endereço base do executável\n"
+    "  -section-alignment=           definir alinhamento de seção no executável\n"
 #ifdef CTEC_TARGET_PE
-    "  -file-alignment=              set PE file alignment\n"
-    "  -stack=                       set PE stack reserve\n"
-    "  -large-address-aware          set related PE option\n"
-    "  -subsystem=[console/windows]  set PE subsystem\n"
-    "  -oformat=[pe-* binary]        set executable output format\n"
-    "Predefined macros:\n"
+    "  -file-alignment=              definir alinhamento de arquivo PE\n"
+    "  -stack=                       definir reserva de pilha PE\n"
+    "  -large-address-aware          definir opção PE relacionada\n"
+    "  -subsystem=[console/windows]  definir subsistema PE\n"
+    "  -oformat=[pe-* binary]        definir formato de saída do executável\n"
+    "Macros pré-definidas:\n"
     "  ctec -E -dM - < nul\n"
 #else
-    "  -rpath=                       set dynamic library search path\n"
-    "  -enable-new-dtags             set DT_RUNPATH instead of DT_RPATH\n"
-    "  -soname=                      set DT_SONAME elf tag\n"
-    "  -Bsymbolic                    set DT_SYMBOLIC elf tag\n"
-    "  -oformat=[elf32/64-* binary]  set executable output format\n"
-    "  -init= -fini= -as-needed -O   (ignored)\n"
-    "Predefined macros:\n"
+    "  -rpath=                       definir caminho de busca de biblioteca dinâmica\n"
+    "  -enable-new-dtags             definir DT_RUNPATH ao invés de DT_RPATH\n"
+    "  -soname=                      definir tag DT_SONAME elf\n"
+    "  -Bsymbolic                    definir tag DT_SYMBOLIC elf\n"
+    "  -oformat=[elf32/64-* binary]  definir formato de saída do executável\n"
+    "  -init= -fini= -as-needed -O   (ignorado)\n"
+    "Macros pré-definidas:\n"
     "  ctec -E -dM - < /dev/null\n"
 #endif
-    "See also the manual for more details.\n"
+    "Veja também o manual para mais detalhes.\n"
     ;
 
 static const char version[] =
