@@ -4842,7 +4842,7 @@ ST_FUNC void unary(void)
                 ctec_error("%s only takes positive integers",
                           tok1 == TOK_builtin_return_address ?
                           "__builtin_return_address" :
-                          "__builtin_frame_address");
+                          "obtenha_endereço_pilha");
             }
             level = (uint32_t)tokc.i;
             next();

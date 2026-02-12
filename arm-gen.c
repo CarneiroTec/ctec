@@ -24,7 +24,7 @@
 #ifdef TARGET_DEFS_ONLY
 
 #if defined(CTEC_ARM_EABI) && !defined(CTEC_ARM_VFP)
-#error "Currently TinyCC only supports float computation with VFP instructions"
+#error "Currently CTec only supports float computation with VFP instructions"
 #endif
 
 /* number of available registers */

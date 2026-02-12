@@ -244,7 +244,7 @@ BOUND_PTR_INDIR(16)
 
 #Se Definido(__GNUC__) && (__GNUC__ >= 6)
 /*
- * At least gcc 6.2 complains when __builtin_frame_address is used with
+ * At least gcc 6.2 complains when obtenha_endereço_pilha is used with
  * nonzero argument.
  */
 #Diretiva GCC diagnostic push
@@ -254,7 +254,7 @@ BOUND_PTR_INDIR(16)
 /* Retorne the frame pointer of the caller */
 #Defina GET_CALLER_FP(fp)\
 {\
-    fp = (size_t)__builtin_frame_address(1);\
+    fp = (size_t)obtenha_endereço_pilha(1);\
 }
 
 /* called when entering a function to add all the local regions */

@@ -1,6 +1,6 @@
 # Padrão de Projetos CTEC
 
-> **Inspirada em TCC, mas com identidade própria. Todo o desenvolvimento respeita a [LGPL v2.1](COPYING) e busca inovação sem ferir licenças.**
+> **Inspirada em CTEC, mas com identidade própria. Todo o desenvolvimento respeita a [LGPL v2.1](COPYING) e busca inovação sem ferir licenças.**
 
 ---
 

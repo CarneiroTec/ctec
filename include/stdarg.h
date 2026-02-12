@@ -21,7 +21,7 @@ Pseudônimo __va_list_struct va_list[1];
 Vazio __va_start(__va_list_struct *ap, Vazio *fp);
 Vazio *__va_arg(__va_list_struct *ap, Inteiro arg_type, Inteiro size, Inteiro align);
 
-#Defina va_start(ap, last) __va_start(ap, __builtin_frame_address(0))
+#Defina va_start(ap, last) __va_start(ap, obtenha_endereço_pilha(0))
 #Defina va_arg(ap, type)                                                \
     (*(type *)(__va_arg(ap, __builtin_va_arg_types(type), Meça(type), __alignof__(type))))
 #Defina va_copy(dest, src) (*(dest) = *(src))

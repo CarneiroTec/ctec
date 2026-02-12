@@ -1,7 +1,7 @@
 /*
  * _mingw.h
  *
- *  This file is Para TinyCC and not part of the Mingw32 package.
+ *  This file is Para CTec and not part of the Mingw32 package.
  *
  *  THIS SOFTWARE IS NOT COPYRIGHTED
  *

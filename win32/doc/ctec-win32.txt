@@ -1,8 +1,8 @@
 
-    TinyCC
+    CTec
     ======
 
-    This file contains specific information for usage of TinyCC
+    This file contains specific information for usage of CTec
     under MS-Windows.  See ctec-doc.html to have all the features.
 
 
@@ -150,7 +150,7 @@
     CTEC is distributed under the GNU Lesser General Public License. (See
     COPYING file or http://www.gnu.org/licenses/lgpl-2.1.html)
 
-    TinyCC homepage is at:
+    CTec homepage is at:
 
 	http://fabrice.bellard.free.fr/ctec/
 

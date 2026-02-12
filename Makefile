@@ -14,11 +14,6 @@ ifeq (-$(CC)-$(GCC_MAJOR)-$(findstring $(GCC_MINOR),56789)-,-gcc-4--)
  CFLAGS += -D_FORTIFY_SOURCE=0
 endif
 
-LIBCTEC = libctec.a
-LIBCTEC1 = libctec1.a
-LINK_LIBCTEC =
-LIBS =
-CFLAGS += -I$(TOP)
 CFLAGS += $(CPPFLAGS)
 VPATH = $(TOPSRC)
 
@@ -86,7 +81,7 @@ ifeq ($(INCLUDED),no)
 
 PROGS = ctec$(EXESUF)
 CTECLIBS = $(LIBCTEC1) $(LIBCTEC) $(LIBCTECDEF)
-CTECDOCS = ctec.1 ctec-doc.html ctec-doc.info
+CTECDOCS = 
 
 all: $(PROGS) $(CTECLIBS) $(CTECDOCS)
 
@@ -225,7 +220,7 @@ libctec.def : libctec.dll ctec$(EXESUF)
 	$(XCTEC) -impdef $< -o $@
 XCTEC ?= ./ctec$(EXESUF)
 
-# TinyCC runtime libraries
+# CTec runtime libraries
 libctec1.a : ctec$(EXESUF) FORCE
 	@$(MAKE) -C lib DEFINES='$(DEF-$T)'
 
@@ -235,19 +230,6 @@ libctec1.a : ctec$(EXESUF) FORCE
 
 .PRECIOUS: %-libctec1.a
 FORCE:
-
-# --------------------------------------------------------------------------
-# documentation and man page
-ctec-doc.html: ctec-doc.texi
-	makeinfo --no-split --html --number-sections -o $@ $< || true
-
-ctec.1: ctec-doc.texi
-	$(TOPSRC)/texi2pod.pl $< ctec.pod \
-	&& pod2man --section=1 --center="CTEC Compiler" --release="$(VERSION)" ctec.pod >tmp.1 \
-	&& mv tmp.1 $@ || rm -f tmp.1
-
-ctec-doc.info: ctec-doc.texi
-	makeinfo $< || true
 
 # --------------------------------------------------------------------------
 # install
@@ -350,13 +332,13 @@ tests2.%:
 	$(MAKE) -C tests/tests2 $@
 
 clean:
-	rm -f ctec$(EXESUF) ctec_p$(EXESUF) *-ctec$(EXESUF) ctec.pod
-	rm -f  *~ *.o *.a *.so* *.out *.log lib*.def *.exe *.dll a.out tags TAGS
+	-rm -f ctec$(EXESUF) ctec_p$(EXESUF) *-ctec$(EXESUF)
+	-rm -f  *~ *.o *.a *.so* *.out *.log lib*.def *.exe *.dll a.out tags TAGS
 	@$(MAKE) -C lib $@
 	@$(MAKE) -C tests $@
 
 distclean: clean
-	rm -f config.h config.mak config.texi ctec.1 ctec-doc.info ctec-doc.html
+	rm -f config.h config.mak config.texi
 
 .PHONY: all clean test tar tags ETAGS distclean install uninstall FORCE
 

@@ -63,11 +63,14 @@ $(BIN) : $(patsubst %.o,$(X)%.o,$(OBJ-$T))
 $(X)%.o : %.c
 	$(XCC) -c $< -o $@ $(XFLAGS)
 
+$(X)%.o : %.ctec
+	$(XCC) -c $< -o $@ $(XFLAGS)
+
 $(X)%.o : %.S
 	$(XCC) -c $< -o $@ $(XFLAGS)
 
-$(X)crt1w.o : crt1.c
-$(X)wincrt1w.o : wincrt1.c
+$(X)crt1w.o : crt1.ctec
+$(X)wincrt1w.o : wincrt1.ctec
 
 clean :
 	rm -f *.a *.o $(BIN)

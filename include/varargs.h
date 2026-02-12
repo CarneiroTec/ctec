@@ -6,7 +6,7 @@
 #SeNãoDefinido _VARARGS_H
 #Defina _VARARGS_H
 
-#Erro "TinyCC no longer implements <varargs.h>."
+#Erro "CTec no longer implements <varargs.h>."
 #Erro "Revise your code to use <stdarg.h>."
 
 #FimSe

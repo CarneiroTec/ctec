@@ -166,10 +166,6 @@ copy>nul ctec-win32.txt doc
 .\ctec -m64 -ar lib/libctec1-64.a %O1% alloca86_64.o alloca86_64-bt.o
 @if errorlevel 1 goto :the_end
 
-:ctec-doc.html
-@if not (%DOC%)==(yes) goto :doc-done
-echo>..\config.texi @set VERSION %VERSION%
-cmd /c makeinfo --html --no-split ../ctec-doc.texi -o doc/ctec-doc.html
 :doc-done
 
 :files-done

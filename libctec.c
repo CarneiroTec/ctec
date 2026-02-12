@@ -26,7 +26,7 @@
 /* use GNU C extensions */
 ST_DATA int gnu_ext = 1;
 
-/* use TinyCC extensions */
+/* use CTec extensions */
 ST_DATA int ctec_ext = 1;
 
 /* XXX: get rid of this ASAP */
@@ -837,7 +837,7 @@ LIBCTECAPI CTECState *ctec_new(void)
 # endif
 #endif
 
-    /* TinyCC & gcc defines */
+    /* CTec & gcc defines */
 #if PTR_SIZE == 4
     /* 32bit systems. */
     ctec_define_symbol(s, "TAMANHO", "Natural Inteiro");

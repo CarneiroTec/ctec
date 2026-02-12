@@ -388,7 +388,7 @@ fi
 fcho() { if test -n "$2"; then echo "$1$2"; fi }
 
 fcho "Binary directory    " "$bindir"
-fcho "TinyCC directory    " "$ctecdir"
+fcho "CTec directory    " "$ctecdir"
 fcho "Library directory   " "$libdir"
 fcho "Include directory   " "$includedir"
 fcho "Manual directory    " "$mandir"
