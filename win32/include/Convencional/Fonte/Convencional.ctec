@@ -4,7 +4,10 @@
 #Inclua "Arquivo/Arquivo.ctec"
 #Inclua "Dados/Dados.ctec"
 #Inclua "Erro/Erro.ctec"
+#Inclua "Matematica/Matematica.ctec"
+#Inclua "Texto/Texto.ctec"
 #Inclua "Sistema/Sistema.ctec"
 #Inclua "Variadicos/Variadicos.ctec"
+
 
 #FimSe

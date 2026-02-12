@@ -7,34 +7,24 @@ Externo Inteiro mkdir(Imutável Caractere *endereço, Natural Inteiro modo);
 Externo Inteiro rename(Imutável Caractere *origem, Imutável Caractere *destino);
 Externo Inteiro rmdir(Imutável Caractere *endereço);
 
+Inteiro ctec_crie_diretorio(Imutável Caractere *endereço, Natural Inteiro modo) { Retorne mkdir(endereço, modo); }
+Caractere *ctec_obtenha_diretorio(Caractere *reserva, Natural Inteiro tamanho) { Retorne getcwd(reserva, tamanho); }
+Inteiro ctec_remova_diretorio(Imutável Caractere *endereço) { Retorne rmdir(endereço); }
+Inteiro ctec_renomeie_diretorio(Imutável Caractere *origem, Imutável Caractere *destino) { Retorne rename(origem, destino); }
+Inteiro ctec_mude_diretorio(Imutável Caractere *dir) { Retorne chdir(dir); }
+
 Pseudônimo Estrutura {
-    Inteiro (*crie_diretorio)(Imutável Caractere *endereço, Natural Inteiro modo);
-    Caractere *(*obtenha_diretorio)(Caractere *reserva, Natural Inteiro tamanho);
-    Inteiro (*remova_diretorio)(Imutável Caractere *endereço);
-    Inteiro (*renomeie_diretorio)(Imutável Caractere *origem, Imutável Caractere *destino);
-} Diretório;
+    Inteiro (*crie)(Imutável Caractere *endereço, Natural Inteiro modo);
+    Inteiro (*remova)(Imutável Caractere *endereço);
+    Inteiro (*mude)(Imutável Caractere *dir);
+    Caractere *(*obtenha_atual)(Caractere *reserva, Natural Inteiro tamanho);
+} ModeloGerenciadorDiretorio;
 
-Inteiro ctec_crie_diretorio(Imutável Caractere *endereço, Natural Inteiro modo) {
-    Retorne mkdir(endereço, modo);
-}
-
-Caractere *ctec_obtenha_diretorio(Caractere *reserva, Natural Inteiro tamanho) {
-    Retorne getcwd(reserva, tamanho);
-}
-
-Inteiro ctec_remova_diretorio(Imutável Caractere *endereço) {
-    Retorne rmdir(endereço);
-}
-
-Inteiro ctec_renomeie_diretorio(Imutável Caractere *origem, Imutável Caractere *destino) {
-    Retorne rename(origem, destino);
-}
-
-Diretório GerenciadorDiretorio = {
-    .crie_diretorio = ctec_crie_diretorio,
-    .obtenha_diretorio = ctec_obtenha_diretorio,
-    .remova_diretorio = ctec_remova_diretorio,
-    .renomeie_diretorio = ctec_renomeie_diretorio
+ModeloGerenciadorDiretorio GerenciadorDiretorio = {
+    .crie = ctec_crie_diretorio,
+    .remova = ctec_remova_diretorio,
+    .mude = ctec_mude_diretorio,
+    .obtenha_atual = ctec_obtenha_diretorio
 };
 
 #FimSe

@@ -9,4 +9,8 @@ Pseudônimo Estrutura Dados Arquivo;
 
 // Providências
 #Inclua "./GerenciadorArquivo.ctec"
+#Inclua "./Compartilhamento.ctec"
+#Inclua "./GerenciadorAcessoArquivo.ctec"
+
+
 #FimSe

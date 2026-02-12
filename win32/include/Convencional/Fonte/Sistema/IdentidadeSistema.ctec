@@ -1,0 +1,26 @@
+#SeNãoDefinido Convencional_Sistema_IdentidadeSistema
+#Defina Convencional_Sistema_IdentidadeSistema
+
+// Importação
+Externo Inteiro _getpid(Vazio);
+Externo Vazio Sleep(Longo milissegundos);
+
+// Wrappers
+Inteiro ctec_obtenha_id_processo(Vazio) { Retorne _getpid(); }
+Vazio ctec_durma(Inteiro segundos) { Sleep(segundos * 1000); }
+Vazio ctec_durma_milissegundos(Inteiro ms) { Sleep(ms); }
+
+// Namespace
+Pseudônimo Estrutura {
+    Inteiro (*obtenha_id_processo)(Vazio);
+    Vazio (*durma)(Inteiro segundos);
+    Vazio (*durma_milissegundos)(Inteiro ms);
+} ModeloGerenciadorIdentidadeSistema;
+
+ModeloGerenciadorIdentidadeSistema GerenciadorIdentidadeSistema = {
+    .obtenha_id_processo = ctec_obtenha_id_processo,
+    .durma = ctec_durma,
+    .durma_milissegundos = ctec_durma_milissegundos
+};
+
+#FimSe

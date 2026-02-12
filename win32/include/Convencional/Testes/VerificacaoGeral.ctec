@@ -1,0 +1,70 @@
+#Inclua "../Fonte/Convencional.ctec"
+
+Inteiro Início(Inteiro argc, Caractere *argv[]) {
+    // Terminal
+    Sistema.terminal->exiba_texto("=== Verificação Geral da Libc Português ===\n\n");
+
+    // 1. Matemática
+    Sistema.terminal->exiba_texto("[1] Testando Matemática...\n");
+    Duplo radianos = 0.0;
+    Sistema.terminal->exiba_formatado("  Seno(%f) = %f\n", radianos, GerenciadorMatematica.seno(radianos));
+    Sistema.terminal->exiba_formatado("  Raiz Quadrada(144) = %f\n", GerenciadorMatematica.raiz_quadrada(144.0));
+    Sistema.terminal->exiba_formatado("  Potência(2, 10) = %f\n", GerenciadorMatematica.potencia(2.0, 10.0));
+    
+    // 2. Texto e Caractere
+    Sistema.terminal->exiba_texto("\n[2] Testando Texto e Caractere...\n");
+    Caractere texto[] = "CTEC Linguagem";
+    Sistema.terminal->exiba_formatado("  Texto: '%s', Tamanho: %d\n", texto, GerenciadorTexto.obtenha_tamanho(texto));
+    Se (GerenciadorCaractere.e_maiuscula('C')) {
+        Sistema.terminal->exiba_texto("  'C' é maiúscula [OK]\n");
+    }
+    Sistema.terminal->exiba_formatado("  'z' para maiúscula: '%c'\n", GerenciadorCaractere.para_maiuscula('z'));
+
+    // 3. Memória
+    Sistema.terminal->exiba_texto("\n[3] Testando Memória...\n");
+    Caractere *buffer = (Caractere *)Sistema.memoria->aloque(32);
+    Se (buffer != 0) {
+        Sistema.memoria->defina(buffer, 0, 32);
+        GerenciadorTexto.copie(buffer, "Memória Dinâmica");
+        Sistema.terminal->exiba_formatado("  Buffer alocado: '%s'\n", buffer);
+        Sistema.memoria->libere(buffer);
+        Sistema.terminal->exiba_texto("  Memória liberada [OK]\n");
+    }
+
+    // 4. Arquivos
+    Sistema.terminal->exiba_texto("\n[4] Testando Arquivos...\n");
+    Imutável Caractere *nome_arq = "teste_verificacao.txt";
+    Arquivo *arq = GerenciadorArquivo.abra(nome_arq, "w");
+    Se (arq != 0) {
+        GerenciadorArquivo.escreva_formatado(arq, "Teste de verificação geral: %d\n", 2026);
+        GerenciadorArquivo.feche(arq);
+        Sistema.terminal->exiba_texto("  Arquivo escrito com sucesso [OK]\n");
+        
+        // Tentativa de ler
+        arq = GerenciadorArquivo.abra(nome_arq, "r");
+        Se (arq != 0) {
+            Caractere linha[100];
+            GerenciadorArquivo.obtenha_linha(linha, 100, arq);
+            Sistema.terminal->exiba_formatado("  Conteúdo lido: %s", linha);
+            GerenciadorArquivo.feche(arq);
+        }
+    }
+
+    // 5. Sistema e Tempo
+    Sistema.terminal->exiba_texto("\n[5] Testando Sistema e Tempo...\n");
+    Longo agora = Sistema.tempo->obtenha_tempo(0);
+    Sistema.terminal->exiba_formatado("  ID do Processo: %d\n", Sistema.sistema->obtenha_id_processo());
+    Sistema.terminal->exiba_formatado("  Tempo (Unix Timestamp): %ld\n", agora);
+    
+    // 6. Tratamento de Erros
+    Sistema.terminal->exiba_texto("\n[6] Testando Erros...\n");
+    GerenciadorArquivo.abra("arquivo_inexistente_totalmente.txt", "r");
+    Erro codigo = GerenciadorErro.obtenha_erro();
+    Se (codigo != 0) {
+        Sistema.terminal->exiba_formatado("  Erro capturado (%d): %s\n", codigo, GerenciadorErro.mensagem(codigo));
+    }
+
+    Sistema.terminal->exiba_texto("\n=== Verificação Finalizada com Sucesso ===\n");
+
+    Retorne 0;
+}

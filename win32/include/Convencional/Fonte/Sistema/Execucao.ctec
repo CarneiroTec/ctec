@@ -1,39 +1,50 @@
 #SeNãoDefinido Convencional_Sistema_Execução
 #Defina Convencional_Sistema_Execução
 
+#Defina SINAL_INTERRUPÇÃO 2
+#Defina SINAL_TERMINAÇÃO  15
+#Defina SINAL_MORTE       9
+#Defina SINAL_ALARME      14
+
+
 Externo Vazio exit(Inteiro codigo);
 Externo Vazio _exit(Inteiro codigo);
 Externo Vazio abort(Vazio);
 Externo Inteiro atexit(Vazio (*func)(Vazio));
+Externo Inteiro signal(Inteiro sinal, Vazio (*func)(Inteiro));
+Externo Inteiro raise(Inteiro sinal);
+Externo Inteiro _setjmp(Vazio *contexto);
+Externo Vazio longjmp(Vazio *contexto, Inteiro valor);
+
+Vazio ctec_finalize(Inteiro codigo) { exit(codigo); }
+Vazio ctec_finalize_imediato(Inteiro codigo) { _exit(codigo); }
+Vazio ctec_aborte(Vazio) { abort(); }
+Inteiro ctec_suceda(Vazio (*func)(Vazio)) { Retorne atexit(func); }
+Inteiro ctec_configure_sinal(Inteiro sinal, Vazio (*func)(Inteiro)) { Retorne signal(sinal, func); }
+Inteiro ctec_gere_sinal(Inteiro sinal) { Retorne raise(sinal); }
+Inteiro ctec_defina_salto(Vazio *contexto) { Retorne _setjmp(contexto); }
+Vazio ctec_salte_longo(Vazio *contexto, Inteiro valor) { longjmp(contexto, valor); }
 
 Pseudônimo Estrutura {
     Vazio (*finalize)(Inteiro codigo);
     Vazio (*finalize_imediato)(Inteiro codigo);
     Vazio (*aborte)(Vazio);
     Inteiro (*suceda)(Vazio (*func)(Vazio));
-} Execução;
+    Inteiro (*configure_sinal)(Inteiro sinal, Vazio (*func)(Inteiro));
+    Inteiro (*gere_sinal)(Inteiro sinal);
+    Inteiro (*defina_salto)(Vazio *contexto);
+    Vazio (*salte_longo)(Vazio *contexto, Inteiro valor);
+} ModeloGerenciadorExecucao;
 
-Vazio ctec_finalize(Inteiro codigo) {
-    exit(codigo);
-}
-
-Vazio ctec_finalize_imediato(Inteiro codigo) {
-    _exit(codigo);
-}
-
-Vazio ctec_aborte(Vazio) {
-    abort();
-}
-
-Inteiro ctec_suceda(Vazio (*func)(Vazio)) {
-    Retorne atexit(func);
-}
-
-Execução GerenciadorExecução = {
+ModeloGerenciadorExecucao GerenciadorExecução = {
     .finalize = ctec_finalize,
     .finalize_imediato = ctec_finalize_imediato,
     .aborte = ctec_aborte,
-    .suceda = ctec_suceda
+    .suceda = ctec_suceda,
+    .configure_sinal = ctec_configure_sinal,
+    .gere_sinal = ctec_gere_sinal,
+    .defina_salto = ctec_defina_salto,
+    .salte_longo = ctec_salte_longo
 };
 
 #FimSe

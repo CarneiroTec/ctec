@@ -1,0 +1,8 @@
+#SeNãoDefinido Convencional_Texto
+#Defina Convencional_Texto
+
+// Implementação
+#Inclua "./GerenciadorTexto.ctec"
+#Inclua "./GerenciadorCaractere.ctec"
+
+#FimSe

@@ -1,0 +1,70 @@
+#SeNãoDefinido Convencional_Matematica_GerenciadorMatematica
+#Defina Convencional_Matematica_GerenciadorMatematica
+
+#Defina PI          3.14159265358979323846
+#Defina EULER       2.71828182845904523536
+#Defina RAIZ_2      1.41421356237309504880
+#Defina LN_2        0.69314718055994530942
+#Defina LN_10       2.30258509299404568402
+
+
+// Importação com Externo
+Externo Duplo sin(Duplo x);
+Externo Duplo cos(Duplo x);
+Externo Duplo tan(Duplo x);
+Externo Duplo asin(Duplo x);
+Externo Duplo acos(Duplo x);
+Externo Duplo atan(Duplo x);
+Externo Duplo pow(Duplo x, Duplo y);
+Externo Duplo sqrt(Duplo x);
+Externo Duplo ceil(Duplo x);
+Externo Duplo floor(Duplo x);
+Externo Duplo fabs(Duplo x);
+Externo Inteiro abs(Inteiro x);
+
+// Nomes Prefixados e Wrappers
+Duplo matematica_seno(Duplo x) { Retorne sin(x); }
+Duplo matematica_cosseno(Duplo x) { Retorne cos(x); }
+Duplo matematica_tangente(Duplo x) { Retorne tan(x); }
+Duplo matematica_arco_seno(Duplo x) { Retorne asin(x); }
+Duplo matematica_arco_cosseno(Duplo x) { Retorne acos(x); }
+Duplo matematica_arco_tangente(Duplo x) { Retorne atan(x); }
+Duplo matematica_potencia(Duplo x, Duplo y) { Retorne pow(x, y); }
+Duplo matematica_raiz_quadrada(Duplo x) { Retorne sqrt(x); }
+Duplo matematica_teto(Duplo x) { Retorne ceil(x); }
+Duplo matematica_piso(Duplo x) { Retorne floor(x); }
+Duplo matematica_absoluto_real(Duplo x) { Retorne fabs(x); }
+Inteiro matematica_absoluto(Inteiro x) { Retorne abs(x); }
+
+// Namespace com Struct
+Pseudônimo Estrutura {
+    Duplo (*seno)(Duplo x);
+    Duplo (*cosseno)(Duplo x);
+    Duplo (*tangente)(Duplo x);
+    Duplo (*arco_seno)(Duplo x);
+    Duplo (*arco_cosseno)(Duplo x);
+    Duplo (*arco_tangente)(Duplo x);
+    Duplo (*potencia)(Duplo x, Duplo y);
+    Duplo (*raiz_quadrada)(Duplo x);
+    Duplo (*teto)(Duplo x);
+    Duplo (*piso)(Duplo x);
+    Duplo (*absoluto_real)(Duplo x);
+    Inteiro (*absoluto)(Inteiro x);
+} ModeloGerenciadorMatematica;
+
+ModeloGerenciadorMatematica GerenciadorMatematica = {
+    .seno = matematica_seno,
+    .cosseno = matematica_cosseno,
+    .tangente = matematica_tangente,
+    .arco_seno = matematica_arco_seno,
+    .arco_cosseno = matematica_arco_cosseno,
+    .arco_tangente = matematica_arco_tangente,
+    .potencia = matematica_potencia,
+    .raiz_quadrada = matematica_raiz_quadrada,
+    .teto = matematica_teto,
+    .piso = matematica_piso,
+    .absoluto_real = matematica_absoluto_real,
+    .absoluto = matematica_absoluto
+};
+
+#FimSe

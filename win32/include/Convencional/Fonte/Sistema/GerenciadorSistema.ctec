@@ -1,0 +1,30 @@
+#SeNãoDefinido Convencional_Sistema_GerenciadorSistema
+#Defina Convencional_Sistema_GerenciadorSistema
+
+// Importação (dos.h, sys/types.h, unistd.h, etc.)
+Externo Inteiro _getpid(Vazio);
+Externo Inteiro _umask(Inteiro mask);
+Externo Vazio Sleep(Longo milissegundos);
+
+// Wrappers
+Inteiro ctec_obtenha_id_processo(Vazio) { Retorne _getpid(); }
+Inteiro ctec_mascara_usuario(Inteiro mask) { Retorne _umask(mask); }
+Vazio ctec_durma(Inteiro segundos) { Sleep(segundos * 1000); }
+Vazio ctec_durma_milissegundos(Inteiro ms) { Sleep(ms); }
+
+// Namespace
+Pseudônimo Estrutura {
+    Inteiro (*obtenha_id_processo)(Vazio);
+    Inteiro (*máscara_usuário)(Inteiro mask);
+    Vazio (*durma)(Inteiro segundos);
+    Vazio (*durma_milissegundos)(Inteiro ms);
+} ModeloGerenciadorSistema;
+
+ModeloGerenciadorSistema GerenciadorSistema = {
+    .obtenha_id_processo = ctec_obtenha_id_processo,
+    .máscara_usuário = ctec_mascara_usuario,
+    .durma = ctec_durma,
+    .durma_milissegundos = ctec_durma_milissegundos
+};
+
+#FimSe

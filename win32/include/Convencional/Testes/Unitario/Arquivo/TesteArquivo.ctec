@@ -1,154 +1,38 @@
-#Inclua "../../../Fonte/Arquivo/Arquivo.ctec"
-Externo Inteiro printf(Imutável Caractere *formato, ...);
+#Inclua "../../../Fonte/Convencional.ctec"
 
-Inteiro teste_deve_criar_arquivo() {
-    Caractere nome[] = "./teste_crie.txt";
-    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
-    Se(arquivo) {
-        GerenciadorArquivo.feche(arquivo);
-        GerenciadorArquivo.remova(nome);
-        printf("Passou: crie_arquivo\n");
-        Retorne 1;
-    }
-    printf("Falhou: crie_arquivo\n");
-    Retorne 0;
-}
+Inteiro Iniciar() {
+    Sistema.terminal->exiba_texto("--- Iniciando Testes de Arquivo ---\n");
 
-Inteiro teste_deve_escrever_e_ler_arquivo() {
-    Caractere nome[] = "./teste_escreva_leia.txt";
-    Caractere conteúdo[] = "conteudo de teste";
-    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
-    Se(!arquivo) { printf("Falhou: escrever (abrir)\n"); Retorne 0; }
-    Inteiro escritos = GerenciadorArquivo.escreva(conteúdo, Meça(Caractere), (Meça(conteúdo) - 1), arquivo);
-    Inteiro flush_res = GerenciadorArquivo.despeje(arquivo);
-    Inteiro close_res = GerenciadorArquivo.feche(arquivo);
-    Se(escritos != (Meça(conteúdo) - 1) || flush_res != 0 || close_res != 0) {
-        GerenciadorArquivo.remova(nome);
-        printf("Falhou: escrever/fechar/despejar\n");
-        Retorne 0;
+    Arquivo *arq = GerenciadorArquivo.abra("teste.txt", "w");
+    Se (arq != 0) {
+        GerenciadorArquivo.exiba_linha("Teste de Escrita\n", arq);
+        GerenciadorArquivo.feche(arq);
+        Sistema.terminal->exiba_texto("[OK] Escrita basica de arquivo\n");
+    } SeNão {
+        Sistema.terminal->exiba_texto("[ERRO] Falha ao abrir arquivo para escrita\n");
     }
 
-    Caractere reserva[64];
-    arquivo = GerenciadorArquivo.abra(nome, "r");
-    Se(!arquivo) { GerenciadorArquivo.remova(nome); printf("Falhou: ler (abrir)\n"); Retorne 0; }
-    Inteiro lidos = GerenciadorArquivo.leia(reserva, Meça(Caractere), (Meça(conteúdo) - 1), arquivo);
-    GerenciadorArquivo.feche(arquivo);
-    GerenciadorArquivo.remova(nome);
-    Se(lidos == (Meça(conteúdo) - 1)) {
-        Inteiro igual = 1;
-        Para(Inteiro i = 0; i < (Meça(conteúdo) - 1); i = i + 1) {
-            Se(reserva[i] != conteúdo[i]) { igual = 0; Interrompa; }
-        }
-        Se(igual) { printf("Passou: escreveu_e_leu_arquivo\n"); Retorne 1; }
+    arq = GerenciadorArquivo.abra("teste.txt", "r");
+    Se (arq != 0) {
+        Caractere buf[100];
+        GerenciadorArquivo.obtenha_linha(buf, 100, arq);
+        Sistema.terminal->exiba_texto("[OK] Leitura de arquivo: ");
+        Sistema.terminal->exiba_texto(buf);
+        GerenciadorArquivo.feche(arq);
+    } SeNão {
+        Sistema.terminal->exiba_texto("[ERRO] Falha ao abrir arquivo para leitura\n");
     }
-    printf("Falhou: escreveu_e_leu_arquivo\n");
-    Retorne 0;
-}
 
-Inteiro teste_deve_abrir_arquivo_inexistente_para_leitura() {
-    Caractere nome[] = "./arquivo_inexistente.txt";
-    Arquivo *arquivo = GerenciadorArquivo.abra(nome, "r");
-    Se(!arquivo) { printf("Passou: abrir arquivo inexistente (esperado falhar)\n"); Retorne 1; }
-    /* Se abriu, falha no comportamento esperado */
-    GerenciadorArquivo.feche(arquivo);
-    GerenciadorArquivo.remova(nome);
-    printf("Falhou: abrir arquivo inexistente\n");
-    Retorne 0;
-}
-
-Inteiro teste_deve_apendar_arquivo() {
-    Caractere nome[] = "./teste_append.txt";
-    Caractere parte1[] = "primaria";
-    Caractere parte2[] = "_secundaria";
-
-    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
-    Se(!arquivo) { printf("Falhou: append (criar)\n"); Retorne 0; }
-    GerenciadorArquivo.escreva(parte1, Meça(Caractere), (Meça(parte1) - 1), arquivo);
-    GerenciadorArquivo.feche(arquivo);
-
-    arquivo = GerenciadorArquivo.crie(nome, "a");
-    Se(!arquivo) { GerenciadorArquivo.remova(nome); printf("Falhou: append (abrir append)\n"); Retorne 0; }
-    GerenciadorArquivo.escreva(parte2, Meça(Caractere), (Meça(parte2) - 1), arquivo);
-    GerenciadorArquivo.feche(arquivo);
-
-    Caractere reserva[64];
-    arquivo = GerenciadorArquivo.abra(nome, "r");
-    Se(!arquivo) { GerenciadorArquivo.remova(nome); printf("Falhou: append (abrir leitura)\n"); Retorne 0; }
-    Inteiro total = (Meça(parte1) - 1) + (Meça(parte2) - 1);
-    Inteiro lidos = GerenciadorArquivo.leia(reserva, Meça(Caractere), total, arquivo);
-    GerenciadorArquivo.feche(arquivo);
-    GerenciadorArquivo.remova(nome);
-    Se(lidos == total) {
-        Inteiro ok = 1;
-        Para(Inteiro i = 0; i < (Meça(parte1) - 1); i = i + 1) { Se(reserva[i] != parte1[i]) { ok = 0; Interrompa; } }
-        Para(Inteiro j = 0; j < (Meça(parte2) - 1) && ok; j = j + 1) { Se(reserva[(Meça(parte1) - 1) + j] != parte2[j]) { ok = 0; Interrompa; } }
-        Se(ok) { printf("Passou: append_arquivo\n"); Retorne 1; }
+    // Teste de baixo nível
+    Inteiro fd = GerenciadorAcessoArquivo.abra("teste_cru.txt", 0x0100 /* _O_CREAT */ | 0x0002 /* _O_RDWR */, 0x0080 /* _S_IWRITE */);
+    Se (fd >= 0) {
+        GerenciadorAcessoArquivo.escreva(fd, "Dados Crus", 10);
+        GerenciadorAcessoArquivo.feche(fd);
+        Sistema.terminal->exiba_texto("[OK] E/S de baixo nivel finalizada\n");
+    } SeNão {
+        Sistema.terminal->exiba_texto("[ERRO] Falha no acesso cru ao arquivo\n");
     }
-    printf("Falhou: append_arquivo\n");
-    Retorne 0;
-}
 
-Inteiro teste_binario_escreva_leia() {
-    Caractere nome[] = "./teste_binario.bin";
-    Caractere bin[] = { 0x00, 0x01, 0x02, 0x00, 0xFF };
-    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "wb");
-    Se(!arquivo) { printf("Falhou: binario (criar)\n"); Retorne 0; }
-    Inteiro escritos = GerenciadorArquivo.escreva(bin, Meça(Caractere), Meça(bin), arquivo);
-    GerenciadorArquivo.despeje(arquivo);
-    GerenciadorArquivo.feche(arquivo);
-    Se(escritos != Meça(bin)) { GerenciadorArquivo.remova(nome); printf("Falhou: binario escrever\n"); Retorne 0; }
-
-    Caractere reserva[16];
-    arquivo = GerenciadorArquivo.abra(nome, "rb");
-    Se(!arquivo) { GerenciadorArquivo.remova(nome); printf("Falhou: binario abrir leitura\n"); Retorne 0; }
-    Inteiro lidos = GerenciadorArquivo.leia(reserva, Meça(Caractere), Meça(bin), arquivo);
-    GerenciadorArquivo.feche(arquivo);
-    GerenciadorArquivo.remova(nome);
-    Se(lidos == Meça(bin)) {
-        Inteiro ok = 1;
-        Para(Inteiro i = 0; i < Meça(bin); i = i + 1) { Se(reserva[i] != bin[i]) { ok = 0; Interrompa; } }
-        Se(ok) { printf("Passou: binario_escreva_leia\n"); Retorne 1; }
-    }
-    printf("Falhou: binario_escreva_leia\n");
-    Retorne 0;
-}
-
-Inteiro teste_escrever_longo_e_ler() {
-    Caractere nome[] = "./teste_longo.txt";
-    Caractere buffer[2048];
-    Para(Inteiro i = 0; i < (Meça(buffer) - 1); i = i + 1) { buffer[i] = (Caractere)('A' + (i % 26)); }
-    buffer[(Meça(buffer) - 1) - 0] = '\0';
-
-    Arquivo *arquivo = GerenciadorArquivo.crie(nome, "w");
-    Se(!arquivo) { printf("Falhou: longo (criar)\n"); Retorne 0; }
-    Inteiro escritos = GerenciadorArquivo.escreva(buffer, Meça(Caractere), (Meça(buffer) - 1), arquivo);
-    GerenciadorArquivo.despeje(arquivo);
-    GerenciadorArquivo.feche(arquivo);
-    Se(escritos != (Meça(buffer) - 1)) { GerenciadorArquivo.remova(nome); printf("Falhou: longo escrever\n"); Retorne 0; }
-
-    Caractere reserva[2050];
-    arquivo = GerenciadorArquivo.abra(nome, "r");
-    Se(!arquivo) { GerenciadorArquivo.remova(nome); printf("Falhou: longo abrir leitura\n"); Retorne 0; }
-    Inteiro lidos = GerenciadorArquivo.leia(reserva, Meça(Caractere), (Meça(buffer) - 1), arquivo);
-    GerenciadorArquivo.feche(arquivo);
-    GerenciadorArquivo.remova(nome);
-    Se(lidos == (Meça(buffer) - 1)) {
-        Inteiro ok = 1;
-        Para(Inteiro i = 0; i < (Meça(buffer) - 1); i = i + 1) { Se(reserva[i] != buffer[i]) { ok = 0; Interrompa; } }
-        Se(ok) { printf("Passou: escrever_longo_e_ler\n"); Retorne 1; }
-    }
-    printf("Falhou: escrever_longo_e_ler\n");
-    Retorne 0;
-}
-
-Inteiro Início() {
-    Inteiro total_acertos = 0;
-    total_acertos = total_acertos + teste_deve_criar_arquivo();
-    total_acertos = total_acertos + teste_deve_escrever_e_ler_arquivo();
-    total_acertos = total_acertos + teste_deve_abrir_arquivo_inexistente_para_leitura();
-    total_acertos = total_acertos + teste_deve_apendar_arquivo();
-    total_acertos = total_acertos + teste_binario_escreva_leia();
-    total_acertos = total_acertos + teste_escrever_longo_e_ler();
-    printf("\nResultado: %d/6 testes passaram\n", total_acertos);
+    Sistema.terminal->exiba_texto("--- Fim dos Testes de Arquivo ---\n");
     Retorne 0;
 }

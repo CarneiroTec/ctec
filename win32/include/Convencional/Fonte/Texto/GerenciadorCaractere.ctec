@@ -1,0 +1,47 @@
+#SeNãoDefinido Convencional_Texto_GerenciadorCaractere
+#Defina Convencional_Texto_GerenciadorCaractere
+
+// Importação
+Externo Inteiro isalpha(Inteiro c);
+Externo Inteiro isdigit(Inteiro c);
+Externo Inteiro isalnum(Inteiro c);
+Externo Inteiro isspace(Inteiro c);
+Externo Inteiro isupper(Inteiro c);
+Externo Inteiro islower(Inteiro c);
+Externo Inteiro toupper(Inteiro c);
+Externo Inteiro tolower(Inteiro c);
+
+// Wrappers
+Inteiro caractere_e_letra(Inteiro c) { Retorne isalpha(c); }
+Inteiro caractere_e_digito(Inteiro c) { Retorne isdigit(c); }
+Inteiro caractere_e_alfanumerico(Inteiro c) { Retorne isalnum(c); }
+Inteiro caractere_e_espaco(Inteiro c) { Retorne isspace(c); }
+Inteiro caractere_e_maiuscula(Inteiro c) { Retorne isupper(c); }
+Inteiro caractere_e_minuscula(Inteiro c) { Retorne islower(c); }
+Inteiro caractere_para_maiuscula(Inteiro c) { Retorne toupper(c); }
+Inteiro caractere_para_minuscula(Inteiro c) { Retorne tolower(c); }
+
+// Namespace
+Pseudônimo Estrutura {
+    Inteiro (*e_letra)(Inteiro c);
+    Inteiro (*e_digito)(Inteiro c);
+    Inteiro (*e_alfanumerico)(Inteiro c);
+    Inteiro (*e_espaco)(Inteiro c);
+    Inteiro (*e_maiuscula)(Inteiro c);
+    Inteiro (*e_minuscula)(Inteiro c);
+    Inteiro (*para_maiuscula)(Inteiro c);
+    Inteiro (*para_minuscula)(Inteiro c);
+} ModeloGerenciadorCaractere;
+
+ModeloGerenciadorCaractere GerenciadorCaractere = {
+    .e_letra = caractere_e_letra,
+    .e_digito = caractere_e_digito,
+    .e_alfanumerico = caractere_e_alfanumerico,
+    .e_espaco = caractere_e_espaco,
+    .e_maiuscula = caractere_e_maiuscula,
+    .e_minuscula = caractere_e_minuscula,
+    .para_maiuscula = caractere_para_maiuscula,
+    .para_minuscula = caractere_para_minuscula
+};
+
+#FimSe

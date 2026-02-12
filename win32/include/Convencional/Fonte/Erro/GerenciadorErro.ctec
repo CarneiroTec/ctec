@@ -2,23 +2,23 @@
 #Defina Convencional_Erro_GerenciadorErro
 
 Externo Inteiro *_errno(Vazio);
+Externo Caractere *strerror(Inteiro errnum);
 
-Erro ctec_obtenha_erro(Vazio) {
-    Retorne *_errno();
-}
-
-Vazio ctec_defina_erro(Erro valor) {
-    *_errno() = valor;
-}
+Erro ctec_obtenha_erro(Vazio) { Retorne *_errno(); }
+Vazio ctec_defina_erro(Erro valor) { *_errno() = valor; }
+Caractere *ctec_mensagem_erro(Inteiro erro) { Retorne strerror(erro); }
 
 Pseudônimo Estrutura {
     Erro  (*obtenha_erro)(Vazio);
     Vazio (*defina_erro)(Erro valor);
+    Caractere *(*mensagem)(Inteiro erro);
 } ModeloGerenciadorErro;
 
 ModeloGerenciadorErro GerenciadorErro = {
     .obtenha_erro = ctec_obtenha_erro,
-    .defina_erro = ctec_defina_erro
+    .defina_erro = ctec_defina_erro,
+    .mensagem = ctec_mensagem_erro
 };
+
 
 #FimSe

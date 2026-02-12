@@ -1,0 +1,67 @@
+#SeNãoDefinido Convencional_Arquivo_GerenciadorAcessoArquivo
+#Defina Convencional_Arquivo_GerenciadorAcessoArquivo
+
+// Importação com Externo (io.h, fcntl.h, sys/stat.h)
+Externo Inteiro _open(Imutável Caractere *caminho, Inteiro flags, ...);
+Externo Inteiro _close(Inteiro fd);
+Externo Inteiro _read(Inteiro fd, Vazio *buf, Inteiro n);
+Externo Inteiro _write(Inteiro fd, Imutável Vazio *buf, Inteiro n);
+Externo Longo _lseek(Inteiro fd, Longo offset, Inteiro whence);
+Externo Inteiro _access(Imutável Caractere *caminho, Inteiro modo);
+Externo Inteiro _chmod(Imutável Caractere *caminho, Inteiro modo);
+Externo Inteiro _dup(Inteiro fd);
+Externo Inteiro _dup2(Inteiro fd1, Inteiro fd2);
+Externo Inteiro _creat(Imutável Caractere *caminho, Inteiro modo);
+Externo Inteiro _unlink(Imutável Caractere *caminho);
+Externo Inteiro stat(Imutável Caractere *caminho, Vazio *buf);
+Externo Inteiro fstat(Inteiro fd, Vazio *buf);
+
+// Wrappers com Nomes Prefixados
+Inteiro ctec_abra_arquivo_cru(Imutável Caractere *caminho, Inteiro flags, Inteiro modo) { Retorne _open(caminho, flags, modo); }
+Inteiro ctec_feche_arquivo_cru(Inteiro fd) { Retorne _close(fd); }
+Inteiro ctec_leia_arquivo_cru(Inteiro fd, Vazio *buf, Inteiro n) { Retorne _read(fd, buf, n); }
+Inteiro ctec_escreva_arquivo_cru(Inteiro fd, Imutável Vazio *buf, Inteiro n) { Retorne _write(fd, buf, n); }
+Longo ctec_posicione_arquivo_cru(Inteiro fd, Longo offset, Inteiro whence) { Retorne _lseek(fd, offset, whence); }
+Inteiro ctec_acesse(Imutável Caractere *caminho, Inteiro modo) { Retorne _access(caminho, modo); }
+Inteiro ctec_mude_modo(Imutável Caractere *caminho, Inteiro modo) { Retorne _chmod(caminho, modo); }
+Inteiro ctec_duplique(Inteiro fd) { Retorne _dup(fd); }
+Inteiro ctec_duplique_para(Inteiro fd1, Inteiro fd2) { Retorne _dup2(fd1, fd2); }
+Inteiro ctec_crie_arquivo_cru(Imutável Caractere *caminho, Inteiro modo) { Retorne _creat(caminho, modo); }
+Inteiro ctec_desvincule(Imutável Caractere *caminho) { Retorne _unlink(caminho); }
+Inteiro ctec_obtenha_estats(Imutável Caractere *caminho, Vazio *buf) { Retorne stat(caminho, buf); }
+Inteiro ctec_obtenha_festats(Inteiro fd, Vazio *buf) { Retorne fstat(fd, buf); }
+
+// Namespace com Struct
+Pseudônimo Estrutura {
+    Inteiro (*abra)(Imutável Caractere *caminho, Inteiro flags, Inteiro modo);
+    Inteiro (*feche)(Inteiro fd);
+    Inteiro (*leia)(Inteiro fd, Vazio *buf, Inteiro n);
+    Inteiro (*escreva)(Inteiro fd, Imutável Vazio *buf, Inteiro n);
+    Longo (*posicione)(Inteiro fd, Longo offset, Inteiro whence);
+    Inteiro (*acesse)(Imutável Caractere *caminho, Inteiro modo);
+    Inteiro (*mude_modo)(Imutável Caractere *caminho, Inteiro modo);
+    Inteiro (*duplique)(Inteiro fd);
+    Inteiro (*duplique_para)(Inteiro fd1, Inteiro fd2);
+    Inteiro (*crie)(Imutável Caractere *caminho, Inteiro modo);
+    Inteiro (*desvincule)(Imutável Caractere *caminho);
+    Inteiro (*obtenha_estatísticas)(Imutável Caractere *caminho, Vazio *buf);
+    Inteiro (*obtenha_estatísticas_descritor)(Inteiro fd, Vazio *buf);
+} ModeloGerenciadorAcessoArquivo;
+
+ModeloGerenciadorAcessoArquivo GerenciadorAcessoArquivo = {
+    .abra = ctec_abra_arquivo_cru,
+    .feche = ctec_feche_arquivo_cru,
+    .leia = ctec_leia_arquivo_cru,
+    .escreva = ctec_escreva_arquivo_cru,
+    .posicione = ctec_posicione_arquivo_cru,
+    .acesse = ctec_acesse,
+    .mude_modo = ctec_mude_modo,
+    .duplique = ctec_duplique,
+    .duplique_para = ctec_duplique_para,
+    .crie = ctec_crie_arquivo_cru,
+    .desvincule = ctec_desvincule,
+    .obtenha_estatísticas = ctec_obtenha_estats,
+    .obtenha_estatísticas_descritor = ctec_obtenha_festats
+};
+
+#FimSe

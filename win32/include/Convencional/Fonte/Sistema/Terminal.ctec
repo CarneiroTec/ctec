@@ -7,48 +7,54 @@ Externo Inteiro puts(Imutável Caractere *texto);
 Externo Inteiro getchar(Vazio);
 Externo Inteiro gets(Caractere *texto);
 Externo Inteiro scanf(Imutável Caractere *formato, ...);
-Externo Inteiro putchar(Caractere caractere);
+Externo Inteiro putchar(Inteiro caractere);
+Externo Inteiro sprintf(Caractere *s, Imutável Caractere *formato, ...);
+Externo Inteiro sscanf(Imutável Caractere *s, Imutável Caractere *formato, ...);
+Externo Vazio perror(Imutável Caractere *s);
+Externo Inteiro getch(Vazio);
+Externo Inteiro getche(Vazio);
+Externo Inteiro kbhit(Vazio);
 
-Vazio ctec_void_ret_void(Vazio) { ((Vazio)0); }
-
-Inteiro ctec_execute(Imutável Caractere *comando) {
-    Retorne system(comando);
-}
-
-Inteiro ctec_exiba_caractere(Caractere caractere) {
-    Retorne putchar(caractere);
-}
-
-Inteiro ctec_exiba_texto(Imutável Caractere *texto) {
-    Retorne puts(texto);
-}
-
-Inteiro ctec_leia_caractere(Vazio) {
-    Retorne getchar();
-}
-
-Inteiro ctec_leia_texto(Caractere *texto) {
-    Retorne gets(texto);
-}
+Inteiro terminal_execute(Imutável Caractere *comando) { Retorne system(comando); }
+Inteiro terminal_exiba_caractere(Inteiro caractere) { Retorne putchar(caractere); }
+Inteiro terminal_exiba_texto(Imutável Caractere *texto) { Retorne puts(texto); }
+Inteiro terminal_leia_caractere(Vazio) { Retorne getchar(); }
+Inteiro terminal_leia_texto(Caractere *texto) { Retorne gets(texto); }
+Vazio terminal_imprima_erro(Imutável Caractere *s) { perror(s); }
+Inteiro terminal_leia_tecla(Vazio) { Retorne getch(); }
+Inteiro terminal_leia_tecla_echo(Vazio) { Retorne getche(); }
+Inteiro terminal_detecte_tecla(Vazio) { Retorne kbhit(); }
 
 Pseudônimo Estrutura {
     Inteiro (*execute)(Imutável Caractere *comando);
-    Inteiro (*exiba_caractere)(Caractere caractere);
+    Inteiro (*exiba_caractere)(Inteiro caractere);
     Inteiro (*exiba_formatado)(Imutável Caractere *formato, ...);
     Inteiro (*exiba_texto)(Imutável Caractere *texto);
+    Inteiro (*escreva_texto)(Caractere *s, Imutável Caractere *formato, ...);
     Inteiro (*leia_caractere)(Vazio);
     Inteiro (*leia_formatado)(Imutável Caractere *formato, ...);
     Inteiro (*leia_texto)(Caractere *texto);
+    Inteiro (*leia_de_texto)(Imutável Caractere *s, Imutável Caractere *formato, ...);
+    Vazio (*imprima_erro)(Imutável Caractere *s);
+    Inteiro (*leia_tecla)(Vazio);
+    Inteiro (*leia_tecla_echo)(Vazio);
+    Inteiro (*detecte_tecla)(Vazio);
 } InterfaceTerminal;
 
 InterfaceTerminal Terminal = {
-    .execute = ctec_execute,
-    .exiba_caractere = ctec_exiba_caractere,
+    .execute = terminal_execute,
+    .exiba_caractere = terminal_exiba_caractere,
     .exiba_formatado = printf,
-    .exiba_texto = ctec_exiba_texto,
-    .leia_caractere = ctec_leia_caractere,
+    .exiba_texto = terminal_exiba_texto,
+    .escreva_texto = sprintf,
+    .leia_caractere = terminal_leia_caractere,
     .leia_formatado = scanf,
-    .leia_texto = ctec_leia_texto
+    .leia_texto = terminal_leia_texto,
+    .leia_de_texto = sscanf,
+    .imprima_erro = terminal_imprima_erro,
+    .leia_tecla = terminal_leia_tecla,
+    .leia_tecla_echo = terminal_leia_tecla_echo,
+    .detecte_tecla = terminal_detecte_tecla
 };
 
 #FimSe

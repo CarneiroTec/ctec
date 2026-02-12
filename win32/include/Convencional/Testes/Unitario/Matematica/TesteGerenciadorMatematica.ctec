@@ -1,0 +1,123 @@
+#SeNãoDefinido Convencional_TesteGerenciadorMatematica
+#Defina Convencional_TesteGerenciadorMatematica
+
+// Dependências
+#Inclua <stdio.h>
+#Inclua <assert.h>
+#Inclua <math.h>
+#Inclua "../../../Fonte/Matematica/GerenciadorMatematica.ctec"
+
+// Função de teste para funções básicas
+Vazio teste_funcoes_basicas() {
+    printf("Testando funções básicas...\n");
+    
+    // Teste valor absoluto
+    assert(GerenciadorMatematica.valor_absoluto(-5.5) == 5.5);
+    assert(GerenciadorMatematica.valor_absoluto_inteiro(-10) == 10);
+    assert(GerenciadorMatematica.valor_absoluto_longo(-1000L) == 1000L);
+    
+    // Teste potência e raiz
+    assert(fabs(GerenciadorMatematica.potência(2.0, 3.0) - 8.0) < 0.0001);
+    assert(fabs(GerenciadorMatematica.raiz_quadrada(9.0) - 3.0) < 0.0001);
+    assert(fabs(GerenciadorMatematica.raiz_cúbica(8.0) - 2.0) < 0.0001);
+    
+    printf("✓ Funções básicas passaram\n");
+}
+
+// Função de teste para funções trigonométricas
+Vazio teste_funcoes_trigonometricas() {
+    printf("Testando funções trigonométricas...\n");
+    
+    Real pi = GerenciadorMatematica.obtenha_pi();
+    
+    // Teste seno, cosseno, tangente
+    assert(fabs(GerenciadorMatematica.seno(0.0) - 0.0) < 0.0001);
+    assert(fabs(GerenciadorMatematica.cosseno(0.0) - 1.0) < 0.0001);
+    assert(fabs(GerenciadorMatematica.seno(pi/2.0) - 1.0) < 0.0001);
+    
+    // Teste arco funções
+    assert(fabs(GerenciadorMatematica.arco_seno(1.0) - pi/2.0) < 0.0001);
+    assert(fabs(GerenciadorMatematica.arco_cosseno(1.0) - 0.0) < 0.0001);
+    
+    printf("✓ Funções trigonométricas passaram\n");
+}
+
+// Função de teste para funções logarítmicas
+Vazio teste_funcoes_logaritmicas() {
+    printf("Testando funções logarítmicas...\n");
+    
+    Real e = GerenciadorMatematica.obtenha_e();
+    
+    // Teste logaritmos
+    assert(fabs(GerenciadorMatematica.logaritmo_natural(e) - 1.0) < 0.0001);
+    assert(fabs(GerenciadorMatematica.logaritmo_decimal(10.0) - 1.0) < 0.0001);
+    assert(fabs(GerenciadorMatematica.logaritmo_base2(2.0) - 1.0) < 0.0001);
+    
+    // Teste exponenciais
+    assert(fabs(GerenciadorMatematica.exponencial(1.0) - e) < 0.0001);
+    assert(fabs(GerenciadorMatematica.exponencial_base2(1.0) - 2.0) < 0.0001);
+    
+    printf("✓ Funções logarítmicas passaram\n");
+}
+
+// Função de teste para funções de arredondamento
+Vazio teste_funcoes_arredondamento() {
+    printf("Testando funções de arredondamento...\n");
+    
+    // Teste arredondamento
+    assert(GerenciadorMatematica.arredonde(2.3) == 2.0);
+    assert(GerenciadorMatematica.arredonde(2.7) == 3.0);
+    assert(GerenciadorMatematica.teto(2.1) == 3.0);
+    assert(GerenciadorMatematica.piso(2.9) == 2.0);
+    assert(GerenciadorMatematica.truncar(2.9) == 2.0);
+    assert(GerenciadorMatematica.truncar(-2.9) == -2.0);
+    
+    printf("✓ Funções de arredondamento passaram\n");
+}
+
+// Função de teste para funções de classificação
+Vazio teste_funcoes_classificacao() {
+    printf("Testando funções de classificação...\n");
+    
+    // Teste classificação
+    assert(GerenciadorMatematica.é_finito(5.0) == 1);
+    assert(GerenciadorMatematica.é_infinito(1.0/0.0) == 1);
+    assert(GerenciadorMatematica.é_não_número(0.0/0.0) == 1);
+    assert(GerenciadorMatematica.é_normal(5.0) == 1);
+    assert(GerenciadorMatematica.bit_sinal(-5.0) == 1);
+    assert(GerenciadorMatematica.bit_sinal(5.0) == 0);
+    
+    printf("✓ Funções de classificação passaram\n");
+}
+
+// Função de teste para constantes matemáticas
+Vazio teste_constantes_matematicas() {
+    printf("Testando constantes matemáticas...\n");
+    
+    // Teste constantes
+    Real pi = GerenciadorMatematica.obtenha_pi();
+    Real e = GerenciadorMatematica.obtenha_e();
+    
+    assert(fabs(pi - 3.14159265358979323846) < 0.0001);
+    assert(fabs(e - 2.71828182845904523536) < 0.0001);
+    assert(fabs(GerenciadorMatematica.obtenha_raiz_2() - 1.41421356237309504880) < 0.0001);
+    
+    printf("✓ Constantes matemáticas passaram\n");
+}
+
+// Função principal de teste
+Inteiro main() {
+    printf("=== Teste do GerenciadorMatematica ===\n");
+    
+    teste_funcoes_basicas();
+    teste_funcoes_trigonometricas();
+    teste_funcoes_logaritmicas();
+    teste_funcoes_arredondamento();
+    teste_funcoes_classificacao();
+    teste_constantes_matematicas();
+    
+    printf("=== Todos os testes passaram! ===\n");
+    Retorne 0;
+}
+
+#FimSe

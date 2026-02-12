@@ -1,0 +1,51 @@
+#SeNãoDefinido Convencional_Texto_GerenciadorTexto
+#Defina Convencional_Texto_GerenciadorTexto
+
+// Importação
+Externo Inteiro strlen(Imutável Caractere *s);
+Externo Caractere *strcpy(Caractere *destino, Imutável Caractere *origem);
+Externo Caractere *strncpy(Caractere *destino, Imutável Caractere *origem, Inteiro n);
+Externo Caractere *strcat(Caractere *destino, Imutável Caractere *origem);
+Externo Inteiro strcmp(Imutável Caractere *s1, Imutável Caractere *s2);
+Externo Inteiro strncmp(Imutável Caractere *s1, Imutável Caractere *s2, Inteiro n);
+Externo Caractere *strchr(Imutável Caractere *s, Inteiro c);
+Externo Caractere *strstr(Imutável Caractere *palheiro, Imutável Caractere *agulha);
+Externo Caractere *strdup(Imutável Caractere *s);
+
+// Wrappers
+Inteiro texto_obtenha_tamanho(Imutável Caractere *s) { Retorne strlen(s); }
+Caractere *texto_copie_texto(Caractere *d, Imutável Caractere *o) { Retorne strcpy(d, o); }
+Caractere *texto_copie_texto_limitado(Caractere *d, Imutável Caractere *o, Inteiro n) { Retorne strncpy(d, o, n); }
+Caractere *texto_concatene_texto(Caractere *d, Imutável Caractere *o) { Retorne strcat(d, o); }
+Inteiro texto_compare_texto(Imutável Caractere *s1, Imutável Caractere *s2) { Retorne strcmp(s1, s2); }
+Inteiro texto_compare_texto_limitado(Imutável Caractere *s1, Imutável Caractere *s2, Inteiro n) { Retorne strncmp(s1, s2, n); }
+Caractere *texto_busque_caractere(Imutável Caractere *s, Inteiro c) { Retorne strchr(s, c); }
+Caractere *texto_busque_texto(Imutável Caractere *p, Imutável Caractere *a) { Retorne strstr(p, a); }
+Caractere *texto_duplique_texto(Imutável Caractere *s) { Retorne strdup(s); }
+
+// Namespace
+Pseudônimo Estrutura {
+    Inteiro (*obtenha_tamanho)(Imutável Caractere *s);
+    Caractere *(*copie)(Caractere *d, Imutável Caractere *o);
+    Caractere *(*copie_limitado)(Caractere *d, Imutável Caractere *o, Inteiro n);
+    Caractere *(*concatene)(Caractere *d, Imutável Caractere *o);
+    Inteiro (*compare)(Imutável Caractere *s1, Imutável Caractere *s2);
+    Inteiro (*compare_limitado)(Imutável Caractere *s1, Imutável Caractere *s2, Inteiro n);
+    Caractere *(*busque_caractere)(Imutável Caractere *s, Inteiro c);
+    Caractere *(*busque_texto)(Imutável Caractere *p, Imutável Caractere *a);
+    Caractere *(*duplique)(Imutável Caractere *s);
+} ModeloGerenciadorTexto;
+
+ModeloGerenciadorTexto GerenciadorTexto = {
+    .obtenha_tamanho = texto_obtenha_tamanho,
+    .copie = texto_copie_texto,
+    .copie_limitado = texto_copie_texto_limitado,
+    .concatene = texto_concatene_texto,
+    .compare = texto_compare_texto,
+    .compare_limitado = texto_compare_texto_limitado,
+    .busque_caractere = texto_busque_caractere,
+    .busque_texto = texto_busque_texto,
+    .duplique = texto_duplique_texto
+};
+
+#FimSe

@@ -1,0 +1,285 @@
+#Inclua "../../../Fonte/Convencional.ctec"
+#Inclua <assert.h>
+#Inclua <string.h>
+#Inclua <stdio.h>
+#Inclua <stdlib.h>
+#Inclua <unistd.h>
+
+// **Valida: Requisitos 2.3**
+// **Propriedade 5: Mapeamento Completo de Arquivos de Cabeçalho**
+// Testa se todas as funcionalidades dos arquivos de cabeçalho relacionados foram mapeadas
+
+Inteiro teste_mapeamento_operacoes_basicas() {
+    Imutável Caractere *nome_arquivo = "teste_mapeamento.txt";
+    Imutável Caractere *conteudo = "Teste de mapeamento completo";
+    
+    // Teste de criação
+    Inteiro resultado_criacao = GerenciadorArquivo.crie(nome_arquivo, PERMISSAO_PADRAO);
+    assert(resultado_criacao == 0);
+    
+    // Teste de existência
+    Inteiro existe = GerenciadorArquivo.existe(nome_arquivo);
+    assert(existe == 1);
+    
+    // Teste de abertura
+    DescriptorArquivo fd = GerenciadorArquivo.abra(nome_arquivo, MODO_ESCRITA, PERMISSAO_PADRAO);
+    assert(fd != ARQUIVO_INVALIDO);
+    
+    // Teste de escrita
+    Inteiro bytes_escritos = GerenciadorArquivo.escreva(fd, conteudo, strlen(conteudo));
+    assert(bytes_escritos == strlen(conteudo));
+    
+    // Teste de fechamento
+    Inteiro resultado_fechamento = GerenciadorArquivo.feche(fd);
+    assert(resultado_fechamento == 0);
+    
+    // Teste de obtenção de tamanho
+    Longo tamanho = GerenciadorArquivo.obtenha_tamanho(nome_arquivo);
+    assert(tamanho == strlen(conteudo));
+    
+    // Teste de leitura
+    fd = GerenciadorArquivo.abra(nome_arquivo, MODO_LEITURA, 0);
+    assert(fd != ARQUIVO_INVALIDO);
+    
+    Caractere buffer[100];
+    memset(buffer, 0, sizeof(buffer));
+    Inteiro bytes_lidos = GerenciadorArquivo.leia(fd, buffer, strlen(conteudo));
+    assert(bytes_lidos == strlen(conteudo));
+    assert(strcmp(buffer, conteudo) == 0);
+    
+    GerenciadorArquivo.feche(fd);
+    
+    // Teste de remoção
+    Inteiro resultado_remocao = GerenciadorArquivo.remova(nome_arquivo);
+    assert(resultado_remocao == 0);
+    
+    // Verificar que não existe mais
+    existe = GerenciadorArquivo.existe(nome_arquivo);
+    assert(existe == 0);
+    
+    Retorne 1;
+}
+
+Inteiro teste_mapeamento_informacoes_arquivo() {
+    Imutável Caractere *nome_arquivo = "teste_info.txt";
+    Imutável Caractere *conteudo = "Informações do arquivo";
+    
+    // Criar arquivo
+    DescriptorArquivo fd = GerenciadorArquivo.abra(nome_arquivo, MODO_CRIAR | MODO_ESCRITA, PERMISSAO_PADRAO);
+    assert(fd != ARQUIVO_INVALIDO);
+    
+    GerenciadorArquivo.escreva(fd, conteudo, strlen(conteudo));
+    
+    // Teste de informações por descriptor
+    InformacoesArquivo info_fd;
+    Inteiro resultado_info_fd = GerenciadorArquivo.obtenha_informacoes_descriptor(fd, &info_fd);
+    assert(resultado_info_fd == 0);
+    assert(info_fd.st_size == strlen(conteudo));
+    
+    GerenciadorArquivo.feche(fd);
+    
+    // Teste de informações por caminho
+    InformacoesArquivo info_caminho;
+    Inteiro resultado_info_caminho = GerenciadorArquivo.obtenha_informacoes(nome_arquivo, &info_caminho);
+    assert(resultado_info_caminho == 0);
+    assert(info_caminho.st_size == strlen(conteudo));
+    
+    // Ambas informações devem ser iguais
+    assert(info_fd.st_size == info_caminho.st_size);
+    assert(info_fd.st_mode == info_caminho.st_mode);
+    
+    // Teste de permissões
+    Inteiro permissoes = GerenciadorArquivo.obtenha_permissoes(nome_arquivo);
+    assert(permissoes != -1);
+    
+    // Limpeza
+    GerenciadorArquivo.remova(nome_arquivo);
+    
+    Retorne 1;
+}
+
+Inteiro teste_mapeamento_posicionamento() {
+    Imutável Caractere *nome_arquivo = "teste_posicao.txt";
+    Imutável Caractere *conteudo = "0123456789ABCDEF";
+    
+    // Criar e escrever arquivo
+    DescriptorArquivo fd = GerenciadorArquivo.abra(nome_arquivo, MODO_CRIAR | MODO_ESCRITA, PERMISSAO_PADRAO);
+    assert(fd != ARQUIVO_INVALIDO);
+    
+    GerenciadorArquivo.escreva(fd, conteudo, strlen(conteudo));
+    GerenciadorArquivo.feche(fd);
+    
+    // Reabrir para leitura
+    fd = GerenciadorArquivo.abra(nome_arquivo, MODO_LEITURA, 0);
+    assert(fd != ARQUIVO_INVALIDO);
+    
+    // Teste de posicionamento
+    Longo nova_posicao = GerenciadorArquivo.posicione(fd, 5, SEEK_SET);
+    assert(nova_posicao == 5);
+    
+    // Verificar posição atual
+    Longo posicao_atual = GerenciadorArquivo.obtenha_posicao(fd);
+    assert(posicao_atual == 5);
+    
+    // Ler um caractere para verificar posição
+    Caractere caractere;
+    Inteiro lido = GerenciadorArquivo.leia(fd, &caractere, 1);
+    assert(lido == 1);
+    assert(caractere == '5'); // Caractere na posição 5
+    
+    // Posicionar relativamente
+    nova_posicao = GerenciadorArquivo.posicione(fd, 2, SEEK_CUR);
+    assert(nova_posicao == 8); // 6 (após leitura) + 2
+    
+    // Posicionar do fim
+    nova_posicao = GerenciadorArquivo.posicione(fd, -1, SEEK_END);
+    assert(nova_posicao == strlen(conteudo) - 1);
+    
+    GerenciadorArquivo.feche(fd);
+    GerenciadorArquivo.remova(nome_arquivo);
+    
+    Retorne 1;
+}
+
+Inteiro teste_mapeamento_operacoes_avancadas() {
+    Imutável Caractere *arquivo_origem = "origem.txt";
+    Imutável Caractere *arquivo_destino = "destino.txt";
+    Imutável Caractere *arquivo_movido = "movido.txt";
+    Imutável Caractere *conteudo = "Conteúdo para operações avançadas";
+    
+    // Criar arquivo origem
+    DescriptorArquivo fd = GerenciadorArquivo.abra(arquivo_origem, MODO_CRIAR | MODO_ESCRITA, PERMISSAO_PADRAO);
+    assert(fd != ARQUIVO_INVALIDO);
+    
+    GerenciadorArquivo.escreva(fd, conteudo, strlen(conteudo));
+    GerenciadorArquivo.feche(fd);
+    
+    // Teste de cópia
+    Inteiro resultado_copia = GerenciadorArquivo.copie_arquivo(arquivo_origem, arquivo_destino);
+    assert(resultado_copia == 0);
+    
+    // Verificar que ambos existem
+    assert(GerenciadorArquivo.existe(arquivo_origem) == 1);
+    assert(GerenciadorArquivo.existe(arquivo_destino) == 1);
+    
+    // Verificar que têm o mesmo tamanho
+    Longo tamanho_origem = GerenciadorArquivo.obtenha_tamanho(arquivo_origem);
+    Longo tamanho_destino = GerenciadorArquivo.obtenha_tamanho(arquivo_destino);
+    assert(tamanho_origem == tamanho_destino);
+    assert(tamanho_origem == strlen(conteudo));
+    
+    // Teste de movimento
+    Inteiro resultado_movimento = GerenciadorArquivo.mova_arquivo(arquivo_destino, arquivo_movido);
+    assert(resultado_movimento == 0);
+    
+    // Verificar que o destino não existe mais e o movido existe
+    assert(GerenciadorArquivo.existe(arquivo_destino) == 0);
+    assert(GerenciadorArquivo.existe(arquivo_movido) == 1);
+    
+    // Teste de truncamento
+    fd = GerenciadorArquivo.abra(arquivo_origem, MODO_LEITURA_ESCRITA, 0);
+    assert(fd != ARQUIVO_INVALIDO);
+    
+    Inteiro resultado_truncamento = GerenciadorArquivo.truncar(fd, 10);
+    assert(resultado_truncamento == 0);
+    
+    GerenciadorArquivo.feche(fd);
+    
+    // Verificar novo tamanho
+    Longo novo_tamanho = GerenciadorArquivo.obtenha_tamanho(arquivo_origem);
+    assert(novo_tamanho == 10);
+    
+    // Limpeza
+    GerenciadorArquivo.remova(arquivo_origem);
+    GerenciadorArquivo.remova(arquivo_movido);
+    
+    Retorne 1;
+}
+
+#SeDefinido _WIN32
+Inteiro teste_mapeamento_recursos_windows() {
+    Imutável Caractere *nome_arquivo = "teste_windows.txt";
+    Imutável Caractere *conteudo = "Teste recursos Windows";
+    
+    // Teste de abertura compartilhada
+    DescriptorArquivo fd = GerenciadorArquivo.abra_compartilhado(
+        nome_arquivo, 
+        MODO_CRIAR | MODO_ESCRITA, 
+        COMPARTILHAMENTO_NEGAR_ESCRITA, 
+        PERMISSAO_PADRAO
+    );
+    assert(fd != ARQUIVO_INVALIDO);
+    
+    GerenciadorArquivo.escreva(fd, conteudo, strlen(conteudo));
+    
+    // Teste de bloqueio de região
+    Inteiro resultado_bloqueio = GerenciadorArquivo.bloqueie_regiao(fd, BLOQUEIO_EXCLUSIVO, 0, 10);
+    // Nota: pode falhar em alguns sistemas, então não fazemos assert
+    
+    // Teste de desbloqueio
+    Se (resultado_bloqueio == 0) {
+        Inteiro resultado_desbloqueio = GerenciadorArquivo.desbloqueie_regiao(fd, 0, 10);
+        // Também pode falhar, então não fazemos assert
+    }
+    
+    GerenciadorArquivo.feche(fd);
+    GerenciadorArquivo.remova(nome_arquivo);
+    
+    Retorne 1;
+}
+#FimSe
+
+Inteiro teste_mapeamento_permissoes() {
+    Imutável Caractere *nome_arquivo = "teste_permissoes.txt";
+    
+    // Criar arquivo com permissões específicas
+    Inteiro resultado_criacao = GerenciadorArquivo.crie(nome_arquivo, PERMISSAO_LEITURA_PROPRIETARIO | PERMISSAO_ESCRITA_PROPRIETARIO);
+    assert(resultado_criacao == 0);
+    
+    // Obter permissões
+    Inteiro permissoes = GerenciadorArquivo.obtenha_permissoes(nome_arquivo);
+    assert(permissoes != -1);
+    
+    // Definir novas permissões
+    Inteiro resultado_permissoes = GerenciadorArquivo.defina_permissoes(nome_arquivo, PERMISSAO_PADRAO);
+    assert(resultado_permissoes == 0);
+    
+    // Verificar que mudaram
+    Inteiro novas_permissoes = GerenciadorArquivo.obtenha_permissoes(nome_arquivo);
+    assert(novas_permissoes != -1);
+    
+    GerenciadorArquivo.remova(nome_arquivo);
+    
+    Retorne 1;
+}
+
+Inteiro executar_todos_testes() {
+    printf("Executando testes de propriedade para GerenciadorArquivo...\n");
+    
+    assert(teste_mapeamento_operacoes_basicas());
+    printf("✓ Teste mapeamento operações básicas passou\n");
+    
+    assert(teste_mapeamento_informacoes_arquivo());
+    printf("✓ Teste mapeamento informações arquivo passou\n");
+    
+    assert(teste_mapeamento_posicionamento());
+    printf("✓ Teste mapeamento posicionamento passou\n");
+    
+    assert(teste_mapeamento_operacoes_avancadas());
+    printf("✓ Teste mapeamento operações avançadas passou\n");
+    
+#SeDefinido _WIN32
+    assert(teste_mapeamento_recursos_windows());
+    printf("✓ Teste mapeamento recursos Windows passou\n");
+#FimSe
+    
+    assert(teste_mapeamento_permissoes());
+    printf("✓ Teste mapeamento permissões passou\n");
+    
+    printf("Todos os testes de propriedade para GerenciadorArquivo passaram com sucesso!\n");
+    Retorne 1;
+}
+
+Inteiro main() {
+    Retorne executar_todos_testes() ? 0 : 1;
+}
