@@ -1,5 +1,0 @@
-#Inclua<stdio.h>
-
-Prioridade Inteiro r = 3;
-
-Inteiro Início(){ printf("31_Prioridade=%d\n", r); Retorne 0; }

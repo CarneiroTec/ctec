@@ -1,7 +1,0 @@
-#Inclua<stdio.h>
-
-Inteiro Início(){
-    Curto s = 7;
-    printf("03_Curto=%d\n", s);
-    Retorne 0;
-}

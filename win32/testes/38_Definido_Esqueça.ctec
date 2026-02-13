@@ -1,9 +1,0 @@
-#Inclua<stdio.h>
-
-#Defina Z 3
-#SeDefinido Z
-  #Aviso "Z definido"
-#FimSe
-#Esqueça Z
-
-Inteiro Início(){ printf("38_Definido_Esqueça OK\n"); Retorne 0; }

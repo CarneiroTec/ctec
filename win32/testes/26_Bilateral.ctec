@@ -1,5 +1,0 @@
-#Inclua<stdio.h>
-
-Bilateral Inteiro s = -1;
-
-Inteiro Início(){ printf("26_Bilateral=%d\n", s); Retorne 0; }

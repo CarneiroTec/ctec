@@ -1,5 +1,0 @@
-#Inclua<stdio.h>
-
-Pseudônimo Inteiro Meu;
-
-Inteiro Início(){ Meu v = 9; printf("19_Pseudônimo=%d\n", v); Retorne 0; }

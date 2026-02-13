@@ -1,7 +1,0 @@
-#Inclua<stdio.h>
-
-Inteiro Início(){
-    Inteiro i = 0;
-    Enquanto (i < 2) { printf("14_Enquanto i=%d\n", i); i = i + 1; }
-    Retorne 0;
-}
