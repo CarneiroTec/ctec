@@ -16,222 +16,238 @@
     <main>
         <section>
             <h2>Padrão de Projetos CTEC</h2>
-            <article>
-                <h3>1. Básico</h3>
-                <ul>
-                    <li>Compilador - ctec</li>
-                    <li>Função de Entrada - Início()</li>
-                    <li>Case Sensitive - Sim</li>
-                    <li>Tipagem - Forte e Estática</li>
-                    <li>Idioma - Português Brasileiro Acentuado sem Anglicismos (Exceção de nomes de arquivos que devem
-                        ser sem acentos)</li>
-                </ul>
-            </article>
-            <article>
-                <h3>2. Arquitetura de Pastas</h3>
-                <ul>
-                    <li><strong>./Inicio.ctec</strong></li>
-                    <li><strong>./LEIAME.md</strong></li>
-                    <li><strong>./Projeto.nds</strong></li>
-                    <li><strong>./Dependencia/</strong>
+            <ul>
+                <li>
+                    <article>
+                        <h3>Básico</h3>
                         <ul>
-                            <li>Autocarregamento.ctec</li>
+                            <li>Compilador - ctec</li>
+                            <li>Função de Entrada - Início()</li>
+                            <li>Case Sensitive - Sim</li>
+                            <li>Tipagem - Forte e Estática</li>
+                            <li>Idioma - Português Brasileiro Acentuado sem Anglicismos (Exceção de nomes de arquivos que devem
+                                ser sem acentos)</li>
                         </ul>
-                    </li>
-                    <li><strong>./Fonte/</strong>
+                    </article>
+                </li>
+                <li>
+                    <article>
+                        <h3>Arquitetura de Pastas</h3>
                         <ul>
-                            <li>[Pastas de Módulos]</li>
-                            <li>[NomeDoProjeto].ctec</li>
-                        </ul>
-                    </li>
-                    <li><strong>./Teste/</strong>
-                        <ul>
-                            <li>
-                                <ul>Unidade/
-                                    <li>[Pastas de Módulos] <ul>
-                                            <li>[TesteNomeArquivo].ctec</li>
+                            <li><strong>./APRESENTACAO.md</strong></li>
+                            <li><strong>./Projeto.nds</strong></li>
+                            <li><strong>./Inicio.ctec</strong></li>
+                            <li><strong>./Dependencia/</strong>
+                                <ul>
+                                    <li>Autocarregamento.ctec</li>
+                                </ul>
+                            </li>
+                            <li><strong>./Teste/</strong>
+                                <ul>
+                                    <li>Unidade/
+                                        <ul>
+                                            <li>[Pastas de Módulos] <ul type="1">
+                                                    <li>[TesteNomeArquivo].ctec</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>Integracao/</li>
+                                    <li>Testes.ctec</li>
+                                </ul>
+                            </li>
+                            <li><strong>./Fonte/</strong>
+                                <ul>
+                                    <li>[Pastas de Módulos]</li>
+                                        <ul>
+                                            <li>[NomeModulo].ctec</li>
+                                        </ul>
+                                    <li>[NomeDoProjeto].ctec</li>
+                                </ul>
+                            </li>
+                            <li><strong>./Documentacao/</strong></li>
+                            <li><strong>./Construcao/</strong>
+                                <ul>
+                                    <li>Depuracao/</li>
+                                    <li>Lancamento/</li>
+                                    <li>Biblioteca/
+                                        <ul>
+                                            <li>Dinamica/</li>
+                                            <li>Estatica/</li>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
-                            <li>Integracao/</li>
-                            <li>Testes.ctec</li>
                         </ul>
-                    </li>
-                    <li><strong>./Documentacao/</strong></li>
-                    <li><strong>./Construcao/</strong>
+                    </article>
+                </li>
+                <li>
+                    <article>
+                        <h3>Sintaxe Básica CTEC</h3>
+                        <section>
+                            <h4>Pré-Processadores</h4>
+                            <ul>
+                                <li>#Aviso</li>
+                                <li>#ARQUIVO</li>
+                                <li>#ARGUMENTOS_VARIÁVEIS</li>
+                                <li>#CONTADOR</li>
+                                <li>#DATA</li>
+                                <li>#Defina / #SeDefinido / #SeNãoDefinido / #FimSe</li>
+                                <li>#Diretiva</li>
+                                <li>#Erro</li>
+                                <li>#Esqueça</li>
+                                <li>#LINHA</li>
+                                <li>#FUNÇÃO</li>
+                                <li>#HORA</li>
+                                <li>#Inclua</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Tipos de Dados</h4>
+                            <ul>
+                                <li>Vazio</li>
+                                <li>Lógico</li>
+                                <li>Inteiro</li>
+                                <li>Real</li>
+                                <li>Longo</li>
+                                <li>Duplo</li>
+                                <li>Caractere</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Modificadores de Tipos</h4>
+                            <ul>
+                                <li>Curto</li>
+                                <li>Longo</li>
+                                <li>Natural</li>
+                                <li>Bilateral</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Qualificadores Semânticos</h4>
+                            <ul>
+                                <li>Imutável</li>
+                                <li>Instável</li>
+                                <li>Integrado</li>
+                                <li>Exclusivo</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Especificadores de Ligação</h4>
+                            <ul>
+                                <li>Fixo</li>
+                                <li>Externo</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Estrutura de Dados</h4>
+                            <ul>
+                                <li>Pseudônimo</li>
+                                <li>Estrutura</li>
+                                <li>Enumeração</li>
+                                <li>União</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Ponteiro</h4>
+                            <ul>
+                                <li>Sinal de Ponteiro - *</li>
+                                <li>Operador de Referência (Alias) - &amp;</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Declarações</h4>
+                            <ul>
+                                <li>Variável - [Modificador(Opcional)] [Tipo] [NomeDaVariável (pode ser mais de uma)] = [
+                                    ValorInicial];</li>
+                                <li>Vetor - [Modificador(Opcional)] [Tipo] [NomeDoVetor][Tamanho] = { ValoresIniciais };</li>
+                                <li>Ponteiro - [Modificador(Opcional)] [Tipo] *[NomeDoPonteiro] = [EndereçoInicial];</li>
+                                <li>Referência - [Modificador(Opcional)] [Tipo] [NomeDaReferência] = &amp;[VariávelExistente];
+                                </li>
+                                <li>Inferência - [NomeDaVariável] = ([Nome do Tipo]) [Expressão];</li>
+                                <li>Função - [TipoDeRetorno] [NomeDaFunção]([Parâmetros]) { CorpoDaFunção }</li>
+                                <li>Pseudônimo - Pseudônimo [TipoExistente] [NomeDoPseudônimo];</li>
+                                <li>Estrutura - Estrutura [NomeDaEstrutura] { Campos }</li>
+                                <li>Enumeração - Enumeração [NomeDaEnumação] { Valores }</li>
+                                <li>Inclua 1 - #Inclua &lt;Caminho/Para/Arquivo.ctec&gt;;</li>
+                                <li>Inclua 2 - #Inclua "Caminho/Para/Arquivo.ctec";</li>
+                                <li>União - União [NomeDaUnião] { Campos }</li>
+                                <li>Pseudo-Classe - Pseudônimo Estrutura {
+                                    [Tipo] [Nome da Propriedade];
+                                    [Tipo] (Ponteiros de Função);
+                                    } [NomeDaClasse];
+                                </li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Contrule de Fluxo</h4>
+                            <ul>
+                                <li>Se</li>
+                                <li>Para</li>
+                                <li>Retorne</li>
+                                <li>Execute</li>
+                                <li>Obs.: Não existe Senão, SenãoSe, Enquanto, Faça...Enquanto, Troque...Caso nativos.</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Operadores</h4>
+                            <ul>
+                                <li>Aritméticos: +, -, *, /, %, ++, --</li>
+                                <li>Atribuição: =, +=, -=, *=, /=, %=</li>
+                                <li>Bit a Bit: &amp;, |, ^, ~, &lt;&lt;, &gt;&gt;</li>
+                                <li>Comparação: ==, !=, &gt;, &lt;, &gt;=, &lt;=</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h4>Funções de Compilador (AOT)</h4>
+                            <ul>
+                                <li>Atributo</li>
+                                <li>Identifique</li>
+                                <li>Início</li>
+                                <li>Genérico</li>
+                                <li>Meça</li>
+                                <li>Montador</li>
+                                <li>ObtenhaAlinhamento</li>
+                                <li>afirme_constante</li>
+                                <li>compare_tipo_compatível</li>
+                                <li>esculha_expressão</li>
+                                <li>espere</li>
+                                <li>obtenha_endereço_pilha</li>
+                                <li>obtenha_endereço_retorno</li>
+                            </ul>
+                        </section>
+                    </article>
+                </li>
+                <li>
+                    <article>
+                        <h3>Convenções de Código</h3>
                         <ul>
-                            <li>Depuracao/</li>
-                            <li>Lancamento/</li>
-                            <li>Biblioteca/
-                                <ul>
-                                    <li>Dinamica/</li>
-                                    <li>Estatica/</li>
-                                </ul>
-                            </li>
+                            <li>Nomes de Arquivos: CamelCase.ctec</li>
+                            <li>Nomes de Variáveis: camelCase</li>
+                            <li>Nomes de Constantes: MAIÚSCULO_SOBRELINHADO</li>
+                            <li>Nomes de Funções: snake_case()</li>
+                            <li>Espaço-Nomeado: Prefixo com o nome do módulo ou projeto, seguido de um sublinhado (Exemplo:
+                                Unidade_teste())</li>
+                            <li>Indentação: 4 espaços</li>
+                            <li>Comentários: // para comentários de linha única, /* */ para comentários de múltiplas linhas</li>
+                            <li>Paradigma: Programação OO e Procedural</li>
+                            <li>Padrões de Projeto: Singleton, Fábrica, Observador, Estratégia</li>
+                            <li>Ciclo de Vida: Use chaves {} para delimitar o ciclo de vida de uma variável</li>
                         </ul>
-                    </li>
-                    <li><strong>./Documentacao/</strong></li>
-                </ul>
-                <h3>3. Sintaxe Básica CTEC</h3>
-                <section>
-                    <h4>Pré-Processadores</h4>
-                    <ul>
-                        <li>#Aviso</li>
-                        <li>#ARQUIVO</li>
-                        <li>#ARGUMENTOS_VARIÁVEIS</li>
-                        <li>#CONTADOR</li>
-                        <li>#DATA</li>
-                        <li>#Defina / #SeDefinido / #SeNãoDefinido / #FimSe</li>
-                        <li>#Diretiva</li>
-                        <li>#Erro</li>
-                        <li>#Esqueça</li>
-                        <li>#LINHA</li>
-                        <li>#FUNÇÃO</li>
-                        <li>#HORA</li>
-                        <li>#Inclua</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Tipos de Dados</h4>
-                    <ul>
-                        <li>Vazio</li>
-                        <li>Lógico</li>
-                        <li>Inteiro</li>
-                        <li>Real</li>
-                        <li>Longo</li>
-                        <li>Duplo</li>
-                        <li>Caractere</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Modificadores de Tipos</h4>
-                    <ul>
-                        <li>Curto</li>
-                        <li>Longo</li>
-                        <li>Natural</li>
-                        <li>Bilateral</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Qualificadores Semânticos</h4>
-                    <ul>
-                        <li>Imutável</li>
-                        <li>Instável</li>
-                        <li>Integrado</li>
-                        <li>Exclusivo</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Especificadores de Ligação</h4>
-                    <ul>
-                        <li>Fixo</li>
-                        <li>Externo</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Estrutura de Dados</h4>
-                    <ul>
-                        <li>Pseudônimo</li>
-                        <li>Estrutura</li>
-                        <li>Enumeração</li>
-                        <li>União</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Ponteiro</h4>
-                    <ul>
-                        <li>Sinal de Ponteiro - *</li>
-                        <li>Operador de Referência (Alias) - &amp;</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Declarações</h4>
-                    <ul>
-                        <li>Variável - [Modificador(Opcional)] [Tipo] [NomeDaVariável (pode ser mais de uma)] = [
-                            ValorInicial];</li>
-                        <li>Vetor - [Modificador(Opcional)] [Tipo] [NomeDoVetor][Tamanho] = { ValoresIniciais };</li>
-                        <li>Ponteiro - [Modificador(Opcional)] [Tipo] *[NomeDoPonteiro] = [EndereçoInicial];</li>
-                        <li>Referência - [Modificador(Opcional)] [Tipo] [NomeDaReferência] = &amp;[VariávelExistente];
-                        </li>
-                        <li>Inferência - [NomeDaVariável] = ([Nome do Tipo]) [Expressão];</li>
-                        <li>Função - [TipoDeRetorno] [NomeDaFunção]([Parâmetros]) { CorpoDaFunção }</li>
-                        <li>Pseudônimo - Pseudônimo [TipoExistente] [NomeDoPseudônimo];</li>
-                        <li>Estrutura - Estrutura [NomeDaEstrutura] { Campos }</li>
-                        <li>Enumeração - Enumeração [NomeDaEnumeração] { Valores }</li>
-                        <li>Inclua 1 - #Inclua &lt;Caminho/Para/Arquivo.ctec&gt;;</li>
-                        <li>Inclua 2 - #Inclua "Caminho/Para/Arquivo.ctec";</li>
-                        <li>União - União [NomeDaUnião] { Campos }</li>
-                        <li>Pseudo-Classe - Pseudônimo Estrutura {
-                            [Tipo] [Nome da Propriedade];
-                            [Tipo] (Ponteiros de Função);
-                            } [NomeDaClasse];
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Controle de Fluxo</h4>
-                    <ul>
-                        <li>Se</li>
-                        <li>Para</li>
-                        <li>Retorne</li>
-                        <li>Execute</li>
-                        <li>Obs.: Não existe Senão, SenãoSe, Enquanto, Faça...Enquanto, Troque...Caso nativos.</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Operadores</h4>
-                    <ul>
-                        <li>Aritméticos: +, -, *, /, %, ++, --</li>
-                        <li>Atribuição: =, +=, -=, *=, /=, %=</li>
-                        <li>Bit a Bit: &amp;, |, ^, ~, &lt;&lt;, &gt;&gt;</li>
-                        <li>Comparação: ==, !=, &gt;, &lt;, &gt;=, &lt;=</li>
-                    </ul>
-                </section>
-                <section>
-                    <h4>Funções de Compilador (AOT)</h4>
-                    <ul>
-                        <li>Atributo</li>
-                        <li>Identifique</li>
-                        <li>Início</li>
-                        <li>Genérico</li>
-                        <li>Meça</li>
-                        <li>Montador</li>
-                        <li>ObtenhaAlinhamento</li>
-                        <li>afirme_constante</li>
-                        <li>compare_tipo_compatível</li>
-                        <li>escolha_expressão</li>
-                        <li>espere</li>
-                        <li>obtenha_endereço_pilha</li>
-                        <li>obtenha_endereço_retorno</li>
-                    </ul>
-                </section>
-            </article>
-            <article>
-                <h3>4. Convenções de Código</h3>
-                <ul>
-                    <li>Nomes de Arquivos: CamelCase.ctec</li>
-                    <li>Nomes de Variáveis: camelCase</li>
-                    <li>Nomes de Constantes: MAIÚSCULO_SOBRELINHADO</li>
-                    <li>Nomes de Funções: snake_case()</li>
-                    <li>Espaço-Nomeado: Prefixo com o nome do módulo ou projeto, seguido de um sublinhado (Exemplo:
-                        Unidade_teste())</li>
-                    <li>Indentação: 4 espaços</li>
-                    <li>Comentários: // para comentários de linha única, /* */ para comentários de múltiplas linhas</li>
-                    <li>Paradigma: Programação OO e Procedural</li>
-                    <li>Padrões de Projeto: Singleton, Fábrica, Observador, Estratégia</li>
-                    <li>Ciclo de Vida: Use chaves {} para delimitar o ciclo de vida de uma variável</li>
-                </ul>
-            </article>
-            <article>
-                <h3>5. Boas Práticas</h3>
-                <ul>
-                    <li>Sempre utilize #Inclua para dependências externas.</li>
-                    <li>Mantenha funções curtas e focadas em uma única tarefa.</li>
-                    <li>Realize testes unitários para funções críticas.</li>
-                    <li>Use #Defina somente em extrema necessidade, preferir funções.</li>
-                </ul>
-            </article>
+                    </article>
+                </li>
+                <li>
+                    <article>
+                        <h3>Boas Práticas</h3>
+                        <ul>
+                            <li>Sempre utilize #Inclua para dependências externas.</li>
+                            <li>Mantenha funções curtas e focadas em uma única tarefa.</li>
+                            <li>Realize testes unitários para funções críticas.</li>
+                            <li>Use #Defina somente em extrema necessidade, preferir funções.</li>
+                        </ul>
+                    </article>
+                </li>
+            </ul>
         </section>
     </main>
     <footer>
