@@ -1,5 +1,0 @@
-#Inclua<stdio.h>
-
-Natural Inteiro u = 1;
-
-Inteiro Início(){ printf("28_Natural=%d\n", u); Retorne 0; }

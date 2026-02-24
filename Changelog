@@ -8,7 +8,7 @@ User interface:
 - -include <file> option (Michael Matz)
 - -mno-sse on x86-64 disables use of SSE instructions
 - @listfile support (Vlad Vissoultchev)
-- ctec -ar/-impdef - formerly tiny_xxx tools integrated (grischka)
+- nld -ar/-impdef - formerly tiny_xxx tools integrated (grischka)
 - CPATH, C_INCLUDE_PATH and LIBRARY_PATH environment variables support
   (Andrew Aladjev, Urs Janssen)
 
@@ -18,7 +18,7 @@ Platforms:
    (Thomas Preud'homme, Daniel Glöckner)
 - provide a runtime library for ARM (Thomas Preud'homme)
 - many x86_64 ABI fixes incl. XMM register passing and tests (James Lyon)
-- ABI tests with native compiler using libctec (James Lyon)
+- ABI tests with native compiler using libnld (James Lyon)
 - UNICODE startup code supports wmain and wWinMain (YX Hao)
 - shared libraries for x86_64 (Michael Matz)
 - Bootstrap native Windows 32/64 compiler using Cygwin+gcc (Christian Jullien)
@@ -39,7 +39,7 @@ Features:
 _ _Generic(...) supported (Matthias Gatto)
 
 Licensing:
-- TinyCC partly relicensed to MIT license (See RELICENSING file).
+- Nildo partly relicensed to MIT license (See RELICENSING file).
 
 version 0.9.26:
 
@@ -48,7 +48,7 @@ User interface:
 - -pthread option (same as -D_REENTRANT -lpthread) (Henry Kroll III)
 - -m32/-m64 to re-exec cross compiler (Henry Kroll III)
 - -Wl, Mimic all GNU -option forms supported by ld (Kirill Smelkov)
-- new LIBCTECAPI ctec_set_options() (grischka)
+- new LIBNILDOAPI nld_set_options() (grischka)
 
 Platforms:
 - Many improvements for x86-64 target (Shinichiro Hamaji, Michael Matz, grischka)
@@ -59,7 +59,7 @@ Platforms:
 - Support SELinux (Security-Enhanced Linux) (Henry Kroll III)
 - Support Debian GNU/kFreeBSD kernels (Pierre Chifflier)
 - Support GNU/Hurd kernels (Thomas Preud'homme)
-- Support OSX (ctec -run only) (Milutin Jovanovic)
+- Support OSX (nld -run only) (Milutin Jovanovic)
 - Support multiarch configuration (Thomas Preud'homme)
 - Support out-of-tree build (Akim Demaille)
 
@@ -73,13 +73,13 @@ version 0.9.25:
 
 - first support for x86-64 target (Shinichiro Hamaji)
 - support µClibc
-- split ctec.c into ctec.h libctec.c ctecpp.c ctecgen.c ctec.c
+- split nld.c into nld.h libnld.c nldpp.c nldgen.c nld.c
 - improved preprocess output with linenumbers and spaces preserved
-- ctec_relocate now copies code into user buffer
+- nld_relocate now copies code into user buffer
 - fix bitfields with non-int types and in unions
 - improve ARM cross-compiling (Daniel Glöckner)
 - link stabstr sections from multiple objects
-- better (still limited) support for multiple CTECStates
+- better (still limited) support for multiple NILDOStates
 
 version 0.9.24:
 
@@ -89,20 +89,20 @@ version 0.9.24:
 - -soname linker option (Marc Andre Tanner)
 - Just warn about unknown directives, ignore quotes in #error/#warning
 - Define __STDC_VERSION__=199901L (477)
-- Switch to newer ctecpe.c (includes support for resources)
+- Switch to newer nldpe.c (includes support for resources)
 - Handle backslashes within #include/#error/#warning
 - Import changesets (part 4) 428,457,460,467: defines for openbsd etc.
-- Use _WIN32 for a windows hosted ctec and define it for the PE target,
+- Use _WIN32 for a windows hosted nld and define it for the PE target,
   otherwise define __unix / __linux (Detlef Riekenberg)
 - Import changesets (part 3) 409,410: ARM EABI by Daniel Glöckner
 - Some in-between fixes:
-  CTEC -E no longer hangs with macro calls involving newlines.
+  NILDO -E no longer hangs with macro calls involving newlines.
   (next_nomacro1 now advances the read-pointer with TOK_LINEFEED)
-  Global cast (int g_i = 1LL;) no longer crashes ctec.
+  Global cast (int g_i = 1LL;) no longer crashes nld.
   (nocode_wanted is initially 1, and only 0 for gen_function)
-  On win32 now ctec.exe finds 'include' & 'lib' even if itself is in 'bin'.
-  (new function w32_ctec_lib_path removes 'bin' if detected)
-  Added quick build batch file for mingw (win32/build-ctec.bat)
+  On win32 now nld.exe finds 'include' & 'lib' even if itself is in 'bin'.
+  (new function w32_nld_lib_path removes 'bin' if detected)
+  Added quick build batch file for mingw (win32/build-nld.bat)
   Last added case label optimization (455) produced wrong code. Reverted.
 
 - Import more changesets from Rob Landley's fork (part 2):
@@ -124,9 +124,9 @@ version 0.9.24:
 - Import some changesets from Rob Landley's fork (part 1):
   462: Use LGPL with bcheck.c and il-gen.c
   458: Fix global compound literals (in unary: case '&':) (Andrew Johnson)
-  456: Use return code from ctec_output_file in main() (Michael Somos)
+  456: Use return code from nld_output_file in main() (Michael Somos)
   442: Fix indirections with function pointers (***fn)() (grischka)
-  441: Fix LL left shift in libctec1.c:__shldi3 (grischka)
+  441: Fix LL left shift in libnld1.c:__shldi3 (grischka)
   440: Pass structures and function ptrs through ?: (grischka)
   439: Keep rvalue in bit assignment (bit2 = bit1 = x) (grischka)
   438: Degrade nonportable pointer assignment to warning (grischka)
@@ -215,7 +215,7 @@ version 0.9.19:
 - chars support in assembler (Dave Long)
 - .string, .globl, .section, .text, .data and .bss asm directive
   support (Dave Long)
-- man page generated from ctec-doc.texi
+- man page generated from nld-doc.texi
 - fixed macro argument substitution
 - fixed zero argument macro parsing
 - changed license to LGPL
@@ -232,7 +232,7 @@ version 0.9.18:
 version 0.9.17:
 
 - PLT generation fix
-- ctec doc fixes (Peter Lund)
+- nld doc fixes (Peter Lund)
 - struct parse fix (signaled by Pedro A. Aranda Gutierrez)
 - better _Bool lvalue support (signaled by Alex Measday)
 - function parameters must be converted to pointers (signaled by Neil Brown)
@@ -263,7 +263,7 @@ version 0.9.15:
 - compilation fixes for glibc 2.2, gcc 2.95.3 and gcc 3.2.
 - FreeBSD compile fixes. Makefile patches still missing (Carl Drougge).
 - fixed file type guessing if '.' is in the path.
-- fixed ctec_compile_string()
+- fixed nld_compile_string()
 - add a dummy page in ELF files to fix RX/RW accesses (pageexec at
   freemail dot hu).
 
@@ -308,7 +308,7 @@ version 0.9.12:
 - force '#endif' to be in same file as matching '#if'
 - #include file optimization with '#ifndef #endif' construct detection
 - macro handling optimization
-- added ctec_relocate() and ctec_get_symbol() in libctec.
+- added nld_relocate() and nld_get_symbol() in libnld.
 
 version 0.9.11:
 
@@ -357,7 +357,7 @@ version 0.9.8:
   patches in symbol exporting).
 - First version of ELF loader for object (.o) and archive (.a) files.
 - Support of simple GNU ld scripts (GROUP and FILE commands)
-- Separated runtime library and bound check code from CTEC (smaller
+- Separated runtime library and bound check code from NILDO (smaller
   compiler core).
 - fixed register reload in float compare.
 - fixed implicit char/short to int casting.
@@ -365,17 +365,17 @@ version 0.9.8:
 - fixed unused || or && result.
 - added GCC style variadic macro support.
 - optimized bound checking code for array access.
-- ctec includes are now in $(prefix)/lib/ctec/include.
+- nld includes are now in $(prefix)/lib/nld/include.
 - more command line options - more consistent handling of multiple
   input files.
-- added ctec man page (thanks to Cyril Bouthors).
+- added nld man page (thanks to Cyril Bouthors).
 - uClibc Makefile update
 - converted documentation to texinfo format.
 - added developper's guide in documentation.
 
 version 0.9.7:
 
-- added library API for easy dynamic compilation (see libctec.h - first
+- added library API for easy dynamic compilation (see libnld.h - first
   draft).
 - fixed long long register spill bug.
 - fixed '? :' register spill bug.
@@ -389,7 +389,7 @@ version 0.9.5:
 
  - uClibc patches (submitted by Alfonso Martone).
  - error reporting fix
- - added CONFIG_CTEC_BCHECK to get smaller code if needed.
+ - added CONFIG_NILDO_BCHECK to get smaller code if needed.
 
 version 0.9.4:
 

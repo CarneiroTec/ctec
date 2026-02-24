@@ -1,9 +1,0 @@
-Módulo teste;
-
-Exporte Inteiro soma(Inteiro a, Inteiro b) {
-    Retorne a + b;
-}
-
-Inteiro Início() {
-    Retorne soma(40, 2);
-}

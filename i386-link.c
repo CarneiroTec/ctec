@@ -1,6 +1,6 @@
 #ifdef TARGET_DEFS_ONLY
 
-#define EM_CTEC_TARGET EM_386
+#define EM_NILDO_TARGET EM_386
 
 /* relocation type for 32 bit data relocation */
 #define R_DATA_32   R_386_32
@@ -20,7 +20,7 @@
 
 #else /* !TARGET_DEFS_ONLY */
 
-#include "ctec.h"
+#include "nld.h"
 
 /* Returns 1 for a code relocation, 0 for a data relocation. For unknown
    relocations, returns -1. */
@@ -45,12 +45,12 @@ int code_reloc (int reloc_type)
             return 1;
     }
 
-    ctec_error ("Unknown relocation type: %d", reloc_type);
+    nld_error ("Unknown relocation type: %d", reloc_type);
     return -1;
 }
 
 /* Returns an enumerator to describe whether and when the relocation needs a
-   GOT and/or PLT entry to be created. See ctec.h for a description of the
+   GOT and/or PLT entry to be created. See nld.h for a description of the
    different values. */
 int gotplt_entry_type (int reloc_type)
 {
@@ -82,11 +82,11 @@ int gotplt_entry_type (int reloc_type)
             return ALWAYS_GOTPLT_ENTRY;
     }
 
-    ctec_error ("Unknown relocation type: %d", reloc_type);
+    nld_error ("Unknown relocation type: %d", reloc_type);
     return -1;
 }
 
-ST_FUNC unsigned create_plt_entry(CTECState *s1, unsigned got_offset, struct sym_attr *attr)
+ST_FUNC unsigned create_plt_entry(NILDOState *s1, unsigned got_offset, struct sym_attr *attr)
 {
     Section *plt = s1->plt;
     uint8_t *p;
@@ -94,7 +94,7 @@ ST_FUNC unsigned create_plt_entry(CTECState *s1, unsigned got_offset, struct sym
     unsigned plt_offset, relofs;
 
     /* on i386 if we build a DLL, we add a %ebx offset */
-    if (s1->output_type == CTEC_OUTPUT_DLL)
+    if (s1->output_type == NILDO_OUTPUT_DLL)
         modrm = 0xa3;
     else
         modrm = 0x25;
@@ -132,7 +132,7 @@ ST_FUNC unsigned create_plt_entry(CTECState *s1, unsigned got_offset, struct sym
 
 /* relocate the PLT: compute addresses and offsets in the PLT now that final
    address for PLT and GOT are known (see fill_program_header) */
-ST_FUNC void relocate_plt(CTECState *s1)
+ST_FUNC void relocate_plt(NILDOState *s1)
 {
     uint8_t *p, *p_end;
 
@@ -160,7 +160,7 @@ void relocate_init(Section *sr)
     qrel = (ElfW_Rel *) sr->data;
 }
 
-void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t addr, addr_t val)
+void relocate(NILDOState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t addr, addr_t val)
 {
     int sym_index, esym_index;
 
@@ -168,7 +168,7 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
 
     switch (type) {
         case R_386_32:
-            if (s1->output_type == CTEC_OUTPUT_DLL) {
+            if (s1->output_type == NILDO_OUTPUT_DLL) {
                 esym_index = s1->sym_attrs[sym_index].dyn_index;
                 qrel->r_offset = rel->r_offset;
                 if (esym_index) {
@@ -183,7 +183,7 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
             add32le(ptr, val);
             return;
         case R_386_PC32:
-            if (s1->output_type == CTEC_OUTPUT_DLL) {
+            if (s1->output_type == NILDO_OUTPUT_DLL) {
                 /* DLL relocation */
                 esym_index = s1->sym_attrs[sym_index].dyn_index;
                 if (esym_index) {
@@ -214,19 +214,19 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
             add32le(ptr, s1->sym_attrs[sym_index].got_offset);
             return;
         case R_386_16:
-            if (s1->output_format != CTEC_OUTPUT_FORMAT_BINARY) {
+            if (s1->output_format != NILDO_OUTPUT_FORMAT_BINARY) {
             output_file:
-                ctec_error("can only produce 16-bit binary files");
+                nld_error("can only produce 16-bit binary files");
             }
             write16le(ptr, read16le(ptr) + val);
             return;
         case R_386_PC16:
-            if (s1->output_format != CTEC_OUTPUT_FORMAT_BINARY)
+            if (s1->output_format != NILDO_OUTPUT_FORMAT_BINARY)
                 goto output_file;
             write16le(ptr, read16le(ptr) + val - addr);
             return;
         case R_386_RELATIVE:
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
             add32le(ptr, val - s1->pe_imagebase);
 #endif
             /* do nothing */

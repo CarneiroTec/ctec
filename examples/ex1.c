@@ -1,5 +1,5 @@
-#!/usr/local/bin/ctec -run
-#include <cteclib.h>
+#!/usr/local/bin/nld -run
+#include <nldlib.h>
 
 int main()
 {

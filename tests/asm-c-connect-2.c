@@ -13,7 +13,7 @@ int x3(void)
 }
 
 /* That callx4 is defined globally (as if ".globl callx4")
-   is a CTEC extension.  GCC doesn't behave like this.  */
+   is a NILDO extension.  GCC doesn't behave like this.  */
 void callx4(void);
 __asm__(_"callx4: call "_"x4; ret;"
 #ifndef __TINYC__

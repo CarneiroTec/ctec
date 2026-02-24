@@ -1,4 +1,0 @@
-#Defina X 1
-#Inclua<stdio.h>
-
-Inteiro Início(){ printf("35_Defina_Inclua X=%d\n", X); Retorne 0; }

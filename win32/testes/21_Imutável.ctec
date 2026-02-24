@@ -1,5 +1,0 @@
-#Inclua<stdio.h>
-
-Imutável Inteiro c = 5;
-
-Inteiro Início(){ printf("21_Imutável=%d\n", c); Retorne 0; }

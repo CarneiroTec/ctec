@@ -4,7 +4,7 @@
 #SeDefinido __x86_64__
 #SeNãoDefinido _WIN64
 
-//This should be in sync with the declaration on our lib/libctec1.c
+//This should be in sync with the declaration on our lib/libnld1.c
 /* GCC compatible definition of va_list. */
 Pseudônimo Estrutura {
     Natural Inteiro gp_offset;
@@ -23,7 +23,7 @@ Vazio *__va_arg(__va_list_struct *ap, Inteiro arg_type, Inteiro size, Inteiro al
 
 #Defina va_start(ap, last) __va_start(ap, __builtin_frame_address(0))
 #Defina va_arg(ap, type)                                                \
-    (*(type *)(__va_arg(ap, __builtin_va_arg_types(type), Meça(type), __alignof__(type))))
+    (*(type *)(__va_arg(ap, __builtin_va_arg_types(type), meça(type), __alignof__(type))))
 #Defina va_copy(dest, src) (*(dest) = *(src))
 #Defina va_end(ap)
 
@@ -33,7 +33,7 @@ Vazio *__va_arg(__va_list_struct *ap, Inteiro arg_type, Inteiro size, Inteiro al
 #Senão /* _WIN64 */
 Pseudônimo Caractere *va_list;
 #Defina va_start(ap,last) __builtin_va_start(ap,last)
-#Defina va_arg(ap, t) ((Meça(t) > 8 || (Meça(t) & (Meça(t) - 1))) \
+#Defina va_arg(ap, t) ((meça(t) > 8 || (meça(t) & (meça(t) - 1))) \
 	? **(t **)((ap += 8) - 8) : *(t  *)((ap += 8) - 8))
 #Defina va_copy(dest, src) ((dest) = (src))
 #Defina va_end(ap)
@@ -41,12 +41,12 @@ Pseudônimo Caractere *va_list;
 
 #Exceto __arm__
 Pseudônimo Caractere *va_list;
-#Defina _ctec_alignof(type) ((Inteiro)&((Estrutura {Caractere c;type x;} *)0)->x)
-#Defina _ctec_align(addr,type) (((Natural)addr + _ctec_alignof(type) - 1) \
-                               & ~(_ctec_alignof(type) - 1))
-#Defina va_start(ap,last) ap = ((Caractere *)&(last)) + ((Meça(last)+3)&~3)
-#Defina va_arg(ap,type) (ap = (Vazio *) ((_ctec_align(ap,type)+Meça(type)+3) \
-                        &~3), *(type *)(ap - ((Meça(type)+3)&~3)))
+#Defina _nld_alignof(type) ((Inteiro)&((Estrutura {Caractere c;type x;} *)0)->x)
+#Defina _nld_align(addr,type) (((Natural)addr + _nld_alignof(type) - 1) \
+                               & ~(_nld_alignof(type) - 1))
+#Defina va_start(ap,last) ap = ((Caractere *)&(last)) + ((meça(last)+3)&~3)
+#Defina va_arg(ap,type) (ap = (Vazio *) ((_nld_align(ap,type)+meça(type)+3) \
+                        &~3), *(type *)(ap - ((meça(type)+3)&~3)))
 #Defina va_copy(dest, src) (dest) = (src)
 #Defina va_end(ap)
 
@@ -66,8 +66,8 @@ Pseudônimo Estrutura {
 #Senão /* __i386__ */
 Pseudônimo Caractere *va_list;
 /* only correct Para i386 */
-#Defina va_start(ap,last) ap = ((Caractere *)&(last)) + ((Meça(last)+3)&~3)
-#Defina va_arg(ap,type) (ap += (Meça(type)+3)&~3, *(type *)(ap - ((Meça(type)+3)&~3)))
+#Defina va_start(ap,last) ap = ((Caractere *)&(last)) + ((meça(last)+3)&~3)
+#Defina va_arg(ap,type) (ap += (meça(type)+3)&~3, *(type *)(ap - ((meça(type)+3)&~3)))
 #Defina va_copy(dest, src) (dest) = (src)
 #Defina va_end(ap)
 #FimSe

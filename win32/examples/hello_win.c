@@ -94,7 +94,7 @@ Inteiro APIENTRY WinMain(
     // Fill in window class structure with parameters that describe
     // the main window.
 
-    ZeroMemory(&wc, Meça wc);
+    ZeroMemory(&wc, meça wc);
     wc.hInstance     = hInstance;
     wc.lpszClassName = szAppName;
     wc.lpfnWndProc   = (WNDPROC)WndProc;

@@ -49,10 +49,10 @@ Externo "C" {
 
 
 #SeDefinido _WIN64
-#Defina MAX_NATURAL_ALIGNMENT Meça(ULONGLONG)
+#Defina MAX_NATURAL_ALIGNMENT meça(ULONGLONG)
 #Defina MEMORY_ALLOCATION_ALIGNMENT 16
 #Senão
-#Defina MAX_NATURAL_ALIGNMENT Meça(DWORD)
+#Defina MAX_NATURAL_ALIGNMENT meça(DWORD)
 #Defina MEMORY_ALLOCATION_ALIGNMENT 8
 #FimSe
 
@@ -90,7 +90,7 @@ Externo "C" {
 #FimSe
 
 #SeNãoDefinido DECLSPEC_ALIGN
-#Defina DECLSPEC_ALIGN(x) Atributo ((aligned(x)))
+#Defina DECLSPEC_ALIGN(x) atribua ((aligned(x)))
 #FimSe
 
 #SeNãoDefinido SYSTEM_CACHE_ALIGNMENT_SIZE
@@ -415,10 +415,10 @@ Pseudônimo DWORD LCID;
 #Defina MAXDWORD 0xffffffff
 
 #Defina FIELD_OFFSET(type,field) ((LONG)(LONG_PTR)&(((type *)0)->field))
-#Defina RTL_FIELD_SIZE(type,field) (Meça(((type *)0)->field))
+#Defina RTL_FIELD_SIZE(type,field) (meça(((type *)0)->field))
 #Defina RTL_SIZEOF_THROUGH_FIELD(type,field) (FIELD_OFFSET(type,field) + RTL_FIELD_SIZE(type,field))
-#Defina RTL_CONTAINS_FIELD(Struct,Size,Field) ((((PCHAR)(&(Struct)->Field)) + Meça((Struct)->Field)) <= (((PCHAR)(Struct))+(Size)))
-#Defina RTL_NUMBER_OF_V1(A) (Meça(A)/Meça((A)[0]))
+#Defina RTL_CONTAINS_FIELD(Struct,Size,Field) ((((PCHAR)(&(Struct)->Field)) + meça((Struct)->Field)) <= (((PCHAR)(Struct))+(Size)))
+#Defina RTL_NUMBER_OF_V1(A) (meça(A)/meça((A)[0]))
 #Defina RTL_NUMBER_OF_V2(A) RTL_NUMBER_OF_V1(A)
 
 #SeDefinido ENABLE_RTL_NUMBER_OF_V2
@@ -440,7 +440,7 @@ Pseudônimo DWORD LCID;
 #Defina RTL_CONST_CAST(type) (type)
 #FimSe
 
-#Defina RTL_BITS_OF(sizeOfArg) (Meça(sizeOfArg) *8)
+#Defina RTL_BITS_OF(sizeOfArg) (meça(sizeOfArg) *8)
 #Defina RTL_BITS_OF_FIELD(type,field) (RTL_BITS_OF(RTL_FIELD_TYPE(type,field)))
 #Defina CONTAINING_RECORD(address,type,field) ((type *)((PCHAR)(address) - (ULONG_PTR)(&((type *)0)->field)))
 
@@ -1334,7 +1334,7 @@ Pseudônimo DWORD LCID;
     BYTE Reserved4[96];
   } XMM_SAVE_AREA32,*PXMM_SAVE_AREA32;
 
-#Defina LEGACY_SAVE_AREA_LENGTH Meça(XMM_SAVE_AREA32)
+#Defina LEGACY_SAVE_AREA_LENGTH meça(XMM_SAVE_AREA32)
 
   Pseudônimo DECLSPEC_ALIGN(16) Estrutura _CONTEXT {
     DWORD64 P1Home;
@@ -2096,7 +2096,7 @@ Pseudônimo DWORD LCID;
 #Defina SID_MAX_SUB_AUTHORITIES (15)
 #Defina SID_RECOMMENDED_SUB_AUTHORITIES (1)
 
-#Defina SECURITY_MAX_SID_SIZE (Meça(SID) - Meça(DWORD) + (SID_MAX_SUB_AUTHORITIES *Meça(DWORD)))
+#Defina SECURITY_MAX_SID_SIZE (meça(SID) - meça(DWORD) + (SID_MAX_SUB_AUTHORITIES *meça(DWORD)))
 
     Pseudônimo Enumeração _SID_NAME_USE {
       SidTypeUser = 1,SidTypeGroup,SidTypeDomain,SidTypeAlias,SidTypeWellKnownGroup,SidTypeDeletedAccount,SidTypeInvalid,SidTypeUnknown,SidTypeComputer
@@ -2479,7 +2479,7 @@ Pseudônimo DWORD LCID;
 #Defina SECURITY_DESCRIPTOR_REVISION (1)
 #Defina SECURITY_DESCRIPTOR_REVISION1 (1)
 
-#Defina SECURITY_DESCRIPTOR_MIN_LENGTH (Meça(SECURITY_DESCRIPTOR))
+#Defina SECURITY_DESCRIPTOR_MIN_LENGTH (meça(SECURITY_DESCRIPTOR))
 
     Pseudônimo WORD SECURITY_DESCRIPTOR_CONTROL,*PSECURITY_DESCRIPTOR_CONTROL;
 
@@ -2681,8 +2681,8 @@ Pseudônimo DWORD LCID;
       TOKEN_AUDIT_POLICY_ELEMENT Policy[ANYSIZE_ARRAY];
     } TOKEN_AUDIT_POLICY,*PTOKEN_AUDIT_POLICY;
 
-#Defina PER_USER_AUDITING_POLICY_SIZE(p) (Meça(TOKEN_AUDIT_POLICY) + (((p)->PolicyCount > ANYSIZE_ARRAY) ? (Meça(TOKEN_AUDIT_POLICY_ELEMENT) *((p)->PolicyCount - ANYSIZE_ARRAY)) : 0))
-#Defina PER_USER_AUDITING_POLICY_SIZE_BY_COUNT(C) (Meça(TOKEN_AUDIT_POLICY) + (((C) > ANYSIZE_ARRAY) ? (Meça(TOKEN_AUDIT_POLICY_ELEMENT) *((C) - ANYSIZE_ARRAY)) : 0))
+#Defina PER_USER_AUDITING_POLICY_SIZE(p) (meça(TOKEN_AUDIT_POLICY) + (((p)->PolicyCount > ANYSIZE_ARRAY) ? (meça(TOKEN_AUDIT_POLICY_ELEMENT) *((p)->PolicyCount - ANYSIZE_ARRAY)) : 0))
+#Defina PER_USER_AUDITING_POLICY_SIZE_BY_COUNT(C) (meça(TOKEN_AUDIT_POLICY) + (((C) > ANYSIZE_ARRAY) ? (meça(TOKEN_AUDIT_POLICY_ELEMENT) *((C) - ANYSIZE_ARRAY)) : 0))
 
 #Defina TOKEN_SOURCE_LENGTH 8
 
@@ -5706,7 +5706,7 @@ Pseudônimo DWORD LCID;
 #Defina TAPE_DRIVE_REWIND_IMMEDIATE 0x80000008
 
 #Defina TAPE_DRIVE_SET_BLOCK_SIZE 0x80000010
-#Defina TAPE_DRIVE_LOAD_UNLD_IMMED 0x80000020
+#Defina TAPE_DRIVE_LOAD_UNILDO_IMMED 0x80000020
 #Defina TAPE_DRIVE_TENSION_IMMED 0x80000040
 #Defina TAPE_DRIVE_LOCK_UNLK_IMMED 0x80000080
 

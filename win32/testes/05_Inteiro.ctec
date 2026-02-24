@@ -1,7 +1,0 @@
-#Inclua<stdio.h>
-
-Inteiro Início(){
-    Inteiro i = 42;
-    printf("05_Inteiro=%d\n", i);
-    Retorne 0;
-}

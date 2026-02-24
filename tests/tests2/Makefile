@@ -67,8 +67,8 @@ all test tests2.all: $(filter-out $(SKIP),$(TESTS)) ;
 	@echo Test: $*...
 	@$(if $(NORUN),$(T1),$(T2)) $(if $(NODIFF),,$(T3))
 
-T1 = $(CTEC) $(FLAGS) $< -o a.exe && ./a.exe $(ARGS)
-T2 = $(CTEC) $(FLAGS) -run $< $(ARGS)
+T1 = $(NILDO) $(FLAGS) $< -o a.exe && ./a.exe $(ARGS)
+T2 = $(NILDO) $(FLAGS) -run $< $(ARGS)
 T3 = $(FILTER) >$*.output 2>&1 || true \
      && diff -Nbu $(filter %.expect,$^) $*.output \
      && rm -f $*.output $(filter $*.expect,$(GEN-ALWAYS))
@@ -77,7 +77,7 @@ T3 = $(FILTER) >$*.output 2>&1 || true \
 tests2.%+:
 	@$(MAKE) $(call F2,$(call F1,$*)) --no-print-directory
 
-# just run ctec to see the output, e.g. "make tests2.37-"
+# just run nld to see the output, e.g. "make tests2.37-"
 tests2.%-:
 	@$(MAKE) $(call F1,$*) NODIFF=true --no-print-directory
 
@@ -94,10 +94,10 @@ F2 = $1 UPDATE="$(patsubst %.test,%.expect,$1)"
 	@$(call GEN,$(SRC)/$*.c) $(FILTER) >$@ 2>&1
 	@rm -f *.exe *.obj *.pdb
 
-# using CTEC for .expect if -dt in FLAGS
-GEN = $(if $(filter -dt,$(FLAGS)),$(GEN-CTEC),$(GEN-CC))
+# using NILDO for .expect if -dt in FLAGS
+GEN = $(if $(filter -dt,$(FLAGS)),$(GEN-NILDO),$(GEN-CC))
 GEN-CC = $(CC) -w -std=gnu99 $(FLAGS) $1 -o a.exe && ./a.exe $(ARGS)
-GEN-CTEC = $(CTEC) $(FLAGS) -run $1 $(ARGS)
+GEN-NILDO = $(NILDO) $(FLAGS) -run $1 $(ARGS)
 GEN-MSC = $(MS-CC) $1 && ./$(basename $@).exe
 MS-CC = cl
 

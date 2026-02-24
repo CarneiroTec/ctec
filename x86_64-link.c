@@ -1,6 +1,6 @@
 #ifdef TARGET_DEFS_ONLY
 
-#define EM_CTEC_TARGET EM_X86_64
+#define EM_NILDO_TARGET EM_X86_64
 
 /* relocation type for 32 bit data relocation */
 #define R_DATA_32   R_X86_64_32S
@@ -20,7 +20,7 @@
 
 #else /* !TARGET_DEFS_ONLY */
 
-#include "ctec.h"
+#include "nld.h"
 
 /* Returns 1 for a code relocation, 0 for a data relocation. For unknown
    relocations, returns -1. */
@@ -52,12 +52,12 @@ int code_reloc (int reloc_type)
             return 1;
     }
 
-    ctec_error ("Unknown relocation type: %d", reloc_type);
+    nld_error ("Unknown relocation type: %d", reloc_type);
     return -1;
 }
 
 /* Returns an enumerator to describe whether and when the relocation needs a
-   GOT and/or PLT entry to be created. See ctec.h for a description of the
+   GOT and/or PLT entry to be created. See nld.h for a description of the
    different values. */
 int gotplt_entry_type (int reloc_type)
 {
@@ -94,11 +94,11 @@ int gotplt_entry_type (int reloc_type)
             return ALWAYS_GOTPLT_ENTRY;
     }
 
-    ctec_error ("Unknown relocation type: %d", reloc_type);
+    nld_error ("Unknown relocation type: %d", reloc_type);
     return -1;
 }
 
-ST_FUNC unsigned create_plt_entry(CTECState *s1, unsigned got_offset, struct sym_attr *attr)
+ST_FUNC unsigned create_plt_entry(NILDOState *s1, unsigned got_offset, struct sym_attr *attr)
 {
     Section *plt = s1->plt;
     uint8_t *p;
@@ -141,7 +141,7 @@ ST_FUNC unsigned create_plt_entry(CTECState *s1, unsigned got_offset, struct sym
 
 /* relocate the PLT: compute addresses and offsets in the PLT now that final
    address for PLT and GOT are known (see fill_program_header) */
-ST_FUNC void relocate_plt(CTECState *s1)
+ST_FUNC void relocate_plt(NILDOState *s1)
 {
     uint8_t *p, *p_end;
 
@@ -170,7 +170,7 @@ void relocate_init(Section *sr)
     qrel = (ElfW_Rel *) sr->data;
 }
 
-void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t addr, addr_t val)
+void relocate(NILDOState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t addr, addr_t val)
 {
     int sym_index, esym_index;
 
@@ -178,7 +178,7 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
 
     switch (type) {
         case R_X86_64_64:
-            if (s1->output_type == CTEC_OUTPUT_DLL) {
+            if (s1->output_type == NILDO_OUTPUT_DLL) {
                 esym_index = s1->sym_attrs[sym_index].dyn_index;
                 qrel->r_offset = rel->r_offset;
                 if (esym_index) {
@@ -196,9 +196,9 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
             break;
         case R_X86_64_32:
         case R_X86_64_32S:
-            if (s1->output_type == CTEC_OUTPUT_DLL) {
-                /* XXX: this logic may depend on CTEC's codegen
-                   now CTEC uses R_X86_64_32 even for a 64bit pointer */
+            if (s1->output_type == NILDO_OUTPUT_DLL) {
+                /* XXX: this logic may depend on NILDO's codegen
+                   now NILDO uses R_X86_64_32 even for a 64bit pointer */
                 qrel->r_info = ELFW(R_INFO)(0, R_X86_64_RELATIVE);
                 /* Use sign extension! */
                 qrel->r_addend = (int)read32le(ptr) + val;
@@ -208,7 +208,7 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
             break;
 
         case R_X86_64_PC32:
-            if (s1->output_type == CTEC_OUTPUT_DLL) {
+            if (s1->output_type == NILDO_OUTPUT_DLL) {
                 /* DLL relocation */
                 esym_index = s1->sym_attrs[sym_index].dyn_index;
                 if (esym_index) {
@@ -230,7 +230,7 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
             long long diff;
             diff = (long long)val - addr;
             if (diff < -2147483648LL || diff > 2147483647LL) {
-                ctec_error("internal error: relocation failed");
+                nld_error("internal error: relocation failed");
             }
             add32le(ptr, diff);
         }
@@ -241,7 +241,7 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
             break;
 
         case R_X86_64_PC64:
-            if (s1->output_type == CTEC_OUTPUT_DLL) {
+            if (s1->output_type == NILDO_OUTPUT_DLL) {
                 /* DLL relocation */
                 esym_index = s1->sym_attrs[sym_index].dyn_index;
                 if (esym_index) {
@@ -287,7 +287,7 @@ void relocate(CTECState *s1, ElfW_Rel *rel, int type, unsigned char *ptr, addr_t
             add64le(ptr, val - s1->got->sh_addr);
             break;
         case R_X86_64_RELATIVE:
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
             add32le(ptr, val - s1->pe_imagebase);
 #endif
             /* do nothing */

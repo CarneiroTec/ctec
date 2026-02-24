@@ -43,7 +43,7 @@ Externo "C" {
 #Defina _wP_tmpdir L"\\"
 #FimSe
 
-#Defina L_tmpnam (Meça(_P_tmpdir) + 12)
+#Defina L_tmpnam (meça(_P_tmpdir) + 12)
 
 #SeDefinido _POSIX_
 #Defina L_ctermid 9
@@ -244,10 +244,10 @@ Externo FILE (*_imp___iob)[];    /* A pointer to an array of FILE */
 # Esqueça vsnprintf
 # Esqueça snprintf
   Externo
-  Atributo((format(gnu_printf, 3, 0))) Atributo((nonnull (3)))
+  atribua((format(gnu_printf, 3, 0))) atribua((nonnull (3)))
   Inteiro __mingw_vsnprintf(Caractere *_DstBuf, size_t _MaxCount, Imutável Caractere *_Format, va_list _ArgList);
   Externo
-  Atributo((format(gnu_printf, 3, 4))) Atributo((nonnull (3)))
+  atribua((format(gnu_printf, 3, 4))) atribua((nonnull (3)))
   Inteiro __mingw_snprintf(Caractere* s, size_t n, Imutável Caractere*  format, ...);
   Inteiro Declaração vsnprintf(Caractere *_DstBuf, size_t _MaxCount, Imutável Caractere *_Format, va_list _ArgList);
   _CRTIMP Inteiro Declaração _snprintf(Caractere *_Dest, size_t _Count, Imutável Caractere *_Format, ...);

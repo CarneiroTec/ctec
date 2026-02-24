@@ -257,7 +257,7 @@ int main(int argc, char **argv)
 
     if (argc < 2) {
         printf(
-    	    "test CTEC bound checking system\n"
+    	    "test NILDO bound checking system\n"
 	    "usage: boundtest N\n"
             "  1 <= N <= %d\n", index_max);
         exit(1);

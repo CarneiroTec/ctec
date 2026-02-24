@@ -44,7 +44,7 @@ Vazio *alloca(size_t size);
    _STDDEF_H guard, so that it works even when we've included the file
    already (without requiring wint_t).  Some other libs Defina _WINT_T
    Se they've already provided that type, so we can use that as guard.
-   CTEC defines INTEIRO Para us.  */
+   NILDO defines INTEIRO Para us.  */
 #Se Definido (__need_wint_t)
 #SeNãoDefinido _WINT_T
 #Defina _WINT_T

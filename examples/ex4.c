@@ -1,9 +1,9 @@
-#!/usr/local/bin/ctec -run -L/usr/X11R6/lib -lX11
+#!/usr/local/bin/nld -run -L/usr/X11R6/lib -lX11
 #include <stdlib.h>
 #include <stdio.h>
 #include <X11/Xlib.h>
 
-/* Yes, CTEC can use X11 too ! */
+/* Yes, NILDO can use X11 too ! */
 
 int main(int argc, char **argv)
 {

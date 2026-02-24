@@ -1,13 +1,13 @@
 /*
- * Simple Test program for libctec
+ * Simple Test program for libnld
  *
- * libctec can be useful to use ctec as a "backend" for a code generator.
+ * libnld can be useful to use nld as a "backend" for a code generator.
  */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "libctec.h"
+#include "libnld.h"
 
 /* this function is called by the generated code */
 int add(int a, int b)
@@ -19,7 +19,7 @@ int add(int a, int b)
 const char hello[] = "Hello World!";
 
 char my_program[] =
-"#include <cteclib.h>\n" /* include the "Simple libc header for CTEC" */
+"#include <nldlib.h>\n" /* include the "Simple libc header for NILDO" */
 "extern int add(int a, int b);\n"
 "#ifdef _WIN32\n" /* dynamically linked data needs 'dllimport' */
 " __attribute__((dllimport))\n"
@@ -43,46 +43,46 @@ char my_program[] =
 
 int main(int argc, char **argv)
 {
-    CTECState *s;
+    NILDOState *s;
     int i;
     int (*func)(int);
 
-    s = ctec_new();
+    s = nld_new();
     if (!s) {
-        fprintf(stderr, "Could not create ctec state\n");
+        fprintf(stderr, "Could not create nld state\n");
         exit(1);
     }
 
-    /* if cteclib.h and libctec1.a are not installed, where can we find them */
+    /* if nldlib.h and libnld1.a are not installed, where can we find them */
     for (i = 1; i < argc; ++i) {
         char *a = argv[i];
         if (a[0] == '-') {
             if (a[1] == 'B')
-                ctec_set_lib_path(s, a+2);
+                nld_set_lib_path(s, a+2);
             else if (a[1] == 'I')
-                ctec_add_include_path(s, a+2);
+                nld_add_include_path(s, a+2);
             else if (a[1] == 'L')
-                ctec_add_library_path(s, a+2);
+                nld_add_library_path(s, a+2);
         }
     }
 
     /* MUST BE CALLED before any compilation */
-    ctec_set_output_type(s, CTEC_OUTPUT_MEMORY);
+    nld_set_output_type(s, NILDO_OUTPUT_MEMORY);
 
-    if (ctec_compile_string(s, my_program) == -1)
+    if (nld_compile_string(s, my_program) == -1)
         return 1;
 
     /* as a test, we add symbols that the compiled program can use.
-       You may also open a dll with ctec_add_dll() and use symbols from that */
-    ctec_add_symbol(s, "add", add);
-    ctec_add_symbol(s, "hello", hello);
+       You may also open a dll with nld_add_dll() and use symbols from that */
+    nld_add_symbol(s, "add", add);
+    nld_add_symbol(s, "hello", hello);
 
     /* relocate the code */
-    if (ctec_relocate(s, CTEC_RELOCATE_AUTO) < 0)
+    if (nld_relocate(s, NILDO_RELOCATE_AUTO) < 0)
         return 1;
 
     /* get entry symbol */
-    func = ctec_get_symbol(s, "foo");
+    func = nld_get_symbol(s, "foo");
     if (!func)
         return 1;
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
     func(32);
 
     /* delete the state */
-    ctec_delete(s);
+    nld_delete(s);
 
     return 0;
 }

@@ -1,8 +1,8 @@
-#define CTEC_LANG_INICIO
-#include "fonte/ctec-lang.ctec"
-#include "fonte/infraestrutura/registro_servicos.ctec"
-#include "fonte/aplicacao/servico_compilacao.ctec"
-#include "fonte/apresentacao/formatador_saida.ctec"
+#define NILDO_LANG_INICIO
+#include "fonte/nld-lang.nld"
+#include "fonte/infraestrutura/registro_servicos.nld"
+#include "fonte/aplicacao/servico_compilacao.nld"
+#include "fonte/apresentacao/formatador_saida.nld"
 
 static RegistroServicos* registro_global = NULL;
 

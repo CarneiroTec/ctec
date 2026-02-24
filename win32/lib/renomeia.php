@@ -15,7 +15,7 @@ function renameCtoCtec($dir) {
         } else {
             // Se for arquivo e terminar com .c
             if (pathinfo($fullPath, PATHINFO_EXTENSION) === 'c') {
-                $newPath = $dir . DIRECTORY_SEPARATOR . pathinfo($fullPath, PATHINFO_FILENAME) . '.ctec';
+                $newPath = $dir . DIRECTORY_SEPARATOR . pathinfo($fullPath, PATHINFO_FILENAME) . '.nld';
                 if (rename($fullPath, $newPath)) {
                     echo "Renomeado: $fullPath -> $newPath\n";
                 } else {

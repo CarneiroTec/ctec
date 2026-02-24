@@ -1,12 +1,12 @@
 /*************************************************************/
 /*
- *  ARM dummy assembler for CTEC
+ *  ARM dummy assembler for NILDO
  *
  */
 
 #ifdef TARGET_DEFS_ONLY
 
-#define CONFIG_CTEC_ASM
+#define CONFIG_NILDO_ASM
 #define NB_ASM_REGS 16
 
 ST_FUNC void g(int c);
@@ -17,11 +17,11 @@ ST_FUNC void gen_le32(int c);
 #else
 /*************************************************************/
 
-#include "ctec.h"
+#include "nld.h"
 
 static void asm_error(void)
 {
-    ctec_error("ARM asm not implemented.");
+    nld_error("ARM asm not implemented.");
 }
 
 /* XXX: make it faster ? */
@@ -54,7 +54,7 @@ ST_FUNC void gen_expr32(ExprValue *pe)
     gen_le32(pe->v);
 }
 
-ST_FUNC void asm_opcode(CTECState *s1, int opcode)
+ST_FUNC void asm_opcode(NILDOState *s1, int opcode)
 {
     asm_error();
 }

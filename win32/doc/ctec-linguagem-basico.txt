@@ -1,4 +1,4 @@
-CTEC - Linguagem de Programação Português Brasileiro
+NILDO - Linguagem de Programação Português Brasileiro
 
 Este documento apresenta um tutorial básico das palavras-chave que passaram nos testes. Para cada palavra-chave há um exemplo mínimo e a saída esperada no terminal.
 
@@ -389,14 +389,14 @@ Inteiro Início(){ printf("32_Fixo=%d\n", s); Retorne 0; }
 Saída no terminal:
 32_Fixo=6
 
-33 - ObtenhaAlinhamento / Meça / Identifique
-Palavra-chave: ObtenhaAlinhamento, Meça, Identifique
+33 - obtenha_alinhamento / meça / identifique
+Palavra-chave: obtenha_alinhamento, meça, identifique
 Exemplo de código:
 #Inclua<stdio.h>
 
-Inteiro Início(){ Inteiro a; /* Meça used for sizeof */ printf("33_Meça=%d\n", Meça(a)); Retorne 0; }
+Inteiro Início(){ Inteiro a; /* meça used for sizeof */ printf("33_meça=%d\n", meça(a)); Retorne 0; }
 Saída no terminal:
-33_Meça=4
+33_meça=4
 
 35 - Defina / Inclua
 Palavra-chave: Defina, Inclua
@@ -468,7 +468,7 @@ Exemplo de código:
 
 Inteiro Início(){ printf("40_LINHA=%d ARQUIVO=%s\n", LINHA, ARQUIVO); Retorne 0; }
 Saída no terminal:
-40_LINHA=3 ARQUIVO=C:/Desenvolvimento/ctec-lang/win32/testes/40_Linha_Diretiva_LINHA_ARQUIVO.ctec
+40_LINHA=3 ARQUIVO=C:/Desenvolvimento/nld-lang/win32/testes/40_Linha_Diretiva_LINHA_ARQUIVO.nld
 
 41 - DATA / HORA / FUNÇÃO
 Palavra-chave: DATA, HORA, FUNÇÃO

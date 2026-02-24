@@ -1,8 +1,8 @@
 
- Relicensing TinyCC
+ Relicensing Nildo
  ------------------
 
- The authors listed below hereby confirm their agreement to relicense TinyCC
+ The authors listed below hereby confirm their agreement to relicense Nildo
  including their past contributions under the following terms:
 
 
@@ -33,7 +33,7 @@
  Edmund Grimley Evans       YES                 arm64
  Fabrice Bellard            YES                 original author
  Frédéric Féret             YES                 x86 64/16 bit asm
- grischka                   YES                 ctecpe.c
+ grischka                   YES                 nldpe.c
  Henry Kroll                YES
  Joe Soroka                 YES
  Kirill Smelkov             YES
@@ -43,7 +43,7 @@
  Vincent Lefèvre            YES
  Thomas Preud'homme         YES                 arm-gen.c
  Timo VJ Lähde (Timppa)     ?                   tiny_libmaker.c
- TK                         ?                   cteccoff.c c67-gen.c
+ TK                         ?                   nldcoff.c c67-gen.c
  Urs Janssen                YES
  waddlesplash               YES
  Christian Jullien          YES                 Windows Cygwin build and tests
@@ -55,6 +55,6 @@
  and (after fetching the latest version) commit to the "mob" branch with
  commit message:
 
-     Relicensing TinyCC
+     Relicensing Nildo
 
  Thanks.

@@ -130,27 +130,27 @@ Externo "C" {
 #Defina _JMP_BUF_DEFINED
 #FimSe
 
-  Vazio * Declaração Atributo ((__nothrow__)) mingw_getsp(Vazio);
+  Vazio * Declaração atribua ((__nothrow__)) mingw_getsp(Vazio);
 
 #SeDefinido USE_MINGW_SETJMP_TWO_ARGS
 #SeNãoDefinido _INC_SETJMPEX
 #Defina setjmp(BUF) _setjmp((BUF),mingw_getsp())
-  Inteiro Declaração Atributo ((__nothrow__)) _setjmp(jmp_buf _Buf,Vazio *_Ctx);
+  Inteiro Declaração atribua ((__nothrow__)) _setjmp(jmp_buf _Buf,Vazio *_Ctx);
 #Senão
 #Esqueça setjmp
 #Defina setjmp(BUF) _setjmpex((BUF),mingw_getsp())
 #Defina setjmpex(BUF) _setjmpex((BUF),mingw_getsp())
-  Inteiro Declaração Atributo ((__nothrow__)) _setjmpex(jmp_buf _Buf,Vazio *_Ctx);
+  Inteiro Declaração atribua ((__nothrow__)) _setjmpex(jmp_buf _Buf,Vazio *_Ctx);
 #FimSe
 #Senão
 #SeNãoDefinido _INC_SETJMPEX
 #Defina setjmp _setjmp
 #FimSe
-  Inteiro Declaração Atributo ((__nothrow__)) setjmp(jmp_buf _Buf);
+  Inteiro Declaração atribua ((__nothrow__)) setjmp(jmp_buf _Buf);
 #FimSe
 
-  __declspec(noreturn) Atributo ((__nothrow__)) Vazio Declaração ms_longjmp(jmp_buf _Buf,Inteiro _Value)/* throw(...)*/;
-  __declspec(noreturn) Atributo ((__nothrow__)) Vazio Declaração longjmp(jmp_buf _Buf,Inteiro _Value);
+  __declspec(noreturn) atribua ((__nothrow__)) Vazio Declaração ms_longjmp(jmp_buf _Buf,Inteiro _Value)/* throw(...)*/;
+  __declspec(noreturn) atribua ((__nothrow__)) Vazio Declaração longjmp(jmp_buf _Buf,Inteiro _Value);
 
 #SeDefinido __cplusplus
 }

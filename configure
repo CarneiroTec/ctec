@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ctec configure script (c) 2003 Fabrice Bellard
+# nld configure script (c) 2003 Fabrice Bellard
 
 # set temporary file name
 # if test ! -z "$TMPDIR" ; then
@@ -11,7 +11,7 @@
 #     TMPDIR1="/tmp"
 # fi
 #
-# bashism: TMPN="${TMPDIR1}/ctec-conf-${RANDOM}-$$-${RANDOM}.c"
+# bashism: TMPN="${TMPDIR1}/nld-conf-${RANDOM}-$$-${RANDOM}.c"
 
 TMPN="./conftest-$$"
 TMPH=$TMPN.h
@@ -21,7 +21,7 @@ prefix=""
 execprefix=""
 bindir=""
 libdir=""
-ctecdir=""
+nlddir=""
 includedir=""
 mandir=""
 infodir=""
@@ -35,12 +35,12 @@ mingw32="no"
 LIBSUF=".a"
 EXESUF=""
 DLLSUF=".so"
-ctec_sysincludepaths=""
-ctec_libpaths=""
-ctec_crtprefix=""
-ctec_elfinterp=""
+nld_sysincludepaths=""
+nld_libpaths=""
+nld_crtprefix=""
+nld_elfinterp=""
 triplet=
-ctec_lddir=
+nld_lddir=
 confvars=
 suggest="yes"
 cpu=
@@ -81,7 +81,7 @@ for opt do
   ;;
   --exec-prefix=*) execprefix=`echo $opt | cut -d '=' -f 2`
   ;;
-  --ctecdir=*) ctecdir=`echo $opt | cut -d '=' -f 2`
+  --nlddir=*) nlddir=`echo $opt | cut -d '=' -f 2`
   ;;
   --bindir=*) bindir=`echo $opt | cut -d '=' -f 2`
   ;;
@@ -113,13 +113,13 @@ for opt do
   ;;
   --extra-libs=*) extralibs="${opt#--extra-libs=}"
   ;;
-  --sysincludepaths=*) ctec_sysincludepaths=`echo $opt | cut -d '=' -f 2`
+  --sysincludepaths=*) nld_sysincludepaths=`echo $opt | cut -d '=' -f 2`
   ;;
-  --libpaths=*) ctec_libpaths=`echo $opt | cut -d '=' -f 2`
+  --libpaths=*) nld_libpaths=`echo $opt | cut -d '=' -f 2`
   ;;
-  --crtprefix=*) ctec_crtprefix=`echo $opt | cut -d '=' -f 2`
+  --crtprefix=*) nld_crtprefix=`echo $opt | cut -d '=' -f 2`
   ;;
-  --elfinterp=*) ctec_elfinterp=`echo $opt | cut -d '=' -f 2`
+  --elfinterp=*) nld_elfinterp=`echo $opt | cut -d '=' -f 2`
   ;;
   --triplet=*) triplet=`echo $opt | cut -d '=' -f 2`
   ;;
@@ -215,11 +215,11 @@ if test "$mingw32" = "yes" ; then
     if test "$cc" = gcc; then
       test -z "$LDFLAGS" && LDFLAGS="-static"
     fi
-    test -z "$prefix" && prefix="C:/Program Files/ctec"
-    test -z "$ctecdir" && ctecdir="${prefix}"
-    test -z "$bindir" && bindir="${ctecdir}"
-    test -z "$docdir" && docdir="${ctecdir}/doc"
-    test -z "$libdir" && libdir="${ctecdir}/libctec"
+    test -z "$prefix" && prefix="C:/Program Files/nld"
+    test -z "$nlddir" && nlddir="${prefix}"
+    test -z "$bindir" && bindir="${nlddir}"
+    test -z "$docdir" && docdir="${nlddir}/doc"
+    test -z "$libdir" && libdir="${nlddir}/libnld"
     confvars="$confvars WIN32"
     LIBSUF=".lib"
     EXESUF=".exe"
@@ -249,8 +249,8 @@ else
     if test x"$infodir" = x""; then
       infodir="${sharedir}/info"
     fi
-    if test x"$ctecdir" = x""; then
-      ctecdir="${libdir}/ctec"
+    if test x"$nlddir" = x""; then
+      nlddir="${libdir}/nld"
     fi
     if test x"$includedir" = x""; then
       includedir="${prefix}/include"
@@ -269,10 +269,10 @@ Standard options:
 			   [same as prefix]
   --bindir=DIR             user executables in DIR [EPREFIX/bin]
   --libdir=DIR             object code libraries in DIR [EPREFIX/lib]
-  --ctecdir=DIR             installation directory [EPREFIX/lib/ctec]
+  --nlddir=DIR             installation directory [EPREFIX/lib/nld]
   --includedir=DIR         C header files in DIR [PREFIX/include]
   --sharedir=DIR           documentation root DIR [PREFIX/share]
-  --docdir=DIR             documentation in DIR [SHAREDIR/doc/ctec]
+  --docdir=DIR             documentation in DIR [SHAREDIR/doc/nld]
   --mandir=DIR             man documentation in DIR [SHAREDIR/man]
   --infodir=DIR            info documentation in DIR [SHAREDIR/info]
 
@@ -286,12 +286,12 @@ Advanced options (experts only):
   --extra-ldflags=         specify linker options []
   --cpu=CPU                CPU [$cpu]
   --strip-binaries         strip symbol tables from resulting binaries
-  --disable-static         make libctec.so instead of libctec.a
-  --enable-static          make libctec.a instead of libctec.dll (win32)
+  --disable-static         make libnld.so instead of libnld.a
+  --enable-static          make libnld.a instead of libnld.dll (win32)
   --disable-rpath          disable use of -rpath with the above
-  --with-libgcc            use libgcc_s.so.1 instead of libctec1.a
+  --with-libgcc            use libgcc_s.so.1 instead of libnld1.a
   --enable-cross           build cross compilers
-  --with-selinux           use mmap for executable memory (with ctec -run)
+  --with-selinux           use mmap for executable memory (with nld -run)
   --sysincludepaths=...    specify system include paths, colon separated
   --libpaths=...           specify system library paths, colon separated
   --crtprefix=...          specify locations of crt?.o, colon separated
@@ -328,7 +328,7 @@ if test -z "$cross_prefix" ; then
       if test -z "$triplet"; then
         if test $cpu = "x86_64" -o $cpu = "aarch64" ; then
           if test -f "/usr/lib64/crti.o" ; then
-            ctec_lddir="lib64"
+            nld_lddir="lib64"
           fi
         fi
       fi
@@ -365,7 +365,7 @@ if test "$bigendian" = "yes" ; then
 fi
 
 # a final configuration tuning
-if ! echo "$cc" | grep -q "ctec"; then
+if ! echo "$cc" | grep -q "nld"; then
   OPT1="-Wdeclaration-after-statement -fno-strict-aliasing"
   # we want -Wno- but gcc does not always reject unknown -Wno- options
   OPT2="-Wpointer-sign -Wsign-compare -Wunused-result"
@@ -388,7 +388,7 @@ fi
 fcho() { if test -n "$2"; then echo "$1$2"; fi }
 
 fcho "Binary directory    " "$bindir"
-fcho "TinyCC directory    " "$ctecdir"
+fcho "Nildo directory    " "$nlddir"
 fcho "Library directory   " "$libdir"
 fcho "Include directory   " "$includedir"
 fcho "Manual directory    " "$mandir"
@@ -407,7 +407,7 @@ cat >config.mak <<EOF
 # Automatically generated by configure - do not modify
 prefix=$prefix
 bindir=\$(DESTDIR)$bindir
-ctecdir=\$(DESTDIR)$ctecdir
+nlddir=\$(DESTDIR)$nlddir
 libdir=\$(DESTDIR)$libdir
 includedir=\$(DESTDIR)$includedir
 mandir=\$(DESTDIR)$mandir
@@ -448,14 +448,14 @@ print_mak_int() {
 echo "/* Automatically generated by configure - do not modify */" > $TMPH
 
 print_inc CONFIG_SYSROOT "$sysroot"
-print_inc CONFIG_CTECDIR "$ctecdir"
-print_mak CONFIG_CTEC_SYSINCLUDEPATHS "$ctec_sysincludepaths"
-print_mak CONFIG_CTEC_LIBPATHS "$ctec_libpaths"
-print_mak CONFIG_CTEC_CRTPREFIX "$ctec_crtprefix"
-print_mak CONFIG_CTEC_ELFINTERP "$ctec_elfinterp"
-print_mak CONFIG_LDDIR "$ctec_lddir"
+print_inc CONFIG_NILDODIR "$nlddir"
+print_mak CONFIG_NILDO_SYSINCLUDEPATHS "$nld_sysincludepaths"
+print_mak CONFIG_NILDO_LIBPATHS "$nld_libpaths"
+print_mak CONFIG_NILDO_CRTPREFIX "$nld_crtprefix"
+print_mak CONFIG_NILDO_ELFINTERP "$nld_elfinterp"
+print_mak CONFIG_LDDIR "$nld_lddir"
 print_mak CONFIG_TRIPLET "$triplet"
-print_mak_int CTEC_CPU_VERSION "$cpuver"
+print_mak_int NILDO_CPU_VERSION "$cpuver"
 
 if test "$cpu" = "aarch64" ; then
   echo "ARCH=arm64" >> config.mak
@@ -474,7 +474,7 @@ done
 
 version=`head $source_path/VERSION`
 echo "VERSION = $version" >> config.mak
-echo "#define CTEC_VERSION \"$version\"" >> $TMPH
+echo "#define NILDO_VERSION \"$version\"" >> $TMPH
 echo "@set VERSION $version" > config.texi
 
 if test "$source_path_used" = "yes" ; then

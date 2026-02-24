@@ -1,5 +1,5 @@
 /*
- *  A64 code generator for CTEC
+ *  A64 code generator for NILDO
  *
  *  Copyright (c) 2014-2015 Edmund Grimley Evans
  *
@@ -43,7 +43,7 @@
 /******************************************************/
 #else /* ! TARGET_DEFS_ONLY */
 /******************************************************/
-#include "ctec.h"
+#include "nld.h"
 #include <assert.h>
 
 ST_DATA const int reg_classes[NB_REGS] = {
@@ -229,7 +229,7 @@ ST_FUNC void gsym_addr(int t_, int a_)
         unsigned char *ptr = cur_text_section->data + t;
         uint32_t next = read32le(ptr);
         if (a - t + 0x8000000 >= 0x10000000)
-            ctec_error("branch out of range");
+            nld_error("branch out of range");
         write32le(ptr, (a - t == 4 ? 0xd503201f : // nop
                         0x14000000 | ((a - t) >> 2 & 0x3ffffff))); // b
         t = next;
@@ -420,8 +420,8 @@ static void arm64_strv(int sz_, int dst, int bas, uint64_t off)
 
 static void arm64_sym(int r, Sym *sym, unsigned long addend)
 {
-    // Currently CTEC's linker does not generate COPY relocations for
-    // STT_OBJECTs when ctec is invoked with "-run". This typically
+    // Currently NILDO's linker does not generate COPY relocations for
+    // STT_OBJECTs when nld is invoked with "-run". This typically
     // results in "R_AARCH64_ADR_PREL_PG_HI21 relocation failed" when
     // a program refers to stdin. A workaround is to avoid that
     // relocation and use only relocations with unlimited range.
@@ -833,9 +833,9 @@ ST_FUNC void gfunc_call(int nb_args)
     if ((return_type->t & VT_BTYPE) == VT_STRUCT)
         --nb_args;
 
-    t = ctec_malloc((nb_args + 1) * sizeof(*t));
-    a = ctec_malloc((nb_args + 1) * sizeof(*a));
-    a1 = ctec_malloc((nb_args + 1) * sizeof(*a1));
+    t = nld_malloc((nb_args + 1) * sizeof(*t));
+    a = nld_malloc((nb_args + 1) * sizeof(*a));
+    a1 = nld_malloc((nb_args + 1) * sizeof(*a1));
 
     t[0] = return_type;
     for (i = 0; i < nb_args; i++)
@@ -985,9 +985,9 @@ ST_FUNC void gfunc_call(int nb_args)
         }
     }
 
-    ctec_free(a1);
-    ctec_free(a);
-    ctec_free(t);
+    nld_free(a1);
+    nld_free(a);
+    nld_free(t);
 }
 
 static unsigned long arm64_func_va_list_stack;
@@ -1009,8 +1009,8 @@ ST_FUNC void gfunc_prolog(CType *func_type)
 
     for (sym = func_type->ref; sym; sym = sym->next)
         ++n;
-    t = ctec_malloc(n * sizeof(*t));
-    a = ctec_malloc(n * sizeof(*a));
+    t = nld_malloc(n * sizeof(*t));
+    a = nld_malloc(n * sizeof(*a));
 
     for (sym = func_type->ref; sym; sym = sym->next)
         t[i++] = &sym->type;
@@ -1062,8 +1062,8 @@ ST_FUNC void gfunc_prolog(CType *func_type)
         }
     }
 
-    ctec_free(a);
-    ctec_free(t);
+    nld_free(a);
+    nld_free(t);
 
     o(0x910003fd); // mov x29,sp
     arm64_func_sub_sp_offset = ind;

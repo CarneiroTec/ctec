@@ -1,5 +1,5 @@
 /*
- *  X86 code generator for CTEC
+ *  X86 code generator for NILDO
  * 
  *  Copyright (c) 2001-2004 Fabrice Bellard
  *
@@ -23,7 +23,7 @@
 /* number of available registers */
 #define NB_REGS         5
 #define NB_ASM_REGS     8
-#define CONFIG_CTEC_ASM
+#define CONFIG_NILDO_ASM
 
 /* a register can belong to several classes. The classes must be
    sorted from more general to more precise (see gv2() code which does
@@ -74,7 +74,7 @@ enum {
 /******************************************************/
 #else /* ! TARGET_DEFS_ONLY */
 /******************************************************/
-#include "ctec.h"
+#include "nld.h"
 
 /* define to 1/0 to [not] have EBX as 4th register */
 #define USE_EBX 0
@@ -89,7 +89,7 @@ ST_DATA const int reg_classes[NB_REGS] = {
 
 static unsigned long func_sub_sp_offset;
 static int func_ret_sub;
-#ifdef CONFIG_CTEC_BCHECK
+#ifdef CONFIG_NILDO_BCHECK
 static addr_t func_bound_offset;
 static unsigned long func_bound_ind;
 #endif
@@ -204,7 +204,7 @@ ST_FUNC void load(int r, SValue *sv)
     int v, t, ft, fc, fr;
     SValue v1;
 
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
     SValue v2;
     sv = pe_getimport(sv, &v2);
 #endif
@@ -282,7 +282,7 @@ ST_FUNC void store(int r, SValue *v)
 {
     int fr, bt, ft, fc;
 
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
     SValue v2;
     v = pe_getimport(v, &v2);
 #endif
@@ -330,7 +330,7 @@ static void gadd_sp(int val)
     }
 }
 
-#if defined CONFIG_CTEC_BCHECK || defined CTEC_TARGET_PE
+#if defined CONFIG_NILDO_BCHECK || defined NILDO_TARGET_PE
 static void gen_static_call(int v)
 {
     Sym *sym;
@@ -391,7 +391,7 @@ static uint8_t fastcallw_regs[2] = { TREG_ECX, TREG_EDX };
    returning via struct pointer. */
 ST_FUNC int gfunc_sret(CType *vt, int variadic, CType *ret, int *ret_align, int *regsize)
 {
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
     int size, align;
     *ret_align = 1; // Never have to re-align return values for x86
     *regsize = 4;
@@ -492,7 +492,7 @@ ST_FUNC void gfunc_call(int nb_args)
             args_size -= 4;
         }
     }
-#ifndef CTEC_TARGET_PE
+#ifndef NILDO_TARGET_PE
     else if ((vtop->type.ref->type.t & VT_BTYPE) == VT_STRUCT)
         args_size -= 4;
 #endif
@@ -503,7 +503,7 @@ ST_FUNC void gfunc_call(int nb_args)
     vtop--;
 }
 
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
 #define FUNC_PROLOG_SIZE (10 + USE_EBX)
 #else
 #define FUNC_PROLOG_SIZE (9 + USE_EBX)
@@ -542,7 +542,7 @@ ST_FUNC void gfunc_prolog(CType *func_type)
        implicit pointer parameter */
     func_vt = sym->type;
     func_var = (sym->f.func_type == FUNC_ELLIPSIS);
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
     size = type_size(&func_vt,&align);
     if (((func_vt.t & VT_BTYPE) == VT_STRUCT)
         && (size > 8 || (size & (size - 1)))) {
@@ -583,14 +583,14 @@ ST_FUNC void gfunc_prolog(CType *func_type)
     /* pascal type call or fastcall ? */
     if (func_call == FUNC_STDCALL || func_call == FUNC_FASTCALLW)
         func_ret_sub = addr - 8;
-#ifndef CTEC_TARGET_PE
+#ifndef NILDO_TARGET_PE
     else if (func_vc)
         func_ret_sub = 4;
 #endif
 
-#ifdef CONFIG_CTEC_BCHECK
+#ifdef CONFIG_NILDO_BCHECK
     /* leave some room for bound checking code */
-    if (ctec_state->do_bounds_check) {
+    if (nld_state->do_bounds_check) {
         func_bound_offset = lbounds_section->data_offset;
         func_bound_ind = ind;
         oad(0xb8, 0); /* lbound section pointer */
@@ -604,8 +604,8 @@ ST_FUNC void gfunc_epilog(void)
 {
     addr_t v, saved_ind;
 
-#ifdef CONFIG_CTEC_BCHECK
-    if (ctec_state->do_bounds_check
+#ifdef CONFIG_NILDO_BCHECK
+    if (nld_state->do_bounds_check
      && func_bound_offset != lbounds_section->data_offset) {
         addr_t saved_ind;
         addr_t *bounds_ptr;
@@ -653,7 +653,7 @@ ST_FUNC void gfunc_epilog(void)
     }
     saved_ind = ind;
     ind = func_sub_sp_offset - FUNC_PROLOG_SIZE;
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
     if (v >= 4096) {
         oad(0xb8, v); /* mov stacksize, %eax */
         gen_static_call(TOK___chkstk); /* call __chkstk, (does the stackframe too) */
@@ -663,7 +663,7 @@ ST_FUNC void gfunc_epilog(void)
         o(0xe58955);  /* push %ebp, mov %esp, %ebp */
         o(0xec81);  /* sub esp, stacksize */
         gen_le32(v);
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
         o(0x90);  /* adjust to FUNC_PROLOG_SIZE */
 #endif
     }
@@ -1064,7 +1064,7 @@ ST_FUNC void ggoto(void)
 }
 
 /* bound check support functions */
-#ifdef CONFIG_CTEC_BCHECK
+#ifdef CONFIG_NILDO_BCHECK
 
 /* generate a bounded pointer addition */
 ST_FUNC void gen_bounded_ptr_add(void)
@@ -1093,7 +1093,7 @@ ST_FUNC void gen_bounded_ptr_deref(void)
     Sym *sym;
 
     size = 0;
-    /* XXX: put that code in generic part of ctec */
+    /* XXX: put that code in generic part of nld */
     if (!is_float(vtop->type.t)) {
         if (vtop->r & VT_LVAL_BYTE)
             size = 1;
@@ -1110,7 +1110,7 @@ ST_FUNC void gen_bounded_ptr_deref(void)
     case 12: func = TOK___bound_ptr_indir12; break;
     case 16: func = TOK___bound_ptr_indir16; break;
     default:
-        ctec_error("unhandled size when dereferencing bounded pointer");
+        nld_error("unhandled size when dereferencing bounded pointer");
         func = 0;
         break;
     }
@@ -1140,7 +1140,7 @@ ST_FUNC void gen_vla_sp_restore(int addr) {
 
 /* Subtract from the stack pointer, and push the resulting value onto the stack */
 ST_FUNC void gen_vla_alloc(CType *type, int align) {
-#ifdef CTEC_TARGET_PE
+#ifdef NILDO_TARGET_PE
     /* alloca does more than just adjust %rsp on Windows */
     vpush_global_sym(&func_old_type, TOK_alloca);
     vswap(); /* Move alloca ref past allocation size */

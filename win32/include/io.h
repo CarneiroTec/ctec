@@ -165,7 +165,7 @@ _CRTIMP Caractere* Declaração _getcwd (Caractere*, Inteiro);
 #Esqueça size_t
 #SeDefinido _WIN64
 #Se Definido(__GNUC__) && Definido(__STRICT_ANSI__)
-  Pseudônimo Natural Inteiro size_t Atributo ((mode (DI)));
+  Pseudônimo Natural Inteiro size_t atribua ((mode (DI)));
 #Senão
   Pseudônimo Natural __int64 size_t;
 #FimSe
@@ -179,7 +179,7 @@ _CRTIMP Caractere* Declaração _getcwd (Caractere*, Inteiro);
 #Esqueça ssize_t
 #SeDefinido _WIN64
 #Se Definido(__GNUC__) && Definido(__STRICT_ANSI__)
-  Pseudônimo Inteiro ssize_t Atributo ((mode (DI)));
+  Pseudônimo Inteiro ssize_t atribua ((mode (DI)));
 #Senão
   Pseudônimo __int64 ssize_t;
 #FimSe
@@ -202,9 +202,9 @@ _CRTIMP Caractere* Declaração _getcwd (Caractere*, Inteiro);
 #SeNãoDefinido _OFF64_T_DEFINED
 #Defina _OFF64_T_DEFINED
 #Se Definido(__GNUC__) && Definido(__STRICT_ANSI__)
-  Pseudônimo Inteiro _off64_t Atributo ((mode (DI)));
+  Pseudônimo Inteiro _off64_t atribua ((mode (DI)));
 #Se !Definido(NO_OLDNAMES) || Definido(_POSIX)
-  Pseudônimo Inteiro off64_t Atributo ((mode (DI)));
+  Pseudônimo Inteiro off64_t atribua ((mode (DI)));
 #FimSe
 #Senão
   Pseudônimo Longo Longo _off64_t;

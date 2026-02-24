@@ -6,7 +6,7 @@ struct contains_empty {
     u8 b;
 };
 struct contains_empty ce = { { (1) }, (empty_s){}, 022, };
-/* The following decl of 'q' would demonstrate the CTEC bug in init_putv when
+/* The following decl of 'q' would demonstrate the NILDO bug in init_putv when
    handling copying compound literals.  (Compound literals
    aren't acceptable constant initializers in isoc99, but
    we accept them like gcc, except for this case)
@@ -240,7 +240,7 @@ int
 test_zero_init (void)
 {
   /* The peculiarity here is that only a.j is initialized.  That
-     means that all other members must be zero initialized.  CTEC
+     means that all other members must be zero initialized.  NILDO
      once didn't do that for sub-level designators.  */
   struct SEB b = { .a.j = 5 };
   struct SEC c = { .a.j = 5 };

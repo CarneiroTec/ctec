@@ -131,10 +131,10 @@ Integrado Inteiro InlineIsEqualGUID(REFGUID rguid1,REFGUID rguid2) {
   Retorne (((Natural Longo *) &rguid1)[0]==((Natural Longo *) &rguid2)[0] && ((Natural Longo *) &rguid1)[1]==((Natural Longo *) &rguid2)[1] &&
     ((Natural Longo *) &rguid1)[2]==((Natural Longo *) &rguid2)[2] && ((Natural Longo *) &rguid1)[3]==((Natural Longo *) &rguid2)[3]);
 }
-Integrado Inteiro IsEqualGUID(REFGUID rguid1,REFGUID rguid2) { Retorne !memcmp(&rguid1,&rguid2,Meça(GUID)); }
+Integrado Inteiro IsEqualGUID(REFGUID rguid1,REFGUID rguid2) { Retorne !memcmp(&rguid1,&rguid2,meça(GUID)); }
 #Senão
 #Defina InlineIsEqualGUID(rguid1,rguid2) (((Natural Longo *) rguid1)[0]==((Natural Longo *) rguid2)[0] && ((Natural Longo *) rguid1)[1]==((Natural Longo *) rguid2)[1] && ((Natural Longo *) rguid1)[2]==((Natural Longo *) rguid2)[2] && ((Natural Longo *) rguid1)[3]==((Natural Longo *) rguid2)[3])
-#Defina IsEqualGUID(rguid1,rguid2) (!memcmp(rguid1,rguid2,Meça(GUID)))
+#Defina IsEqualGUID(rguid1,rguid2) (!memcmp(rguid1,rguid2,meça(GUID)))
 #FimSe
 
 #SeDefinido __INLINE_ISEQUAL_GUID

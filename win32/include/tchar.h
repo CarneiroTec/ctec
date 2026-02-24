@@ -65,8 +65,8 @@ Externo "C" {
 #Defina _ftcsupr _tcsupr
 
 #Defina _ftclen _tclen
-#Defina _fctecpy _ctecpy
-#Defina _fctecmp _ctecmp
+#Defina _fnldpy _nldpy
+#Defina _fnldmp _nldmp
 
 #SeNãoDefinido _CONST_RETURN
 #SeDefinido __cplusplus
@@ -409,8 +409,8 @@ Externo "C" {
 #Defina _tcsxfrm_l _wcsxfrm_l
 
 #Defina _tclen(_pc) (1)
-#Defina _ctecpy(_pc1,_cpc2) ((*(_pc1) = *(_cpc2)))
-#Defina _ctecmp(_cpc1,_cpc2) ((*(_cpc1))-(*(_cpc2)))
+#Defina _nldpy(_pc1,_cpc2) ((*(_pc1) = *(_cpc2)))
+#Defina _nldmp(_cpc1,_cpc2) ((*(_cpc1))-(*(_cpc2)))
 
 #Defina _istalnum iswalnum
 #Defina _istalnum_l _iswalnum_l
@@ -831,8 +831,8 @@ Externo "C" {
 #Defina _tcsupr_l _mbsupr_l
 
 #Defina _tclen _mbclen
-#Defina _ctecpy _mbccpy
-#Defina _ctecpy_l _mbccpy_l
+#Defina _nldpy _mbccpy
+#Defina _nldpy_l _mbccpy_l
 #Senão
 
   _CRTIMP _CONST_RETURN Caractere *Declaração _tcschr(Imutável Caractere *_Str,Natural Inteiro _Val);
@@ -893,7 +893,7 @@ Externo "C" {
   _CRTIMP Caractere *Declaração _tcsupr(Caractere *_Str);
   _CRTIMP Caractere *Declaração _tcsupr_l(Caractere *_Str,_locale_t _Locale);
   _CRTIMP size_t Declaração _tclen(Imutável Caractere *_Str);
-  _CRTIMP Vazio Declaração _ctecpy(Caractere *_DstCh,Imutável Caractere *_SrcCh);
+  _CRTIMP Vazio Declaração _nldpy(Caractere *_DstCh,Imutável Caractere *_SrcCh);
 
 #SeDefinido __cplusplus
 #SeNãoDefinido _CPP_TCHAR_INLINES_DEFINED
@@ -908,7 +908,7 @@ Externo "C" {
 #FimSe
 #FimSe
 
-#Defina _ctecmp(_cp1,_cp2) _tcsnccmp(_cp1,_cp2,1)
+#Defina _nldmp(_cp1,_cp2) _tcsnccmp(_cp1,_cp2,1)
 
 #Defina _istalnum _ismbcalnum
 #Defina _istalnum_l _ismbcalnum_l
@@ -1028,8 +1028,8 @@ Externo "C" {
 #Defina _istleadbyte_l(_Char,_Locale) (0)
 
 #Defina _tclen(_pc) (1)
-#Defina _ctecpy(_pc1,_cpc2) (*(_pc1) = *(_cpc2))
-#Defina _ctecmp(_cpc1,_cpc2) (((Natural Caractere)*(_cpc1))-((Natural Caractere)*(_cpc2)))
+#Defina _nldpy(_pc1,_cpc2) (*(_pc1) = *(_cpc2))
+#Defina _nldmp(_cpc1,_cpc2) (((Natural Caractere)*(_cpc1))-((Natural Caractere)*(_cpc2)))
 
   /* dirent structures and functions */
 #Defina _tdirent	dirent

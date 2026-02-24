@@ -206,8 +206,8 @@ Externo "C" {
 #Defina _tcsupr_s _mbsupr_s
 #Defina _tcsupr_s_l _mbsupr_s_l
 
-#Defina _ctecpy_s _mbccpy_s
-#Defina _ctecpy_s_l _mbccpy_s_l
+#Defina _nldpy_s _mbccpy_s
+#Defina _nldpy_s_l _mbccpy_s_l
 #Senão
 
   _CRTIMP Caractere *Declaração _tcsncat_s(Caractere *_Dst,size_t _DstSizeInChars,Imutável Caractere *_Src,size_t _MaxCount);

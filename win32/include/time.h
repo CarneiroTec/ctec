@@ -36,7 +36,7 @@ Externo "C" {
 #Defina _TIME64_T_DEFINED
 #Se _INTEGRAL_MAX_BITS >= 64
 #Se Definido(__GNUC__) && Definido(__STRICT_ANSI__)
-  Pseudônimo Inteiro _time64_t Atributo ((mode (DI)));
+  Pseudônimo Inteiro _time64_t atribua ((mode (DI)));
 #Senão
   Pseudônimo __int64 __time64_t;
 #FimSe
@@ -62,7 +62,7 @@ Externo "C" {
 #Esqueça size_t
 #SeDefinido _WIN64
 #Se Definido(__GNUC__) && Definido(__STRICT_ANSI__)
-  Pseudônimo Natural Inteiro size_t Atributo ((mode (DI)));
+  Pseudônimo Natural Inteiro size_t atribua ((mode (DI)));
 #Senão
   Pseudônimo Natural __int64 size_t;
 #FimSe
@@ -76,7 +76,7 @@ Externo "C" {
 #Esqueça ssize_t
 #SeDefinido _WIN64
 #Se Definido(__GNUC__) && Definido(__STRICT_ANSI__)
-  Pseudônimo Inteiro ssize_t Atributo ((mode (DI)));
+  Pseudônimo Inteiro ssize_t atribua ((mode (DI)));
 #Senão
   Pseudônimo __int64 ssize_t;
 #FimSe
@@ -162,7 +162,7 @@ Externo "C" {
 #Defina _SIZE_T_DEFINED
 #SeDefinido _WIN64
 #Se Definido(__GNUC__) && Definido(__STRICT_ANSI__)
-  Pseudônimo Natural Inteiro size_t Atributo ((mode (DI)));
+  Pseudônimo Natural Inteiro size_t atribua ((mode (DI)));
 #Senão
   Pseudônimo Natural __int64 size_t;
 #FimSe
@@ -175,7 +175,7 @@ Externo "C" {
 #Defina _SSIZE_T_DEFINED
 #SeDefinido _WIN64
 #Se Definido(__GNUC__) && Definido(__STRICT_ANSI__)
-  Pseudônimo Inteiro ssize_t Atributo ((mode (DI)));
+  Pseudônimo Inteiro ssize_t atribua ((mode (DI)));
 #Senão
   Pseudônimo __int64 ssize_t;
 #FimSe

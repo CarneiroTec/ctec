@@ -1,7 +1,0 @@
-#Inclua<stdio.h>
-
-Inteiro Início(){
-    Real r = 3.14;
-    printf("06_Real=%.2f\n", r);
-    Retorne 0;
-}

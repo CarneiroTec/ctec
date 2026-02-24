@@ -82,8 +82,8 @@ Externo "C" {
 #Esqueça _alloca
 #Defina _alloca(x) __builtin_alloca((x))
 #Senão
-  /* ctec implements alloca internally and exposes it (since commit d778bde7).
-  /* alloca is declared at Inclua/stddef.h (which is distributed with ctec).
+  /* nld implements alloca internally and exposes it (since commit d778bde7).
+  /* alloca is declared at Inclua/stddef.h (which is distributed with nld).
    */
 #SeDefinido _alloca
 #Esqueça _alloca

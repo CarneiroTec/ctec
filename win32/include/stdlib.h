@@ -289,11 +289,11 @@ Externo "C" {
   errno_t Declaração _get_winminor(Natural Inteiro *_Value);
 #SeNãoDefinido _countof
 #SeNãoDefinido __cplusplus
-#Defina _countof(_Array) (Meça(_Array) / Meça(_Array[0]))
+#Defina _countof(_Array) (meça(_Array) / meça(_Array[0]))
 #Senão
   Externo "C++" {
     template <typename _CountofType,size_t _SizeOfArray> Caractere (*__countof_helper(UNALIGNED _CountofType (&_Array)[_SizeOfArray]))[_SizeOfArray];
-#Defina _countof(_Array) Meça(*__countof_helper(_Array))
+#Defina _countof(_Array) meça(*__countof_helper(_Array))
   }
 #FimSe
 #FimSe

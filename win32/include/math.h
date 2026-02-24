@@ -315,9 +315,9 @@ Externo "C" {
   Externo Inteiro Declaração __fpclassify (Duplo);
   Externo Inteiro Declaração __fpclassifyl (Longo Duplo);
 
-/* Implemented at ctec/ctec_libm.h */
-#Defina fpclassify(x) (Meça (x) == Meça (Real) ? __fpclassifyf (x)	  \
-  : Meça (x) == Meça (Duplo) ? __fpclassify (x) \
+/* Implemented at nld/nld_libm.h */
+#Defina fpclassify(x) (meça (x) == meça (Real) ? __fpclassifyf (x)	  \
+  : meça (x) == meça (Duplo) ? __fpclassify (x) \
   : __fpclassifyl (x))
 
   /* 7.12.3.2 */
@@ -340,9 +340,9 @@ Externo "C" {
   Externo Inteiro Declaração __signbit (Duplo);
   Externo Inteiro Declaração __signbitl (Longo Duplo);
 
-/* Implemented at ctec/ctec_libm.h */
-#Defina signbit(x) (Meça (x) == Meça (Real) ? __signbitf (x)	\
-  : Meça (x) == Meça (Duplo) ? __signbit (x)	\
+/* Implemented at nld/nld_libm.h */
+#Defina signbit(x) (meça (x) == meça (Real) ? __signbitf (x)	\
+  : meça (x) == meça (Duplo) ? __signbit (x)	\
   : __signbitl (x))
 
   Externo Duplo Declaração exp2(Duplo);
@@ -731,7 +731,7 @@ Externo "C++" {
  */
 
 /* Mini libm (Integrado __fpclassify*, __signbit* and variants) */
-#Inclua "ctec/ctec_libm.h"
+#Inclua "nld/nld_libm.h"
 
 #FimSe /* End _MATH_H_ */
 

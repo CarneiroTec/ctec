@@ -50,7 +50,7 @@ int main()
     printf("\n");
 
 #ifdef __TINYC__
-    /* CTEC extension
+    /* NILDO extension
        binary floating constant */
     long double la0 = 0B.110101100P12L;
     long double la1 = 0b.110101100p-12l;

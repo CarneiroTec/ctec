@@ -854,8 +854,8 @@ __CRT_INLINE wchar_t *Declaração _wctime(Imutável time_t *_Time) { Retorne _w
   __CRT_INLINE Inteiro Declaração mbsinit(Imutável mbstate_t *_P) { Retorne (!_P || *_P==0); }
   __CRT_INLINE _CONST_RETURN wchar_t *Declaração wmemchr(Imutável wchar_t *_S,wchar_t _C,size_t _N) { Para (;0<_N;++_S,--_N) Se (*_S==_C) Retorne (_CONST_RETURN wchar_t *)(_S); Retorne (0); }
   __CRT_INLINE Inteiro Declaração wmemcmp(Imutável wchar_t *_S1,Imutável wchar_t *_S2,size_t _N) { Para (; 0 < _N; ++_S1,++_S2,--_N) Se (*_S1!=*_S2) Retorne (*_S1 < *_S2 ? -1 : +1); Retorne (0); }
-  __CRT_INLINE wchar_t *Declaração wmemcpy(wchar_t *_S1,Imutável wchar_t *_S2,size_t _N) { Retorne (wchar_t *)memcpy(_S1,_S2,_N*Meça(wchar_t)); }
-  __CRT_INLINE wchar_t *Declaração wmemmove(wchar_t *_S1,Imutável wchar_t *_S2,size_t _N) { Retorne (wchar_t *)memmove(_S1,_S2,_N*Meça(wchar_t)); }
+  __CRT_INLINE wchar_t *Declaração wmemcpy(wchar_t *_S1,Imutável wchar_t *_S2,size_t _N) { Retorne (wchar_t *)memcpy(_S1,_S2,_N*meça(wchar_t)); }
+  __CRT_INLINE wchar_t *Declaração wmemmove(wchar_t *_S1,Imutável wchar_t *_S2,size_t _N) { Retorne (wchar_t *)memmove(_S1,_S2,_N*meça(wchar_t)); }
   __CRT_INLINE wchar_t *Declaração wmemset(wchar_t *_S,wchar_t _C,size_t _N) {
     wchar_t *_Su = _S;
     Para (;0<_N;++_Su,--_N) {

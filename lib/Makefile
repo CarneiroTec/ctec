@@ -1,5 +1,5 @@
 #
-# CTEC Compiler Makefile for libctec1.a
+# NILDO Compiler Makefile for libnld1.a
 #
 
 TOP = ..
@@ -7,20 +7,20 @@ include $(TOP)/Makefile
 VPATH = $(TOPSRC)/lib $(TOPSRC)/win32/lib
 T = $(or $(CROSS_TARGET),$(NATIVE_TARGET),unknown)
 X = $(if $(CROSS_TARGET),$(CROSS_TARGET)-)
-BIN = $(TOP)/$(X)libctec1.a
+BIN = $(TOP)/$(X)libnld1.a
 
-XCTEC ?= $(TOP)/$(X)ctec$(EXESUF)
-XCC = $(XCTEC)
-XAR = $(XCTEC) -ar
+XNILDO ?= $(TOP)/$(X)nld$(EXESUF)
+XCC = $(XNILDO)
+XAR = $(XNILDO) -ar
 XFLAGS-unx = -B$(TOPSRC)
 XFLAGS-win = -B$(TOPSRC)/win32 -I$(TOPSRC)/include
 XFLAGS = $(XFLAGS$(XCFG))
 XCFG = $(or $(findstring -win,$T),-unx)
 
-# in order to use gcc, tyoe: make <target>-libctec1-usegcc=yes
-arm-libctec1-usegcc ?= no
+# in order to use gcc, tyoe: make <target>-libnld1-usegcc=yes
+arm-libnld1-usegcc ?= no
 
-ifeq "$($(T)-libctec1-usegcc)" "yes"
+ifeq "$($(T)-libnld1-usegcc)" "yes"
  XCC = $(CC)
  XAR = $(AR)
  XFLAGS = $(CFLAGS) -fPIC
@@ -37,9 +37,9 @@ ifdef CONFIG_OSX
  XFLAGS += -D_ANSI_SOURCE
 endif
 
-I386_O = libctec1.o alloca86.o alloca86-bt.o
-X86_64_O = libctec1.o alloca86_64.o alloca86_64-bt.o
-ARM_O = libctec1.o armeabi.o alloca-arm.o armflush.o
+I386_O = libnld1.o alloca86.o alloca86-bt.o
+X86_64_O = libnld1.o alloca86_64.o alloca86_64-bt.o
+ARM_O = libnld1.o armeabi.o alloca-arm.o armflush.o
 ARM64_O = lib-arm64.o
 WIN_O = crt1.o crt1w.o wincrt1.o wincrt1w.o dllcrt1.o dllmain.o
 

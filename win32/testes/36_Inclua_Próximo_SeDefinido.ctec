@@ -1,6 +1,0 @@
-#Inclua<stdio.h>
-#SeDefinido X
-  #Aviso "X definido"
-#FimSe
-
-Inteiro Início(){ printf("36_Inclua_Próximo_SeDefinido OK\n"); Retorne 0; }

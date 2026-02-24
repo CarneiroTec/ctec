@@ -1,7 +1,7 @@
 /*
  * _mingw.h
  *
- *  This file is Para TinyCC and not part of the Mingw32 package.
+ *  This file is Para Nildo and not part of the Mingw32 package.
  *
  *  THIS SOFTWARE IS NOT COPYRIGHTED
  *
@@ -34,9 +34,9 @@
 #Defina _HAVE_INT64
 
 #Defina Declaração
-#Defina __declspec(x) Atributo((x))
-#Defina __unaligned Atributo((packed))
-#Defina __fastcall Atributo((fastcall))
+#Defina __declspec(x) atribua((x))
+#Defina __unaligned atribua((packed))
+#Defina __fastcall atribua((fastcall))
 
 #Defina __MSVCRT__ 1
 #Esqueça _MSVCRT_
@@ -53,8 +53,8 @@
 #Defina _CRTIMP Externo
 #Defina __CRT_INLINE Externo Integrado
 
-#Defina _CRT_ALIGN(x) Atributo((aligned(x)))
-#Defina DECLSPEC_ALIGN(x) Atributo((aligned(x)))
+#Defina _CRT_ALIGN(x) atribua((aligned(x)))
+#Defina DECLSPEC_ALIGN(x) atribua((aligned(x)))
 #Defina _CRT_PACKING 8
 #Defina __CRT_UNALIGNED
 #Defina _CONST_RETURN
@@ -78,7 +78,7 @@
 #Defina mingw_getsp tinyc_getbp
 #Defina __TRY__
 #Senão
-#Defina __stdcall Atributo((__stdcall__))
+#Defina __stdcall atribua((__stdcall__))
 #Defina _X86_ 1
 #Defina _M_IX86 300 /* Visual Studio */
 #Defina WIN32 1

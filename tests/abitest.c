@@ -1,10 +1,10 @@
-#include <libctec.h>
+#include <libnld.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 
-// MinGW has 80-bit rather than 64-bit long double which isn't compatible with CTEC or MSVC
+// MinGW has 80-bit rather than 64-bit long double which isn't compatible with NILDO or MSVC
 #if defined(_WIN32) && defined(__GNUC__)
 #define LONG_DOUBLE double
 #define LONG_DOUBLE_LITERAL(x) x
@@ -16,18 +16,18 @@
 static int g_argc;
 static char **g_argv;
 
-static void set_options(CTECState *s, int argc, char **argv)
+static void set_options(NILDOState *s, int argc, char **argv)
 {
     int i;
     for (i = 1; i < argc; ++i) {
         char *a = argv[i];
         if (a[0] == '-') {
             if (a[1] == 'B')
-                ctec_set_lib_path(s, a+2);
+                nld_set_lib_path(s, a+2);
             else if (a[1] == 'I')
-                ctec_add_include_path(s, a+2);
+                nld_add_include_path(s, a+2);
             else if (a[1] == 'L')
-                ctec_add_library_path(s, a+2);
+                nld_add_library_path(s, a+2);
         }
     }
 }
@@ -38,29 +38,29 @@ typedef int (*callback_type) (void*);
  * Compile source code and call a callback with a pointer to the symbol "f".
  */
 static int run_callback(const char *src, callback_type callback) {
-  CTECState *s;
+  NILDOState *s;
   int result;
   void *ptr;
   
-  s = ctec_new();
+  s = nld_new();
   if (!s)
     return -1;
 
   set_options(s, g_argc, g_argv);
 
-  if (ctec_set_output_type(s, CTEC_OUTPUT_MEMORY) == -1)
+  if (nld_set_output_type(s, NILDO_OUTPUT_MEMORY) == -1)
     return -1;
-  if (ctec_compile_string(s, src) == -1)
+  if (nld_compile_string(s, src) == -1)
     return -1;
-  if (ctec_relocate(s, CTEC_RELOCATE_AUTO) == -1)
+  if (nld_relocate(s, NILDO_RELOCATE_AUTO) == -1)
     return -1;
   
-  ptr = ctec_get_symbol(s, "f");
+  ptr = nld_get_symbol(s, "f");
   if (!ptr)
     return -1;
   result = callback(ptr);
   
-  ctec_delete(s);
+  nld_delete(s);
   
   return result;
 }
@@ -152,7 +152,7 @@ static int ret_2double_test(void) {
  *
  * Note that the purpose of the 10th argument is to avoid a situation
  * in which gcc would accidentally put the double at the right
- * address, thus causing a success message even though CTEC actually
+ * address, thus causing a success message even though NILDO actually
  * generated incorrect code.
  */
 typedef ret_2double_test_type (*ret_8plus2double_test_function_type) (double, double, double, double, double, double, double, ret_2double_test_type, double, double);
@@ -320,7 +320,7 @@ static int reg_pack_longlong_test(void) {
  *
  * Note that the purpose of the 10th argument is to avoid a situation
  * in which gcc would accidentally put the longlong at the right
- * address, thus causing a success message even though CTEC actually
+ * address, thus causing a success message even though NILDO actually
  * generated incorrect code.
  */
 typedef reg_pack_longlong_test_type (*ret_6plus2longlong_test_function_type) (long long, long long, long long, long long, long long, reg_pack_longlong_test_type, long long, long long);
@@ -652,7 +652,7 @@ int main(int argc, char **argv) {
   const char *testname = NULL;
   int retval = EXIT_SUCCESS;
   
-  /* if cteclib.h and libctec1.a are not installed, where can we find them */
+  /* if nldlib.h and libnld1.a are not installed, where can we find them */
   for (i = 1; i < argc; ++i) {
     if (!memcmp(argv[i], "run_test=", 9))
       testname = argv[i] + 9;

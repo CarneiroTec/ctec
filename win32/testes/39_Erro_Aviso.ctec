@@ -1,5 +1,0 @@
-#Aviso "teste aviso"
-/* avoid #Erro to not abort */
-#Inclua<stdio.h>
-
-Inteiro Início(){ printf("39_Aviso OK\n"); Retorne 0; }
