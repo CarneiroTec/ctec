@@ -5,27 +5,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTEC - Linguagem de Programação PT-BR</title>
+    <title>NLD - Linguagem de Programação PT-BR</title>
 </head>
 
 <body>
     <header>
-        <h1>CTEC - Linguagem de Programação PT-BR</h1>
+        <h1>NLD - Linguagem de Programação PT-BR</h1>
         <i>Esse compilador é um fork do TCC - Tiny C Compiler</i>
     </header>
     <main>
         <section>
-            <h2>Padrão de Projetos CTEC</h2>
+            <h2>Padrão de Projetos NLD</h2>
             <ul>
                 <li>
                     <article>
                         <h3>Básico</h3>
                         <ul>
-                            <li>Compilador - ctec</li>
+                            <li>Compilador - nld</li>
                             <li>Função de Entrada - Início()</li>
                             <li>Case Sensitive - Sim</li>
                             <li>Tipagem - Forte e Estática</li>
-                            <li>Idioma - Português Brasileiro Acentuado sem Anglicismos (Exceção de nomes de arquivos que devem
+                            <li>Idioma - Português Brasileiro Acentuado sem Anglicismos (Exceção de nomes de arquivos
+                                que devem
                                 ser sem acentos)</li>
                         </ul>
                     </article>
@@ -36,10 +37,10 @@
                         <ul>
                             <li><strong>./APRESENTACAO.md</strong></li>
                             <li><strong>./Projeto.nds</strong></li>
-                            <li><strong>./Inicio.ctec</strong></li>
+                            <li><strong>./Inicio.nld</strong></li>
                             <li><strong>./Dependencia/</strong>
                                 <ul>
-                                    <li>Autocarregamento.ctec</li>
+                                    <li>Autocarregamento.nld</li>
                                 </ul>
                             </li>
                             <li><strong>./Teste/</strong>
@@ -47,22 +48,22 @@
                                     <li>Unidade/
                                         <ul>
                                             <li>[Pastas de Módulos] <ul type="1">
-                                                    <li>[TesteNomeArquivo].ctec</li>
+                                                    <li>[TesteNomeArquivo].nld</li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
                                     <li>Integracao/</li>
-                                    <li>Testes.ctec</li>
+                                    <li>Testes.nld</li>
                                 </ul>
                             </li>
                             <li><strong>./Fonte/</strong>
                                 <ul>
                                     <li>[Pastas de Módulos]</li>
-                                        <ul>
-                                            <li>[NomeModulo].ctec</li>
-                                        </ul>
-                                    <li>[NomeDoProjeto].ctec</li>
+                                    <ul>
+                                        <li>[NomeModulo].nld</li>
+                                    </ul>
+                                    <li>[NomeDoProjeto].nld</li>
                                 </ul>
                             </li>
                             <li><strong>./Documentacao/</strong></li>
@@ -83,7 +84,7 @@
                 </li>
                 <li>
                     <article>
-                        <h3>Sintaxe Básica CTEC</h3>
+                        <h3>Sintaxe Básica NLD</h3>
                         <section>
                             <h4>Pré-Processadores</h4>
                             <ul>
@@ -158,19 +159,23 @@
                         <section>
                             <h4>Declarações</h4>
                             <ul>
-                                <li>Variável - [Modificador(Opcional)] [Tipo] [NomeDaVariável (pode ser mais de uma)] = [
+                                <li>Variável - [Modificador(Opcional)] [Tipo] [NomeDaVariável (pode ser mais de uma)] =
+                                    [
                                     ValorInicial];</li>
-                                <li>Vetor - [Modificador(Opcional)] [Tipo] [NomeDoVetor][Tamanho] = { ValoresIniciais };</li>
-                                <li>Ponteiro - [Modificador(Opcional)] [Tipo] *[NomeDoPonteiro] = [EndereçoInicial];</li>
-                                <li>Referência - [Modificador(Opcional)] [Tipo] [NomeDaReferência] = &amp;[VariávelExistente];
+                                <li>Vetor - [Modificador(Opcional)] [Tipo] [NomeDoVetor][Tamanho] = { ValoresIniciais };
+                                </li>
+                                <li>Ponteiro - [Modificador(Opcional)] [Tipo] *[NomeDoPonteiro] = [EndereçoInicial];
+                                </li>
+                                <li>Referência - [Modificador(Opcional)] [Tipo] [NomeDaReferência] =
+                                    &amp;[VariávelExistente];
                                 </li>
                                 <li>Inferência - [NomeDaVariável] = ([Nome do Tipo]) [Expressão];</li>
                                 <li>Função - [TipoDeRetorno] [NomeDaFunção]([Parâmetros]) { CorpoDaFunção }</li>
                                 <li>Pseudônimo - Pseudônimo [TipoExistente] [NomeDoPseudônimo];</li>
                                 <li>Estrutura - Estrutura [NomeDaEstrutura] { Campos }</li>
                                 <li>Enumeração - Enumeração [NomeDaEnumação] { Valores }</li>
-                                <li>Inclua 1 - #Inclua &lt;Caminho/Para/Arquivo.ctec&gt;;</li>
-                                <li>Inclua 2 - #Inclua "Caminho/Para/Arquivo.ctec";</li>
+                                <li>Inclua 1 - #Inclua &lt;Caminho/Para/Arquivo.nld&gt;;</li>
+                                <li>Inclua 2 - #Inclua "Caminho/Para/Arquivo.nld";</li>
                                 <li>União - União [NomeDaUnião] { Campos }</li>
                                 <li>Pseudo-Classe - Pseudônimo Estrutura {
                                     [Tipo] [Nome da Propriedade];
@@ -186,7 +191,8 @@
                                 <li>Para</li>
                                 <li>Retorne</li>
                                 <li>Execute</li>
-                                <li>Obs.: Não existe Senão, SenãoSe, Enquanto, Faça...Enquanto, Troque...Caso nativos.</li>
+                                <li>Obs.: Não existe Senão, SenãoSe, Enquanto, Faça...Enquanto, Troque...Caso nativos.
+                                </li>
                             </ul>
                         </section>
                         <section>
@@ -222,14 +228,16 @@
                     <article>
                         <h3>Convenções de Código</h3>
                         <ul>
-                            <li>Nomes de Arquivos: CamelCase.ctec</li>
+                            <li>Nomes de Arquivos: CamelCase.nld</li>
                             <li>Nomes de Variáveis: camelCase</li>
                             <li>Nomes de Constantes: MAIÚSCULO_SOBRELINHADO</li>
                             <li>Nomes de Funções: snake_case()</li>
-                            <li>Espaço-Nomeado: Prefixo com o nome do módulo ou projeto, seguido de um sublinhado (Exemplo:
+                            <li>Espaço-Nomeado: Prefixo com o nome do módulo ou projeto, seguido de um sublinhado
+                                (Exemplo:
                                 Unidade_teste())</li>
                             <li>Indentação: 4 espaços</li>
-                            <li>Comentários: // para comentários de linha única, /* */ para comentários de múltiplas linhas</li>
+                            <li>Comentários: // para comentários de linha única, /* */ para comentários de múltiplas
+                                linhas</li>
                             <li>Paradigma: Programação OO e Procedural</li>
                             <li>Padrões de Projeto: Singleton, Fábrica, Observador, Estratégia</li>
                             <li>Ciclo de Vida: Use chaves {} para delimitar o ciclo de vida de uma variável</li>
@@ -251,7 +259,7 @@
         </section>
     </main>
     <footer>
-        <p>&copy; 2026 CTEC - Linguagem de Programação PT-BR</p>
+        <p>&copy; 2026 NLD - Linguagem de Programação PT-BR</p>
     </footer>
 </body>
 
