@@ -41,6 +41,18 @@ Inteiro Início() {
 
 ````
 
+Comando no Powershell
+````
+nld.exe ola_mundo.nld
+./ola_mundo
+````
+
+Comando no CMD
+````
+nld.exe ola_mundo.nld
+ola_mundo
+````
+
 ## Referência Rápida
 
 ### Pré-Processadores
